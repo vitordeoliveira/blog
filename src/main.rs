@@ -1,3 +1,7 @@
 fn main() {
-    println!("Hello, world!");
+    // Config env
+    // Config Tracing
+    // Config Database
+    // Config Routes
+    // Run Server
 }
