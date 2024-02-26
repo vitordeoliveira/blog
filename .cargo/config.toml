@@ -1,0 +1,4 @@
+[env]
+DATABASE_URL = "hello"
+RUST_LOG = "info"
+SERVER_PORT = "8000"
