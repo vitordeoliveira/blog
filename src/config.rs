@@ -1,6 +1,8 @@
 use std::env;
 
+use axum::Router;
 use dotenv::dotenv;
+use tokio::net::TcpListener;
 
 // Config env OK
 // Config Tracing OK
@@ -38,7 +40,7 @@ impl Config {
         }
     }
 
-    pub async fn setup(self) -> Result<(), ()> {
+    pub async fn setup(self) -> Result<(TcpListener, Router), ()> {
         tracing_subscriber::fmt()
             .with_env_filter(self.environment.rust_log)
             .init();
@@ -51,13 +53,13 @@ impl Config {
             self.environment.server_port
         );
 
+        let router = Router::new();
+
         let listener =
             tokio::net::TcpListener::bind(format!("127.0.0.1:{}", self.environment.server_port))
                 .await
                 .unwrap();
 
-        axum::serve(listener, router).await.unwrap();
-
-        Ok(())
+        Ok((listener, router))
     }
 }
