@@ -4,6 +4,8 @@ use axum::Router;
 use dotenv::dotenv;
 use tokio::net::TcpListener;
 
+use crate::error::{Error, Result};
+
 // Config env OK
 // Config Tracing OK
 // Config Database
@@ -40,7 +42,7 @@ impl Config {
         }
     }
 
-    pub async fn setup(self) -> Result<(TcpListener, Router), ()> {
+    pub async fn setup(self) -> Result<(TcpListener, Router)> {
         tracing_subscriber::fmt()
             .with_env_filter(self.environment.rust_log)
             .init();
@@ -48,17 +50,16 @@ impl Config {
         // let controller = Controller::new().await?;
         // let router = controller.get_routes().await?;
 
-        tracing::info!(
-            "router initialized, now listening on port {}",
-            self.environment.server_port
-        );
-
         let router = Router::new();
 
         let listener =
             tokio::net::TcpListener::bind(format!("127.0.0.1:{}", self.environment.server_port))
-                .await
-                .unwrap();
+                .await?;
+
+        tracing::info!(
+            "router initialized, now listening on port {}",
+            self.environment.server_port
+        );
 
         Ok((listener, router))
     }

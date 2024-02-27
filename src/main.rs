@@ -1,8 +1,11 @@
 use config::Config;
+use error::Result;
 
 mod config;
+mod error;
 
-async fn main() -> Result<(), ()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     // Config env
     // Config Tracing
     // Config Database
