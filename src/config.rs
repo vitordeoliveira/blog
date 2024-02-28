@@ -1,8 +1,10 @@
 use std::env;
 
-use axum::Router;
+use axum::{middleware, response::Response, routing::get, Router};
+use blog::controller::root;
 use dotenv::dotenv;
 use tokio::net::TcpListener;
+use tracing::info;
 
 use crate::error::{Error, Result};
 
@@ -50,7 +52,14 @@ impl Config {
         // let controller = Controller::new().await?;
         // let router = controller.get_routes().await?;
 
-        let router = Router::new();
+        let router = Router::new() // `GET /` goes to `root`
+            .route("/", get(root))
+            .layer(middleware::map_response(response_mapper));
+
+        async fn response_mapper(res: Response) -> Response {
+            info!("Response mapper");
+            res
+        }
 
         let listener =
             tokio::net::TcpListener::bind(format!("127.0.0.1:{}", self.environment.server_port))
