@@ -13,33 +13,60 @@
     <script src="/assets/theme.js"></script>   
     {% block head %}{% endblock %}
   </head>
-  <body class="bg-orange-50 font-mono dark:bg-sky-950">
+  <body class="bg-orange-50 font-mono dark:bg-sky-950 text-sky-950">
     <div id="content" class="max-w-6xl mx-auto min-h-screen h-1">
       {% block header %}
       {% include "header.html" %}
       {% endblock %} 
 
       <main class="h-full">
-        {% block content %}
-        <div class="flex justify-between">
+        {% block main %}
+
+        <div class="flex flex-col items-center dark:text-white drop-shadow px-8">
+
+          <h1 class="text-3xl font-bold m-8">Hi I am Vitor</h1>
+          <p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat
+          reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex
+          esse exercitation amet. Nisi anim cupidatat excepteur officia.
+          Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate
+          voluptate dolor minim nulla est proident. Nostrud officia pariatur ut
+          officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit
+            commodo officia dolor Lorem duis laboris cupidatat officia
+            voluptate. Culpa proident adipisicing id nulla nisi laboris ex in
+            Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex
+            non excepteur duis sunt velit enim. Voluptate laboris sint
+            cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
+
+          <h1 class="text-3xl font-bold m-8">Blog posts</h1>
+        </div>
+
+
+        <div class="flex">
           <div
-            class="bg-white dark:bg-orange-100 p-8 w-96 h-96 drop-shadow rounded-lg m-32"
+           class="flex flex-col justify-evenly bg-white flex-1 dark:bg-orange-100 px-8 w-96 h-96 drop-shadow rounded-lg"
           >
-            <p class="dark:bg-orange-100">Title dark</p>
-            <p class="dark:bg-orange-100 text-slate-400">Subtitle dark</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              class="w-8 h-8 stroke-orange-400 cursor-pointer drop-shadow hover:stroke-white rounded-lg transition duration-300 ease-out"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-              />
-            </svg>
+          <div>
+            <p class="dark:bg-orange-100 text-lg font-bold">Title dark</p>
+            <p class="dark:bg-orange-100 text-sm mb-2 text-slate-400">Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>
+            <div>
+              <span class="bg-orange-100 text-orange-500 text-xs lowercase px-1 py-0.5 rounded-full dark:bg-orange-500 dark:text-white border border-orange-500">Htmx</span>
+              <span class="bg-orange-100 text-orange-500 text-xs lowercase px-1 py-0.5 rounded-full dark:bg-orange-500 dark:text-white border border-orange-500">Htmx</span>
+            </div>
+          </div>
+
+            <div>Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
+              sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit
+              amet, officia excepteur ex fugiat reprehenderit enim labore culpa
+            sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi
+            anim cupidatat excepteur officia. Reprehenderit nostrud nostrud
+          ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla
+          est proident. Nostrud officia pariatur ut officia. Sit irure elit
+        esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor
+        Lorem duis laboris cupidatat officia voluptate. Culpa proident
+      adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod.
+      Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim.
+    Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et
+    culpa duis.</div>
           </div>
         </div>
         {% endblock %}
