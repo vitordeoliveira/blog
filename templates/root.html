@@ -5,42 +5,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script
       src="https://unpkg.com/htmx.org@1.9.10"
       integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
       crossorigin="anonymous"
     ></script>
-
+    <script src="/assets/theme.js"></script>   
     {% block head %}{% endblock %}
   </head>
-  <body class="bg-slate-200">
-    {% block header %}
-    <div id="content">
-      <header
-        class="mx-auto flex text-xl bg-orange-200 text-white font-semibold items-center justify-between px-24 h-16"
-      >
-        <div class="text-4xl text-orange-400 hover:text-white cursor-pointer">
-          vitor.ws
-        </div>
-        <nav class="h-full">
-          <ul
-            class="flex cursor-pointer text-orange-400 gap-x-20 h-full items-center"
+  <body class="bg-orange-50 font-mono dark:bg-sky-950">
+    <div id="content" class="max-w-6xl mx-auto min-h-screen h-1">
+      {% block header %}
+      {% include "header.html" %}
+      {% endblock %} 
+
+      <main class="h-full">
+        {% block content %}
+        <div class="flex justify-between">
+          <div
+            class="bg-white dark:bg-orange-100 p-8 w-96 h-96 drop-shadow rounded-lg m-32"
           >
-            <li class="min-w-20 hover:text-white text-center">portifolio</li>
-            <li class="min-w-20 hover:text-white text-center">blog</li>
-            <li class="min-w-20 hover:text-white text-center">resume</li>
-          </ul>
-        </nav>
-        <button
-          class="transition duration-700 ease-out shadow-lg bg-orange-400 rounded-lg p-2 hover:text-orange-400 hover:bg-white"
-        >
-          contact
-        </button>
-      </header>
-      {% endblock %} {% block content %}
-      <p>Placeholder content</p>
-      {% endblock %}
+            <p class="dark:bg-orange-100">Title dark</p>
+            <p class="dark:bg-orange-100 text-slate-400">Subtitle dark</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              class="w-8 h-8 stroke-orange-400 cursor-pointer drop-shadow hover:stroke-white rounded-lg transition duration-300 ease-out"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+              />
+            </svg>
+          </div>
+        </div>
+        {% endblock %}
+      </main>
     </div>
   </body>
 </html>
