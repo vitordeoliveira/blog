@@ -4,6 +4,7 @@ use axum::{middleware, response::Response, routing::get, Router};
 use blog::controller::root;
 use dotenv::dotenv;
 use tokio::net::TcpListener;
+use tower_http::services::ServeDir;
 use tracing::info;
 
 use crate::error::{Error, Result};
@@ -52,9 +53,14 @@ impl Config {
         // let controller = Controller::new().await?;
         // let router = controller.get_routes().await?;
 
+        let assets_path = std::env::current_dir().unwrap();
         let router = Router::new() // `GET /` goes to `root`
             .route("/", get(root))
-            .layer(middleware::map_response(response_mapper));
+            .layer(middleware::map_response(response_mapper))
+            .nest_service(
+                "/assets",
+                ServeDir::new(format!("{}/assets", assets_path.to_str().unwrap())),
+            );
 
         async fn response_mapper(res: Response) -> Response {
             info!("Response mapper");
