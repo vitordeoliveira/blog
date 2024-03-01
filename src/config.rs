@@ -1,7 +1,8 @@
 use std::env;
 
 use axum::{middleware, response::Response, routing::get, Router};
-use blog::controller::root;
+
+use blog::controller::{root_page, Blog};
 use dotenv::dotenv;
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
@@ -14,7 +15,9 @@ use crate::error::{Error, Result};
 // Config Database
 // Config Routes
 
-struct Routes {}
+struct Routes {
+    blog: axum::Router,
+}
 struct Database {}
 struct Environment {
     database_url: String,
@@ -40,7 +43,9 @@ impl Config {
 
         Self {
             environment: env,
-            routes: Routes {},
+            routes: Routes {
+                blog: Blog::new().routes,
+            },
             database: Database {},
         }
     }
@@ -55,7 +60,8 @@ impl Config {
 
         let assets_path = std::env::current_dir().unwrap();
         let router = Router::new() // `GET /` goes to `root`
-            .route("/", get(root))
+            .route("/", get(root_page))
+            .nest("/blog", self.routes.blog)
             .layer(middleware::map_response(response_mapper))
             .nest_service(
                 "/assets",
@@ -63,7 +69,7 @@ impl Config {
             );
 
         async fn response_mapper(res: Response) -> Response {
-            info!("Response mapper");
+            info!("Response have been called");
             res
         }
 

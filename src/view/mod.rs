@@ -6,6 +6,7 @@ use axum::{
 
 use crate::error::{self, Result};
 
+pub mod blog;
 pub mod home;
 
 #[derive(Template)]

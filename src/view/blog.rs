@@ -13,14 +13,18 @@ use crate::error::{self, Result, ResultPath};
 struct BlogTemplate {
     title: String,
     id: u16,
+    markdown_html: String,
 }
 
 #[debug_handler]
 pub async fn blog_view(ResultPath(blog_id): ResultPath<u16>) -> Result<impl IntoResponse> {
     // pub async fn blog_view(blog_id: Result<Path<u16>>) -> Result<impl IntoResponse> {
+    let blog_title = "blog_title";
+    let markdown_html = "<p>FAKE HTML MARKDOWN</p>".to_string();
     let root = BlogTemplate {
-        title: "vitor.ws".to_string(),
+        title: blog_title.to_string(),
         id: blog_id,
+        markdown_html,
     };
 
     let html = match root.render() {
