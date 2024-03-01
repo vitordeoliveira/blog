@@ -1,12 +1,12 @@
 use askama::Template;
 use axum::{
-    extract::{rejection::PathRejection, Path},
+    extract::Path,
     http::StatusCode,
     response::{Html, IntoResponse},
 };
 use axum_macros::debug_handler;
 
-use crate::error::{self, Error, Result};
+use crate::error::{self, Result, ResultPath};
 
 #[derive(Template)]
 #[template(path = "blog.html")]
@@ -16,16 +16,11 @@ struct BlogTemplate {
 }
 
 #[debug_handler]
-pub async fn blog_view(
-    blog_id: std::result::Result<Path<u16>, PathRejection>,
-) -> Result<impl IntoResponse> {
-    let test = match blog_id {
-        Ok(e) => e,
-        Err(_) => return Err(Error::InternalServerError),
-    };
+pub async fn blog_view(ResultPath(blog_id): ResultPath<u16>) -> Result<impl IntoResponse> {
+    // pub async fn blog_view(blog_id: Result<Path<u16>>) -> Result<impl IntoResponse> {
     let root = BlogTemplate {
         title: "vitor.ws".to_string(),
-        id: test.0,
+        id: blog_id,
     };
 
     let html = match root.render() {

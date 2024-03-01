@@ -14,3 +14,6 @@ tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 axum = { version = "0.7.4", features = ["form", "macros"] }
 thiserror = "1.0.57"
 tower-http = { version = "0.5.2", features = ["fs"] }
+axum-macros = "0.4.1"
+serde = "1.0.197"
+async-trait = "0.1.77"

@@ -196,8 +196,11 @@ name = "blog"
 version = "0.1.0"
 dependencies = [
  "askama",
+ "async-trait",
  "axum",
+ "axum-macros",
  "dotenv",
+ "serde",
  "thiserror",
  "tokio",
  "tower-http",
