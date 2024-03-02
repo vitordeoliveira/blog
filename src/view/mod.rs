@@ -22,7 +22,7 @@ pub fn root() -> Result<impl IntoResponse> {
 
     let html = match root.render() {
         Ok(html) => html,
-        Err(_) => return Err(error::Error::InternalServerError),
+        Err(err) => return Err(error::Error::InternalServerError(err.to_string())),
     };
 
     Ok((StatusCode::OK, Html(html)))

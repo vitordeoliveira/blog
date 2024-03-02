@@ -1,2 +1,8 @@
-<h1>blog page {{id}}</h1>
+{% block head %}
+<meta property="title" content="{{title}}" />
+<meta property="description" content="{{description}}" />
+<meta name="keywords" content="{{tags.join(",")}}">
+
+{% endblock %}
+
 <div class="markdown">{{markdown_html|safe }}</div>
