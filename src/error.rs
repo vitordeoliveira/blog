@@ -13,11 +13,14 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Error)]
 pub enum Error {
-    #[error("Internal Server Error")]
-    InternalServerError,
+    #[error("Internal Server Error {0}")]
+    InternalServerError(String),
 
-    #[error("Page not found")]
+    #[error("Page {0} not found")]
     PageNotFound(String),
+
+    #[error("Page {0} has some error")]
+    PageUnavailable(String),
 
     #[error("data store disconnected : {0}")]
     Disconnect(#[from] io::Error),
@@ -27,9 +30,10 @@ impl IntoResponse for Error {
     fn into_response(self) -> axum::response::Response {
         error!("{self}");
         let response = match self {
-            Error::InternalServerError => "a".to_string(),
-            Error::PageNotFound(val) => val,
-            Error::Disconnect(_) => "c".to_string(),
+            Error::InternalServerError(_) => "INTERNAL_SERVER_ERROR".to_string(),
+            Error::PageNotFound(_) => "Page not found".to_string(),
+            Error::Disconnect(_) => "INTERNAL_SERVER_ERROR".to_string(),
+            Error::PageUnavailable(_) => "Page unavailable in the moment".to_string(),
         };
 
         (StatusCode::INTERNAL_SERVER_ERROR, Html(response)).into_response()

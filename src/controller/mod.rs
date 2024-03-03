@@ -1,10 +1,8 @@
-use std::fs;
-
 use axum::{response::IntoResponse, routing::get, Router};
 
 use crate::{
-    error::{Error, Result, ResultPath},
-    model::MarkdownMetadata,
+    error::{Result, ResultPath},
+    model::Markdown,
     view::{self, root as rootView},
 };
 
@@ -35,15 +33,7 @@ impl Blog {
     }
 
     async fn show(ResultPath(postname): ResultPath<String>) -> Result<impl IntoResponse> {
-        let file = format!("./blogpost/{}.md", &postname);
-        let markdown_input =
-            fs::read_to_string(file).map_err(|_| Error::PageNotFound(postname.clone()))?;
-        let metadata = MarkdownMetadata::new(&markdown_input)?;
-        let mut html_output = String::new();
-        let res = MarkdownMetadata::extract(&markdown_input)?;
-        let parser = pulldown_cmark::Parser::new(&res);
-        pulldown_cmark::html::push_html(&mut html_output, parser);
-
-        Ok(view::blog::show(html_output, metadata))
+        let markdown = Markdown::new(postname)?;
+        Ok(view::blog::show(markdown))
     }
 }

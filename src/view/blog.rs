@@ -8,18 +8,14 @@ use axum::{
 
 use crate::{
     error::{self, Error, Result, ResultPath},
-    model::MarkdownMetadata,
+    model::{Markdown, MarkdownMetadata},
 };
 
 #[derive(Template)]
 #[template(path = "blog.html")]
 struct BlogTemplate {
-    title: String,
-    description: String,
-    tags: Vec<String>,
-    similar_posts: Vec<String>,
-    date: String,
-    markdown_html: String,
+    metadata: MarkdownMetadata,
+    content: String,
 }
 
 pub fn index() -> Result<impl IntoResponse> {
@@ -30,24 +26,8 @@ pub fn index() -> Result<impl IntoResponse> {
     Ok((StatusCode::OK, Html("ok")))
 }
 
-pub fn show(
-    markdown_html: String,
-    MarkdownMetadata {
-        title,
-        description,
-        tags,
-        similar_posts,
-        date,
-    }: MarkdownMetadata,
-) -> Result<impl IntoResponse> {
-    let root = BlogTemplate {
-        title,
-        description,
-        tags,
-        similar_posts,
-        date,
-        markdown_html,
-    };
+pub fn show(Markdown { metadata, content }: Markdown) -> Result<impl IntoResponse> {
+    let root = BlogTemplate { metadata, content };
 
     let html = match root.render() {
         Ok(html) => html,
