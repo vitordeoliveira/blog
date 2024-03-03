@@ -3,8 +3,10 @@ use axum::{
     http::StatusCode,
     response::{Html, IntoResponse},
 };
+use serde::Deserialize;
+use yaml_front_matter::YamlFrontMatter;
 
-use crate::error::{self, Result};
+use crate::error::{self, Error, Result};
 
 pub mod blog;
 pub mod home;
