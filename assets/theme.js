@@ -1,7 +1,3 @@
-tailwind.config = {
-  darkMode: "selector",
-};
-
 // Function to apply dark mode
 function applyDarkMode() {
   document.documentElement.classList.add("dark");
@@ -34,7 +30,6 @@ window
 
 function toggleTheme() {
   const currentTheme = localStorage.getItem("theme");
-  console.log(currentTheme);
   if (currentTheme === "dark") {
     localStorage.setItem("theme", "light");
   } else {
