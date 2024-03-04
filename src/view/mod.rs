@@ -3,10 +3,11 @@ use axum::{
     http::StatusCode,
     response::{Html, IntoResponse},
 };
-use serde::Deserialize;
-use yaml_front_matter::YamlFrontMatter;
 
-use crate::error::{self, Error, Result};
+use crate::{
+    error::{self, Result},
+    model::MarkdownMetadata,
+};
 
 pub mod blog;
 pub mod home;
@@ -15,16 +16,18 @@ pub mod home;
 #[template(path = "root.html")]
 struct RootTemplate {
     title: String,
+    posts: Vec<MarkdownMetadata>,
 }
 
-pub fn root() -> Result<impl IntoResponse> {
+pub fn homepage(posts: Vec<MarkdownMetadata>) -> Result<impl IntoResponse> {
     let root = RootTemplate {
         title: "vitor.ws".to_string(),
+        posts,
     };
 
     let html = match root.render() {
         Ok(html) => html,
-        Err(err) => return Err(error::Error::InternalServerError(err.to_string())),
+        Err(err) => return Err(error::Error::InternalServer(err.to_string())),
     };
 
     Ok((StatusCode::OK, Html(html)))

@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 use std::{fmt::Debug, io};
 
 use async_trait::async_trait;
@@ -8,13 +9,13 @@ use axum::{
 };
 use serde::de::DeserializeOwned;
 use thiserror::Error;
-use tracing::{error, info};
+use tracing::error;
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Error)]
 pub enum Error {
     #[error("Internal Server Error {0}")]
-    InternalServerError(String),
+    InternalServer(String),
 
     #[error("Page {0} not found")]
     PageNotFound(String),
@@ -30,7 +31,7 @@ impl IntoResponse for Error {
     fn into_response(self) -> axum::response::Response {
         error!("{self}");
         let response = match self {
-            Error::InternalServerError(_) => "INTERNAL_SERVER_ERROR".to_string(),
+            Error::InternalServer(_) => "INTERNAL_SERVER_ERROR".to_string(),
             Error::PageNotFound(_) => "Page not found".to_string(),
             Error::Disconnect(_) => "INTERNAL_SERVER_ERROR".to_string(),
             Error::PageUnavailable(_) => "Page unavailable in the moment".to_string(),

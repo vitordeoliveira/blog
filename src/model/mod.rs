@@ -29,28 +29,47 @@ impl Markdown {
 
         Ok(Self { metadata, content })
     }
+
+    pub fn list() -> Result<Vec<MarkdownMetadata>> {
+        let paths = fs::read_dir("./blogpost").unwrap();
+
+        let mut metadata_list: Vec<MarkdownMetadata> = Vec::new();
+
+        for path in paths {
+            let filepath = path.unwrap().path().display().to_string();
+            let markdown_file = fs::read_to_string(&filepath)
+                .map_err(|_| Error::PageNotFound(filepath.to_string()))?;
+            let metadata = MarkdownMetadata::new(&markdown_file)?;
+            metadata_list.push(metadata);
+        }
+
+        Ok(metadata_list)
+    }
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct MarkdownMetadata {
+    pub filename: String,
     pub title: String,
+    pub subtitle: String,
     pub description: String,
     pub tags: Vec<String>,
     pub similar_posts: Vec<String>,
     pub date: String,
+    pub finished: bool,
 }
 
 impl MarkdownMetadata {
     fn new(input: &str) -> Result<Self> {
         let result = YamlFrontMatter::parse::<MarkdownMetadata>(input)
-            .map_err(|_| Error::InternalServerError("Error on YamlFrontMatter".to_string()))?;
+            .map_err(|_| Error::InternalServer("Error on YamlFrontMatter".to_string()))?;
 
         Ok(result.metadata)
     }
 
     fn extract(string_output: &str) -> Result<String> {
         let regex = regex::Regex::new(r"---((.|\n)*?)---")
-            .map_err(|err| Error::InternalServerError(err.to_string()))?;
+            .map_err(|err| Error::InternalServer(err.to_string()))?;
 
         Ok(regex.replace(string_output, "").to_string())
     }

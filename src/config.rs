@@ -2,32 +2,29 @@ use std::env;
 
 use axum::{middleware, response::Response, routing::get, Router};
 
-use blog::controller::{root_page, Blog};
+use blog::controller::{blog::Blog, home};
 use dotenv::dotenv;
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
-use tracing::info;
 
-use crate::error::{Error, Result};
+use crate::error::Result;
 
 // Config env OK
 // Config Tracing OK
-// Config Database
-// Config Routes
 
 struct Routes {
     blog: axum::Router,
 }
-struct Database {}
+// struct Database {}
 struct Environment {
-    database_url: String,
+    // database_url: String,
     rust_log: String,
     server_port: String,
 }
 
 pub struct Config {
     routes: Routes,
-    database: Database,
+    // database: Database,
     environment: Environment,
 }
 
@@ -36,7 +33,7 @@ impl Config {
         dotenv().ok();
 
         let env = Environment {
-            database_url: env::var("DATABASE_URL").expect("DATABASE_URl should be set"),
+            // database_url: env::var("DATABASE_URL").expect("DATABASE_URl should be set"),
             rust_log: env::var("RUST_LOG").unwrap_or("debug".to_string()),
             server_port: env::var("SERVER_PORT").unwrap_or("8000".to_string()),
         };
@@ -46,7 +43,7 @@ impl Config {
             routes: Routes {
                 blog: Blog::new().routes,
             },
-            database: Database {},
+            // database: Database {},
         }
     }
 
@@ -55,12 +52,9 @@ impl Config {
             .with_env_filter(self.environment.rust_log)
             .init();
 
-        // let controller = Controller::new().await?;
-        // let router = controller.get_routes().await?;
-
         let assets_path = std::env::current_dir().unwrap();
         let router = Router::new() // `GET /` goes to `root`
-            .route("/", get(root_page))
+            .route("/", get(home))
             .nest("/blog", self.routes.blog)
             .layer(middleware::map_response(response_mapper))
             .nest_service(
@@ -69,7 +63,6 @@ impl Config {
             );
 
         async fn response_mapper(res: Response) -> Response {
-            info!("Response have been called");
             res
         }
 
