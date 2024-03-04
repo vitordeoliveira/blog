@@ -1,0 +1,8 @@
+[tasks.buildcss]
+command = "npx"
+args = ["tailwindcss", "-i", "./assets/input.css", "-o", "./assets/output.css"]
+
+[tasks.watch]
+command = "cargo"
+args = ["watch", "-q", "-x", "run"]
+dependencies = ["buildcss"]
