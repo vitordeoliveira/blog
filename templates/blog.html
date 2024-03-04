@@ -1,8 +1,15 @@
+{% extends "root.html" %}
+
+{% block title %}
+{{metadata.title}}
+{% endblock title %}
+
 {% block head %}
 <meta property="title" content="{{metadata.title}}" />
 <meta property="description" content="{{metadata.description}}" />
 <meta name="keywords" content="{{metadata.tags.join(",")}}">
-
 {% endblock %}
 
+{% block main %}
 <div class="markdown">{{content|safe }}</div>
+{% endblock %}

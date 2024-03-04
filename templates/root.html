@@ -4,58 +4,28 @@
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <script
       src="https://unpkg.com/htmx.org@1.9.10"
       integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
       crossorigin="anonymous"
     ></script>
-    <script src="/assets/theme.js"></script>   
+    <script src="/assets/theme.js"></script>
+    <link href="./assets/output.css" rel="stylesheet">
     {% block head %}{% endblock %}
   </head>
-  <body class="bg-orange-50 font-mono dark:bg-sky-950 text-sky-950">
+  <body hx-boost="true" class="bg-orange-50 font-mono dark:bg-sky-950 text-sky-950">
     <div id="content" class="max-w-6xl mx-auto min-h-screen h-1">
       {% block header %}
       {% include "header.html" %}
       {% endblock %} 
 
-      <main class="min-h-full relative pb-32">
+      <main id="main" class="min-h-full relative pb-32">
         {% block main %}
 
         {% include "intro.html" %}
 
-        <div class="flex flex-col items-center mt-8 gap-16">
-          <h1 class="dark:text-white text-3xl font-bold mt-8">Blog posts</h1>
-          <div
+        {% include "blogposts.html" %}
 
-           id="#blog"
-           class="flex flex-col justify-evenly bg-white dark:bg-orange-100 p-8 drop-shadow rounded-lg"
-          >
-
-          <div>
-            <p class="dark:bg-orange-100 text-lg font-bold">Title dark</p>
-            <p class="dark:bg-orange-100 text-sm mb-2 text-slate-400">Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>
-            <div>
-              <span class="bg-orange-100 text-orange-500 text-xs lowercase px-1 py-0.5 rounded-full dark:bg-orange-500 dark:text-white border border-orange-500">Htmx</span>
-              <span class="bg-orange-100 text-orange-500 text-xs lowercase px-1 py-0.5 rounded-full dark:bg-orange-500 dark:text-white border border-orange-500">Htmx</span>
-            </div>
-          </div>
-
-            <div>Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
-              sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit
-              amet, officia excepteur ex fugiat reprehenderit enim labore culpa
-            sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi
-            anim cupidatat excepteur officia. Reprehenderit nostrud nostrud
-          ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla
-          est proident. Nostrud officia pariatur ut officia. Sit irure elit
-        esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor
-        Lorem duis laboris cupidatat officia voluptate. Culpa proident
-      adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod.
-      Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim.
-    Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et
-    culpa duis.</div>
-          </div>
-        </div>
         {% endblock %}
 
         {% block footer %}
