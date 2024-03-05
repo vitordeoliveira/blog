@@ -1,5 +1,6 @@
 use std::fs;
 
+use pulldown_cmark::Options;
 use serde::Deserialize;
 use yaml_front_matter::YamlFrontMatter;
 
@@ -24,7 +25,9 @@ impl Markdown {
         let metadata = MarkdownMetadata::new(&markdown_file)?;
         let content_raw = MarkdownMetadata::extract(&markdown_file)?;
         let mut content = String::new();
-        let parser = pulldown_cmark::Parser::new(&content_raw);
+        let mut options = Options::empty();
+        options.insert(Options::ENABLE_TABLES);
+        let parser = pulldown_cmark::Parser::new_ext(&content_raw, options);
         pulldown_cmark::html::push_html(&mut content, parser);
 
         Ok(Self { metadata, content })
