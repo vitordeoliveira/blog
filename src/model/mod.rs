@@ -11,12 +11,6 @@ pub struct Markdown {
     pub content: String,
 }
 
-// let markdown_input =
-//     fs::read_to_string(file).map_err(|_| Error::PageNotFound(postname.clone()))?;
-// let metadata = MarkdownMetadata::new(&markdown_input)?;
-// let mut html_output = String::new();
-// let res = MarkdownMetadata::extract(&markdown_input)?;
-
 impl Markdown {
     pub fn new(postname: String) -> Result<Self> {
         let file = format!("./blogpost/{}.md", &postname);
@@ -28,6 +22,12 @@ impl Markdown {
         let mut options = Options::empty();
         options.insert(Options::ENABLE_TABLES);
         let parser = pulldown_cmark::Parser::new_ext(&content_raw, options);
+
+        // let parser =
+        //     pulldown_cmark::Parser::new_ext(&content_raw, options).map(|event| match event {
+        //         Event::Start(Tag::Heading { .. }) => Event::InlineHtml("<h1 id=\"level1\">".into()),
+        //         _ => event,
+        //     });
         pulldown_cmark::html::push_html(&mut content, parser);
 
         Ok(Self { metadata, content })
