@@ -1,4 +1,5 @@
+pub mod config;
 pub mod controller;
-mod error;
+pub mod error;
 mod model;
 mod view;
