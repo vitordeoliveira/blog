@@ -1,13 +1,15 @@
-use std::env;
+use std::{env, sync::OnceLock};
 
 use axum::{middleware, response::Response, routing::get, Router};
 
-use blog::controller::{blog::Blog, home};
 use dotenv::dotenv;
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
 
-use crate::error::Result;
+use crate::{
+    controller::{blog::Blog, home},
+    error::{Error, Result},
+};
 
 // Config env OK
 // Config Tracing OK
@@ -15,41 +17,55 @@ use crate::error::Result;
 struct Routes {
     blog: axum::Router,
 }
-// struct Database {}
-struct Environment {
-    // database_url: String,
-    rust_log: String,
-    server_port: String,
+
+pub struct Environment {
+    pub rust_log: String,
+    pub server_port: String,
+}
+
+impl Environment {
+    fn load_from_env() -> Result<Self> {
+        Ok(Self {
+            server_port: get_env("SERVER_PORT")?,
+            rust_log: get_env("RUST_LOG")?,
+        })
+    }
+}
+
+pub fn environment() -> &'static Environment {
+    dotenv().ok();
+    static INSTANCE: OnceLock<Environment> = OnceLock::new();
+
+    INSTANCE.get_or_init(|| {
+        Environment::load_from_env()
+            .unwrap_or_else(|ex| panic!("FATAL - WHILE LOADING CONF - CAUSE: {ex:?}"))
+    })
+}
+
+fn get_env(name: &'static str) -> Result<String> {
+    env::var(name).map_err(|_| Error::InternalServer("env not found".to_string()))
 }
 
 pub struct Config {
     routes: Routes,
-    // database: Database,
-    environment: Environment,
+    environment: &'static Environment,
 }
 
 impl Config {
     pub fn new() -> Self {
         dotenv().ok();
 
-        let env = Environment {
-            // database_url: env::var("DATABASE_URL").expect("DATABASE_URl should be set"),
-            rust_log: env::var("RUST_LOG").unwrap_or("debug".to_string()),
-            server_port: env::var("SERVER_PORT").unwrap_or("8000".to_string()),
-        };
-
         Self {
-            environment: env,
+            environment: environment(),
             routes: Routes {
                 blog: Blog::new().routes,
             },
-            // database: Database {},
         }
     }
 
     pub async fn setup(self) -> Result<(TcpListener, Router)> {
         tracing_subscriber::fmt()
-            .with_env_filter(self.environment.rust_log)
+            .with_env_filter(self.environment.rust_log.clone())
             .init();
 
         let assets_path = std::env::current_dir().unwrap();
