@@ -11,9 +11,6 @@ use crate::{
     error::{Error, Result},
 };
 
-// Config env OK
-// Config Tracing OK
-
 struct Routes {
     blog: axum::Router,
 }
@@ -21,6 +18,7 @@ struct Routes {
 pub struct Environment {
     pub rust_log: String,
     pub server_port: String,
+    server_host: String,
 }
 
 impl Environment {
@@ -28,6 +26,7 @@ impl Environment {
         Ok(Self {
             server_port: get_env("SERVER_PORT")?,
             rust_log: get_env("RUST_LOG")?,
+            server_host: get_env("SERVER_HOST")?,
         })
     }
 }
@@ -38,12 +37,12 @@ pub fn environment() -> &'static Environment {
 
     INSTANCE.get_or_init(|| {
         Environment::load_from_env()
-            .unwrap_or_else(|ex| panic!("FATAL - WHILE LOADING CONF - CAUSE: {ex:?}"))
+            .unwrap_or_else(|ex| panic!("FATAL - WHILE LOADING CONF - CAUSE: {ex}"))
     })
 }
 
 fn get_env(name: &'static str) -> Result<String> {
-    env::var(name).map_err(|_| Error::InternalServer("env not found".to_string()))
+    env::var(name).map_err(|_| Error::InternalServer(format!("Env: {name} not found").to_string()))
 }
 
 pub struct Config {
@@ -52,15 +51,13 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new() -> Self {
-        dotenv().ok();
-
-        Self {
+    pub fn new() -> Result<Self> {
+        Ok(Self {
             environment: environment(),
             routes: Routes {
                 blog: Blog::new().routes,
             },
-        }
+        })
     }
 
     pub async fn setup(self) -> Result<(TcpListener, Router)> {
@@ -82,9 +79,11 @@ impl Config {
             res
         }
 
-        let listener =
-            tokio::net::TcpListener::bind(format!("127.0.0.1:{}", self.environment.server_port))
-                .await?;
+        let listener = tokio::net::TcpListener::bind(format!(
+            "{}:{}",
+            self.environment.server_host, self.environment.server_port
+        ))
+        .await?;
 
         tracing::info!(
             "router initialized, now listening on port {}",
