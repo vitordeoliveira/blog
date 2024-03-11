@@ -8,7 +8,7 @@ similar_posts:
   - "rendering markdown"
   - "using rust to render markdown"
 date: "2021-09-13t03:48:00"
-finished: true
+finished: false
 ---
 
 # titulo
