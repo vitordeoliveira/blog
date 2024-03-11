@@ -1,4 +1,4 @@
-FROM rust:1.76.0 as build
+FROM rust:slim-buster as build
 
 # create a new empty shell project
 RUN USER=root cargo new --bin blog
@@ -27,7 +27,7 @@ RUN cargo build --release \
 # RUN cargo build --release
 #
 # # our final base
-FROM ubuntu:24.04
+FROM debian:stable-slim
 ENV SERVER_HOST=0.0.0.0
 ENV SERVER_PORT=8080
 ENV RUST_LOG=debug
