@@ -6,12 +6,7 @@ description: "this tutorial walks you through the practice of parsing markdown f
 tags: ["rust", "GCP", "free", "axum"]
 similar_posts: [""]
 date: "2021-09-13t03:48:00"
-finished: true
+finished: false
 ---
 
-# titulo
-
-Ola
-
-- vitor
-- nicolas
+# How host a rustlang server with your own DNS for free in the google cloud plataform?
