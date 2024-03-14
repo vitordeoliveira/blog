@@ -4,5 +4,9 @@ args = ["tailwindcss", "-i", "./assets/input.css", "-o", "./assets/output.css"]
 
 [tasks.watch]
 command = "cargo"
-args = ["watch", "-q", "-x", "run"]
+args = ["watch", "-q", "-x", "", "-x", "run"]
 dependencies = ["buildcss"]
+
+[tasks.run]
+command = "cargo"
+args = ["watch", "-s", "cargo make buildcss", "-s", "cargo run"]
