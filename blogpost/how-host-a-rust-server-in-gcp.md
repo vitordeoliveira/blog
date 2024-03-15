@@ -179,3 +179,6 @@ Now if you want to add a custom DNS, just click in
 mapping domain, I will not show this part, but if you want to me create another
 post showing, please give me a thumbs up, and give me a comment, you can send
 me a message in my social networks if you need help.
+
+In the next step we will connect with our github repo, this way every time we
+merge the changes on main branch GCP will update our container.
