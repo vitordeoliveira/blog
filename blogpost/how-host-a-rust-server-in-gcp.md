@@ -1,6 +1,6 @@
 ---
 filename: "how-host-a-rust-server-in-gcp"
-title: "How host a rustlang server with your own DNS for free in the google cloud plataform?"
+title: "How host a rustlang server for free in the google cloud plataform?"
 subtitle: "finding one of the cheapest and easiest ways of host your rust server"
 description: "In the Rust language journey, after learning the basics and being
 able to create a server, the second thought comes to mind... how do I do it
@@ -8,19 +8,21 @@ available for the internet, how should I configure my server for the internet
 and what is the cheapest way to do it, if possible for free?"
 tags: ["rust", "GCP", "free", "axum"]
 similar_posts: [""]
-date: "2021-09-13t03:48:00"
+date: "2024-03-14t17:52:00"
 finished: true
 ---
 
-# How host a rustlang server with your own DNS for free in the google cloud plataform?
+# How host a rustlang server for free in the google cloud plataform?
 
 In the Rust language journey, after learning the basics and being able to
 create a server, the second thought comes to mind... how do I do it available
 for the internet, how should I configure my server for the internet and what is
 the cheapest way to do it, if possible for free?
 
-Here we will answer you that, using the google cloud platform and the cloudrun service.
+In the end of this blog post you should have your first and free rust server
+running on internet.
 
+Here we will answer you that, using the google cloud platform and the cloudrun service.
 A little explanation about GCP for the newcomers:
 
 GCP uses the model of account base, and not project base like AWS, so if you
@@ -52,6 +54,8 @@ cargo add tokio -F full
 The goal is showing how you post your container in the GCP for free, so I will
 not create a fancy server here
 
+In the project/src/main.rs
+
 ```rust
 use std::env;
 
@@ -80,7 +84,15 @@ servers with axum in another blog post, if you have any prior experience with
 any other programming language, you are able to understand what we are doing
 here.
 
-Then after having our service we need to conteinerize him, we use Docker for do this
+Then after having our service we need to conteinerize him, we use Docker for do this:
+
+Create a Dockerfile in /project (that is the root, DO NOT DO inside /src folder)
+
+```bash
+touch Dockerfile
+```
+
+On the file copy and paste this content:
 
 ```Dockerfile
 FROM rust:slim-buster as build
@@ -113,7 +125,8 @@ docker tag project:latest <yourdockerhubaccount>/project:0.0.1
 docker push <yourdockerhubaccount>/project:0.0.1
 ```
 
-note I add **_--plataform linux/amd64_** the reason is because I am in a Macbook, by
+note I add **_--plataform linux/amd64_** the reason is because I am in a
+Macbook, by
 default mac build for linux/arm64, that wont work in the cloudrun.
 
 now we need to tag and push to some registry, lets use Dockerhub itself,
@@ -121,11 +134,48 @@ because google now is able to pull from there
 
 With docker and the server ready in our side, we are ready to publish to cloud run
 
-- create project
-- access cloud run
-- setup container
-- finished
+If is your first time using GCP, he will ask to you to create a new project, if
+you already have used, you need to click in your project and create a new one.
 
-Now if you want to add a custom DNS, just click here in back, and click in
+![open projects in GCP](/assets/gcp_projects.png)
+
+Lets create a project called "Project"
+
+![create project on GCP](/assets/create_project_in_gcp.png)
+
+After finished click in SELECT PROJECT
+
+![select project on GCP](/assets/select_project_in_gcp.png)
+
+Type Cloud run in the search bar and select the first one:
+
+![select cloudrun service on GCP](/assets/select_cloudrun_service_in_gcp.png)
+
+Then click in create service in the header (check that, we have here a "manage
+custom domains", if you want to add a DNS simple click here later)
+
+![create cloudrun service on GCP](/assets/create_cloudrun_service_in_gcp.png)
+
+add your registry in the container image
+
+![container image cloudrun service on GCP](/assets/container_image_cloudrun_service_in_gcp.png)
+
+Scroll down and click in Container(s), Volumes, Networking, Security
+
+There just check if the port is correct, that will be the port that GCP will
+proxy from (default is 8080)
+
+![configure container cloudrun service on GCP](/assets/configure_container_cloudrun_service_in_gcp.png)
+
+Then just click in Create and wait the magic happen.
+
+![create cloudrun service on GCP](/assets/create_cloudrun_service.png)
+
+When finish GCP will
+generate a DNS to you, and then you can access your server from any internet
+connection on the world.
+
+Now if you want to add a custom DNS, just click in
 mapping domain, I will not show this part, but if you want to me create another
-post showing, please give me a thumbs up, and give me a comment
+post showing, please give me a thumbs up, and give me a comment, you can send
+me a message in my social networks if you need help.
