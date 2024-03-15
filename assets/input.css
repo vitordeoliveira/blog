@@ -3,17 +3,21 @@
 @tailwind utilities;
 
 .markdown {
+  @apply dark:text-white mx-6 xl:mx-auto;
+
+  p {
+    @apply my-6;
+  }
+
   h1 {
-    @apply text-center text-4xl m-6;
+    @apply text-center text-4xl my-10;
+  }
+
+  img {
+    @apply md:max-w-2xl mx-auto object-scale-down drop-shadow rounded-lg;
   }
 
   pre {
-    @apply bg-slate-600 p-5 my-5;
-  }
-}
-
-.dark {
-  .markdown {
-    @apply text-white;
+    @apply overflow-auto bg-white dark:text-sky-950 dark:bg-orange-100 p-8 drop-shadow rounded-lg my-6;
   }
 }

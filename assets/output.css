@@ -672,6 +672,10 @@ video {
        column-gap: 2rem;
 }
 
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
 .rounded-full {
   border-radius: 9999px;
 }
@@ -833,8 +837,30 @@ video {
 }
 
 .markdown {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+@media (min-width: 1280px) {
+  .markdown {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.markdown:where(.dark, .dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.markdown {
+  p {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
   h1 {
-    margin: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
   }
   h1 {
     text-align: center;
@@ -843,23 +869,54 @@ video {
     font-size: 2.25rem;
     line-height: 2.5rem;
   }
+  img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  img {
+    border-radius: 0.5rem;
+  }
+  img {
+    -o-object-fit: scale-down;
+       object-fit: scale-down;
+  }
+  img {
+    --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+  @media (min-width: 768px) {
+    img {
+      max-width: 42rem;
+    }
+  }
   pre {
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  pre {
+    overflow: auto;
+  }
+  pre {
+    border-radius: 0.5rem;
   }
   pre {
     --tw-bg-opacity: 1;
-    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   }
   pre {
-    padding: 1.25rem;
+    padding: 2rem;
   }
-}
-
-.dark {
-  .markdown {
+  pre {
+    --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+  pre:where(.dark, .dark *) {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 237 213 / var(--tw-bg-opacity));
+  }
+  pre:where(.dark, .dark *) {
     --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
+    color: rgb(8 47 73 / var(--tw-text-opacity));
   }
 }
 
