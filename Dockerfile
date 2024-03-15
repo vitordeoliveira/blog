@@ -7,26 +7,19 @@ WORKDIR /blog
 # copy over your manifests
 COPY ./Cargo.lock ./Cargo.lock
 COPY ./Cargo.toml ./Cargo.toml
+COPY ./src ./src
 COPY ./templates/ ./templates/
+
+RUN cargo build --release
+
 COPY ./blogpost/ ./blogpost/
 COPY ./assets/ ./assets/
-COPY ./src ./src
 
-
-RUN cargo build --release \
-  && cp -rf templates/ ./target/release/. \
+RUN  cp -rf templates/ ./target/release/. \
   && cp -rf blogpost/ ./target/release/. \
   && cp -rf assets/ ./target/release/.
 
-# RUN rm src/*.rs
-
-# copy your source tree
-
-# build for release
-# RUN rm ./target/release/deps/blog*
-# RUN cargo build --release
-#
-# # our final base
+## our final base
 FROM debian:stable-slim
 ENV SERVER_HOST=0.0.0.0
 ENV SERVER_PORT=8080
