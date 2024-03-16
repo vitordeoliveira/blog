@@ -4,6 +4,19 @@
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="googlebot-news" content="index, follow">
+    <meta name="slurp" content="index, follow">
+    <meta name="msnbot" content="index, follow">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="author" content="Vitor de Oliveira">
+    <meta name="robots" content="noodp">
+    <meta name="robots" content="noydir">
+    <meta name="google" content="notranslate">
+    <meta name="referrer" content="always">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    {% block head %}{% endblock %}
     <script
       src="https://unpkg.com/htmx.org@1.9.10"
       integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -11,7 +24,6 @@
     ></script>
     <script src="/assets/theme.js"></script>
     <link href="/assets/output.css" rel="stylesheet">
-    {% block head %}{% endblock %}
   </head>
   <body hx-boost="true" class="overflow-x-hidden bg-orange-50 font-mono dark:bg-sky-950 text-sky-950">
     <div id="content" class="max-w-6xl mx-auto min-h-screen h-1">
