@@ -4,7 +4,7 @@ use axum::{middleware, response::Response, routing::get, Router};
 
 use dotenv::dotenv;
 use tokio::net::TcpListener;
-use tower_http::services::ServeDir;
+use tower_http::services::{ServeDir, ServeFile};
 
 use crate::{
     controller::{blog::Blog, home},
@@ -70,6 +70,7 @@ impl Config {
             .route("/", get(home))
             .nest("/blog", self.routes.blog)
             .layer(middleware::map_response(response_mapper))
+            .route_service("/sitemap", ServeFile::new("sitemap.xml"))
             .nest_service(
                 "/assets",
                 ServeDir::new(format!("{}/assets", assets_path.to_str().unwrap())),

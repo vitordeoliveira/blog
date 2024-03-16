@@ -1,0 +1,34 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>https://vitor.ws/</loc>
+      <lastmod>2024-03-16</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>1.0</priority>
+   </url>
+   <url>
+      <loc>https://vitor.ws/blog/how-host-a-rust-server-in-gcp</loc>
+      <lastmod>2024-03-15</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://vitor.ws/blog/why_js_devs_are_migrating_from_js_to_rust</loc>
+      <lastmod>2024-03-15</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://vitor.ws/#blog</loc>
+      <lastmod>2024-03-14</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.6</priority>
+   </url>
+   <url>
+      <loc>https://vitor.ws/#contact</loc>
+      <lastmod>2024-03-14</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.6</priority>
+   </url>
+</urlset>
