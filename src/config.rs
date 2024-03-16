@@ -70,7 +70,7 @@ impl Config {
             .route("/", get(home))
             .nest("/blog", self.routes.blog)
             .layer(middleware::map_response(response_mapper))
-            .route_service("/sitemap", ServeFile::new("sitemap.xml"))
+            .route_service("/sitemap.xml", ServeFile::new("sitemap.xml"))
             .nest_service(
                 "/assets",
                 ServeDir::new(format!("{}/assets", assets_path.to_str().unwrap())),

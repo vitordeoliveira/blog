@@ -17,7 +17,8 @@ COPY ./assets/ ./assets/
 
 RUN  cp -rf templates/ ./target/release/. \
   && cp -rf blogpost/ ./target/release/. \
-  && cp -rf assets/ ./target/release/.
+  && cp -rf assets/ ./target/release/. \
+  && cp -rf sitemap.xml ./target/release/.
 
 ## our final base
 FROM debian:stable-slim
