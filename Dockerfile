@@ -14,6 +14,7 @@ RUN cargo build --release
 
 COPY ./blogpost/ ./blogpost/
 COPY ./assets/ ./assets/
+COPY ./sitemap.xml ./sitemap.xml
 
 RUN  cp -rf templates/ ./target/release/. \
   && cp -rf blogpost/ ./target/release/. \
