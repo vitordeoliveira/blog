@@ -10,7 +10,23 @@
   }
 
   h1 {
-    @apply text-center text-4xl my-10;
+    @apply text-center text-5xl my-12 font-semibold;
+  }
+
+  h2 {
+    @apply text-3xl my-10 font-bold;
+  }
+
+  ol {
+    @apply list-decimal bg-white dark:text-sky-950 dark:bg-orange-100 pl-16 py-3 drop-shadow rounded-lg;
+  }
+
+  li {
+    @apply my-3;
+  }
+
+  blockquote {
+    @apply bg-white dark:text-sky-950 dark:bg-orange-100 pl-8 py-3 drop-shadow rounded-lg my-3;
   }
 
   img {
