@@ -14,3 +14,16 @@ finished: false
 # How connect rust to firestore database
 
 here I start the fake
+brew install --cask google-cloud-sdk
+
+gcloud auth application-default login
+
+firebase init
+
+firebase init emulators
+
+firebase emulators:start
+
+cargo add firestore serde tokio-stream futures gcloud-sdk
+
+cargo add tokio -F full
