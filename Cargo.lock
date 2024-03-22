@@ -323,7 +323,6 @@ dependencies = [
  "dotenv",
  "firestore",
  "futures",
- "gcloud-sdk",
  "pulldown-cmark",
  "regex",
  "serde",
