@@ -3,7 +3,8 @@ use std::{env, sync::OnceLock};
 use axum::{middleware, response::Response, routing::get, Router};
 
 use dotenv::dotenv;
-use tokio::net::TcpListener;
+use firestore::FirestoreDb;
+use tokio::{net::TcpListener, sync::OnceCell};
 use tower_http::services::{ServeDir, ServeFile};
 
 use crate::{
@@ -19,6 +20,7 @@ pub struct Environment {
     pub rust_log: String,
     pub server_port: String,
     server_host: String,
+    firestore_project_id: String,
 }
 
 impl Environment {
@@ -27,6 +29,7 @@ impl Environment {
             server_port: get_env("SERVER_PORT")?,
             rust_log: get_env("RUST_LOG")?,
             server_host: get_env("SERVER_HOST")?,
+            firestore_project_id: get_env("FIRESTORE_PROJECT_ID")?,
         })
     }
 }
@@ -39,6 +42,18 @@ pub fn environment() -> &'static Environment {
         Environment::load_from_env()
             .unwrap_or_else(|ex| panic!("FATAL - WHILE LOADING CONF - CAUSE: {ex}"))
     })
+}
+
+pub async fn firestore() -> &'static FirestoreDb {
+    static INSTANCE_FIRESTORE: OnceCell<FirestoreDb> = OnceCell::const_new();
+
+    INSTANCE_FIRESTORE
+        .get_or_init(|| async {
+            FirestoreDb::new(environment().firestore_project_id.clone())
+                .await
+                .unwrap()
+        })
+        .await
 }
 
 fn get_env(name: &'static str) -> Result<String> {
