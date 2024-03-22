@@ -51,7 +51,9 @@ pub async fn firestore() -> &'static FirestoreDb {
         .get_or_init(|| async {
             FirestoreDb::new(environment().firestore_project_id.clone())
                 .await
-                .unwrap()
+                .unwrap_or_else(|ex| {
+                    panic!("FATAL - WHILE CREATING DATABASE INSTANCE_FIRESTORE - CAUSE: {ex}")
+                })
         })
         .await
 }
