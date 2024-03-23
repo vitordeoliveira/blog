@@ -1,15 +1,29 @@
 use std::fs;
 
+use firestore::*;
+use futures::stream::BoxStream;
 use pulldown_cmark::Options;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
+use tokio_stream::StreamExt;
 use yaml_front_matter::YamlFrontMatter;
 
-use crate::error::{Error, Result};
+use crate::{
+    config::firestore,
+    error::{Error, Result},
+};
 
 pub struct Markdown {
     pub metadata: MarkdownMetadata,
     pub content: String,
 }
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+struct PostInfo {
+    id: String,
+    viewd: u16,
+}
+
+const COLLECTION_NAME: &str = "posts";
 
 impl Markdown {
     pub fn new(postname: String) -> Result<Self> {
@@ -33,8 +47,15 @@ impl Markdown {
         Ok(Self { metadata, content })
     }
 
-    pub fn list() -> Result<Vec<MarkdownMetadata>> {
+    pub async fn list_markdown_info() -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
+        // Ok(())
+        todo!()
+    }
+
+    pub async fn list_all_markdown_metadata() -> Result<Vec<MarkdownMetadata>> {
         let paths = fs::read_dir("./blogpost").unwrap();
+
+        let db = firestore().await;
 
         let mut metadata_list: Vec<MarkdownMetadata> = Vec::new();
 
@@ -43,6 +64,33 @@ impl Markdown {
             let markdown_file = fs::read_to_string(&filepath)
                 .map_err(|_| Error::PageNotFound(filepath.to_string()))?;
             let metadata = MarkdownMetadata::new(&markdown_file)?;
+
+            let post: Option<PostInfo> = db
+                .fluent()
+                .select()
+                .by_id_in(COLLECTION_NAME)
+                .obj()
+                .one(&metadata.title)
+                .await
+                .map_err(|_| Error::InternalServer("Error on query".to_string()))?;
+
+            match post {
+                Some(data) => println!("{data:?}"),
+                None => {
+                    db.fluent()
+                        .insert()
+                        .into(COLLECTION_NAME)
+                        .document_id(&metadata.title)
+                        .object(&PostInfo {
+                            id: metadata.title.clone(),
+                            viewd: 0,
+                        })
+                        .execute::<PostInfo>()
+                        .await
+                        .unwrap();
+                }
+            }
+
             metadata_list.push(metadata);
         }
 
