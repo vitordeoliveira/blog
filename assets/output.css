@@ -561,6 +561,14 @@ video {
   bottom: 0px;
 }
 
+.right-0 {
+  right: 0px;
+}
+
+.top-0 {
+  top: 0px;
+}
+
 .m-16 {
   margin: 4rem;
 }
