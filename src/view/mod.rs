@@ -6,7 +6,7 @@ use axum::{
 
 use crate::{
     error::{self, Result},
-    model::MarkdownMetadata,
+    model::{MarkdownMetadata, PostInfo},
 };
 
 pub mod blog;
@@ -16,10 +16,10 @@ pub mod home;
 #[template(path = "root.html")]
 struct RootTemplate {
     title: String,
-    posts: Vec<MarkdownMetadata>,
+    posts: Vec<(MarkdownMetadata, PostInfo)>,
 }
 
-pub fn homepage(posts: Vec<MarkdownMetadata>) -> Result<impl IntoResponse> {
+pub fn homepage(posts: Vec<(MarkdownMetadata, PostInfo)>) -> Result<impl IntoResponse> {
     let root = RootTemplate {
         title: "vitor.ws".to_string(),
         posts,

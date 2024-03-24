@@ -18,9 +18,9 @@ pub struct Markdown {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
-struct PostInfo {
+pub struct PostInfo {
     id: String,
-    viewd: u16,
+    pub viewd: u16,
 }
 
 const COLLECTION_NAME: &str = "posts";
@@ -47,9 +47,57 @@ impl Markdown {
         Ok(Self { metadata, content })
     }
 
+    async fn get_views_or_create(title: &str) -> Result<PostInfo> {
+        let db = firestore().await;
+
+        let post = db
+            .fluent()
+            .select()
+            .by_id_in(COLLECTION_NAME)
+            .obj()
+            .one(title)
+            .await
+            .map_err(|_| Error::InternalServer("Error on query".to_string()))?;
+
+        Ok(match post {
+            Some(data) => data,
+            None => {
+                db.fluent()
+                    .insert()
+                    .into(COLLECTION_NAME)
+                    .document_id(title)
+                    .object(&PostInfo {
+                        id: title.to_string(),
+                        viewd: 0,
+                    })
+                    .execute::<PostInfo>()
+                    .await
+                    .unwrap();
+
+                PostInfo {
+                    id: title.to_string(),
+                    viewd: 0,
+                }
+            }
+        })
+    }
+
     pub async fn list_markdown_info() -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
-        // Ok(())
-        todo!()
+        let paths = fs::read_dir("./blogpost").unwrap();
+
+        let mut markdown_info: Vec<(MarkdownMetadata, PostInfo)> = Vec::new();
+
+        for path in paths {
+            let filepath = path.unwrap().path().display().to_string();
+            let markdown_file = fs::read_to_string(&filepath)
+                .map_err(|_| Error::PageNotFound(filepath.to_string()))?;
+            let metadata = MarkdownMetadata::new(&markdown_file)?;
+            let post: PostInfo = Self::get_views_or_create(&metadata.title).await?;
+
+            markdown_info.push((metadata, post));
+        }
+
+        Ok(markdown_info)
     }
 
     pub async fn list_all_markdown_metadata() -> Result<Vec<MarkdownMetadata>> {
