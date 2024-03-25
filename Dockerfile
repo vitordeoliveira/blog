@@ -24,6 +24,7 @@ RUN  cp -rf templates/ ./target/release/. \
 ## our final base
 FROM debian:stable-slim
 ENV SERVER_HOST=0.0.0.0
+ENV FIRESTORE_PROJECT_ID=blogpage-416810
 ENV SERVER_PORT=8080
 ENV RUST_LOG=debug
 WORKDIR /app
