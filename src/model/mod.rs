@@ -1,14 +1,11 @@
 use std::fs;
 
-use firestore::*;
-use futures::stream::BoxStream;
 use pulldown_cmark::Options;
 use serde::{Deserialize, Serialize};
-use tokio_stream::StreamExt;
 use yaml_front_matter::YamlFrontMatter;
 
 use crate::{
-    config::firestore,
+    config::database::firestore,
     error::{Error, Result},
 };
 
@@ -20,7 +17,7 @@ pub struct Markdown {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct PostInfo {
     id: String,
-    pub viewd: u16,
+    pub views: u16,
 }
 
 const COLLECTION_NAME: &str = "posts";
@@ -68,7 +65,7 @@ impl Markdown {
                     .document_id(title)
                     .object(&PostInfo {
                         id: title.to_string(),
-                        viewd: 0,
+                        views: 0,
                     })
                     .execute::<PostInfo>()
                     .await
@@ -76,10 +73,28 @@ impl Markdown {
 
                 PostInfo {
                     id: title.to_string(),
-                    viewd: 0,
+                    views: 0,
                 }
             }
         })
+    }
+
+    pub async fn add_views_to_markdown(title: &str) -> Result<()> {
+        let db = firestore().await;
+        let postview = Markdown::get_views_or_create(title).await?;
+
+        db.fluent()
+            .update()
+            .in_col(COLLECTION_NAME)
+            .document_id(title)
+            .object(&PostInfo {
+                views: postview.views + 1,
+                ..postview
+            })
+            .execute::<PostInfo>()
+            .await
+            .unwrap();
+        Ok(())
     }
 
     pub async fn list_markdown_info() -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
@@ -92,57 +107,12 @@ impl Markdown {
             let markdown_file = fs::read_to_string(&filepath)
                 .map_err(|_| Error::PageNotFound(filepath.to_string()))?;
             let metadata = MarkdownMetadata::new(&markdown_file)?;
-            let post: PostInfo = Self::get_views_or_create(&metadata.title).await?;
+            let post: PostInfo = Self::get_views_or_create(&metadata.filename).await?;
 
             markdown_info.push((metadata, post));
         }
 
         Ok(markdown_info)
-    }
-
-    pub async fn list_all_markdown_metadata() -> Result<Vec<MarkdownMetadata>> {
-        let paths = fs::read_dir("./blogpost").unwrap();
-
-        let db = firestore().await;
-
-        let mut metadata_list: Vec<MarkdownMetadata> = Vec::new();
-
-        for path in paths {
-            let filepath = path.unwrap().path().display().to_string();
-            let markdown_file = fs::read_to_string(&filepath)
-                .map_err(|_| Error::PageNotFound(filepath.to_string()))?;
-            let metadata = MarkdownMetadata::new(&markdown_file)?;
-
-            let post: Option<PostInfo> = db
-                .fluent()
-                .select()
-                .by_id_in(COLLECTION_NAME)
-                .obj()
-                .one(&metadata.title)
-                .await
-                .map_err(|_| Error::InternalServer("Error on query".to_string()))?;
-
-            match post {
-                Some(data) => println!("{data:?}"),
-                None => {
-                    db.fluent()
-                        .insert()
-                        .into(COLLECTION_NAME)
-                        .document_id(&metadata.title)
-                        .object(&PostInfo {
-                            id: metadata.title.clone(),
-                            viewd: 0,
-                        })
-                        .execute::<PostInfo>()
-                        .await
-                        .unwrap();
-                }
-            }
-
-            metadata_list.push(metadata);
-        }
-
-        Ok(metadata_list)
     }
 }
 
