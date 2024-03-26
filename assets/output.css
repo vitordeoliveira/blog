@@ -561,12 +561,12 @@ video {
   bottom: 0px;
 }
 
-.right-0 {
-  right: 0px;
+.bottom-3 {
+  bottom: 0.75rem;
 }
 
-.top-0 {
-  top: 0px;
+.right-5 {
+  right: 1.25rem;
 }
 
 .m-16 {
@@ -1012,6 +1012,24 @@ video {
 .hover\:drop-shadow:hover {
   --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+@media (min-width: 768px) {
+  .md\:relative {
+    position: relative;
+  }
+
+  .md\:right-0 {
+    right: 0px;
+  }
+
+  .md\:top-0 {
+    top: 0px;
+  }
+
+  .md\:font-bold {
+    font-weight: 700;
+  }
 }
 
 .dark\:bg-orange-100:where(.dark, .dark *) {
