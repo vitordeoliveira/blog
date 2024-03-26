@@ -2,6 +2,8 @@ FROM rust:slim-buster as build
 
 # create a new empty shell project
 RUN USER=root cargo new --bin blog
+RUN apt-get install -y ca-certificates
+
 WORKDIR /blog
 
 # copy over your manifests
@@ -31,4 +33,5 @@ WORKDIR /app
 
 EXPOSE 8080
 COPY --from=build /blog/target/release/ .
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 CMD ["./blog"]
