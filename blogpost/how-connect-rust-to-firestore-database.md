@@ -27,3 +27,13 @@ firebase emulators:start
 cargo add firestore serde tokio-stream futures gcloud-sdk
 
 cargo add tokio -F full
+
+- '--network=cloudbuild'
+
+# builder (lukemathwalker/cargo-chef:latest-rust-1-slim-bullseye)
+
+RUN apt-get update && apt-get install -y ca-certificates
+
+# runner (debian:bullseye-slim)
+
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
