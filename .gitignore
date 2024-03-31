@@ -16,3 +16,6 @@ Cargo.lock
 
 # TAILWINDCSS
 node_modules/
+
+# logs
+*.log
