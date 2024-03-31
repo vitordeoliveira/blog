@@ -9,6 +9,10 @@
     @apply my-6;
   }
 
+  a {
+    @apply text-orange-500
+  }
+
   h1 {
     @apply text-center text-5xl my-12 font-semibold;
   }
