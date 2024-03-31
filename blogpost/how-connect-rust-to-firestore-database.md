@@ -13,7 +13,26 @@ finished: false
 
 # How connect rust to firestore database
 
+Requirements:
+
+Java, NodeJs, Rust, GCloud
+
 here I start the fake
+
+npm i -g firebase-tools
+
+firebase login
+
+you need to have java installed
+asdf plugin add java
+asdf install java openjdk-22
+asdf global java openjdk-22
+
+asdf plugin add gcloud
+asdf install gcloud 470.0.0
+asdf global gcloud 470.0.0
+
+MAC:
 brew install --cask google-cloud-sdk
 
 gcloud auth application-default login

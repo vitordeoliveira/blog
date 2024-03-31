@@ -1,0 +1,393 @@
+[debug] [2024-03-31T15:28:03.821Z] ----------------------------------------------------------------------
+[debug] [2024-03-31T15:28:03.823Z] Command:       /home/vitor/.asdf/installs/nodejs/21.7.1/bin/node /home/vitor/.asdf/installs/nodejs/21.7.1/bin/firebase emulators:start
+[debug] [2024-03-31T15:28:03.824Z] CLI Version:   13.6.0
+[debug] [2024-03-31T15:28:03.824Z] Platform:      linux
+[debug] [2024-03-31T15:28:03.824Z] Node Version:  v21.7.1
+[debug] [2024-03-31T15:28:03.824Z] Time:          Sun Mar 31 2024 17:28:03 GMT+0200 (Mitteleuropäische Sommerzeit)
+[debug] [2024-03-31T15:28:03.824Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-31T15:28:03.906Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-31T15:28:03.906Z] > authorizing via signed-in user (vitordeoliveira50@gmail.com)
+[debug] [2024-03-31T15:28:03.996Z] openjdk version "22" 2024-03-19
+
+[debug] [2024-03-31T15:28:03.997Z] OpenJDK Runtime Environment (build 22+35-2369)
+OpenJDK 64-Bit Server VM (build 22+35-2369, mixed mode, sharing)
+
+[debug] [2024-03-31T15:28:04.001Z] Parsed Java major version: 22
+[info] i  emulators: Starting emulators: firestore {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: firestore"}}
+[debug] [2024-03-31T15:28:04.005Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-03-31T15:28:04.005Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-03-31T15:28:04.005Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2024-03-31T15:28:04.005Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":8082},{"address":"::1","family":"IPv6","port":8082}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8081}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2024-03-31T15:28:04.009Z] [hub] writing locator at /tmp/hub-blogpage-416810.json
+[info] i  firestore: downloading cloud-firestore-emulator-v1.19.4.jar... {"metadata":{"emulator":{"name":"firestore"},"message":"downloading cloud-firestore-emulator-v1.19.4.jar..."}}
+[debug] [2024-03-31T15:28:04.017Z] >>> [apiv2][query] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.19.4.jar 
+[debug] [2024-03-31T15:28:04.264Z] <<< [apiv2][status] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.19.4.jar 200
+[debug] [2024-03-31T15:28:04.265Z] <<< [apiv2][body] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.19.4.jar [stream]
+[debug] [2024-03-31T15:28:08.473Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2024-03-31T15:28:08.473Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2024-03-31T15:28:08.473Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","/home/vitor/.cache/firebase/emulators/cloud-firestore-emulator-v1.19.4.jar","--host","127.0.0.1","--port",8081,"--websocket_port",9150,"--project_id","blogpage-416810","--rules","/home/vitor/Studie/rust/blog/firestore.rules","--single_project_mode",true],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"/home/vitor/.cache/firebase/emulators/cloud-firestore-emulator-v1.19.4.jar\",\"--host\",\"127.0.0.1\",\"--port\",8081,\"--websocket_port\",9150,\"--project_id\",\"blogpage-416810\",\"--rules\",\"/home/vitor/Studie/rust/blog/firestore.rules\",\"--single_project_mode\",true],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[debug] [2024-03-31T15:28:09.301Z] Mar 31, 2024 5:28:09 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://127.0.0.1:9150
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:28:09 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\nINFO: Started WebSocket server on ws://127.0.0.1:9150\n"}}
+[debug] [2024-03-31T15:28:09.317Z] API endpoint: http://127.0.0.1:8081
+ {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://127.0.0.1:8081\n"}}
+[debug] [2024-03-31T15:28:09.317Z] If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8081
+
+If you are running a Firestore in Datastore Mode project, run:
+
+   export DATASTORE_EMULATOR_HOST=127.0.0.1:8081
+
+Note: Support for Datastore Mode is in preview. If you encounter any bugs please file at https://github.com/firebase/firebase-tools/issues.
+Dev App Server is now running.
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\n\n   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8081\n\nIf you are running a Firestore in Datastore Mode project, run:\n\n   export DATASTORE_EMULATOR_HOST=127.0.0.1:8081\n\nNote: Support for Datastore Mode is in preview. If you encounter any bugs please file at https://github.com/firebase/firebase-tools/issues.\nDev App Server is now running.\n\n"}}
+[info] ✔  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[info] i  ui: downloading ui-v1.11.8.zip... {"metadata":{"emulator":{"name":"ui"},"message":"downloading ui-v1.11.8.zip..."}}
+[debug] [2024-03-31T15:28:09.503Z] >>> [apiv2][query] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.11.8.zip 
+[debug] [2024-03-31T15:28:09.633Z] <<< [apiv2][status] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.11.8.zip 200
+[debug] [2024-03-31T15:28:09.633Z] <<< [apiv2][body] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.11.8.zip [stream]
+[debug] [2024-03-31T15:28:10.065Z] Data is 3523907
+[debug] [2024-03-31T15:28:10.065Z] [unzip] Entry: client/ (compressed_size=0 bytes, uncompressed_size=0 bytes)
+[debug] [2024-03-31T15:28:10.065Z] [unzip] Processing entry: client/
+[debug] [2024-03-31T15:28:10.065Z] [unzip] mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/
+[debug] [2024-03-31T15:28:10.066Z] [unzip] Entry: client/favicon.ico (compressed_size=2497 bytes, uncompressed_size=7406 bytes)
+[debug] [2024-03-31T15:28:10.066Z] [unzip] Processing entry: client/favicon.ico
+[debug] [2024-03-31T15:28:10.066Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.067Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/favicon.ico
+[debug] [2024-03-31T15:28:10.071Z] [unzip] Entry: client/apple-touch-icon.png (compressed_size=7231 bytes, uncompressed_size=7367 bytes)
+[debug] [2024-03-31T15:28:10.071Z] [unzip] Processing entry: client/apple-touch-icon.png
+[debug] [2024-03-31T15:28:10.071Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.072Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/apple-touch-icon.png
+[debug] [2024-03-31T15:28:10.073Z] [unzip] Entry: client/android-chrome-512x512.png (compressed_size=16987 bytes, uncompressed_size=18186 bytes)
+[debug] [2024-03-31T15:28:10.073Z] [unzip] Processing entry: client/android-chrome-512x512.png
+[debug] [2024-03-31T15:28:10.073Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.073Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/android-chrome-512x512.png
+[debug] [2024-03-31T15:28:10.074Z] [unzip] Entry: client/assets/ (compressed_size=0 bytes, uncompressed_size=0 bytes)
+[debug] [2024-03-31T15:28:10.074Z] [unzip] Processing entry: client/assets/
+[debug] [2024-03-31T15:28:10.074Z] [unzip] mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/
+[debug] [2024-03-31T15:28:10.075Z] [unzip] Entry: client/assets/extensions/ (compressed_size=0 bytes, uncompressed_size=0 bytes)
+[debug] [2024-03-31T15:28:10.075Z] [unzip] Processing entry: client/assets/extensions/
+[debug] [2024-03-31T15:28:10.075Z] [unzip] mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/extensions/
+[debug] [2024-03-31T15:28:10.075Z] [unzip] Entry: client/assets/extensions/default-extension.png (compressed_size=1646 bytes, uncompressed_size=1657 bytes)
+[debug] [2024-03-31T15:28:10.075Z] [unzip] Processing entry: client/assets/extensions/default-extension.png
+[debug] [2024-03-31T15:28:10.075Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/extensions
+[debug] [2024-03-31T15:28:10.075Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/extensions/default-extension.png
+[debug] [2024-03-31T15:28:10.076Z] [unzip] Entry: client/assets/index-Z4-ilXvq.js.map (compressed_size=2229704 bytes, uncompressed_size=9599487 bytes)
+[debug] [2024-03-31T15:28:10.076Z] [unzip] Processing entry: client/assets/index-Z4-ilXvq.js.map
+[debug] [2024-03-31T15:28:10.076Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets
+[debug] [2024-03-31T15:28:10.076Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/index-Z4-ilXvq.js.map
+[debug] [2024-03-31T15:28:10.118Z] [unzip] Entry: client/assets/provider-icons/ (compressed_size=0 bytes, uncompressed_size=0 bytes)
+[debug] [2024-03-31T15:28:10.118Z] [unzip] Processing entry: client/assets/provider-icons/
+[debug] [2024-03-31T15:28:10.118Z] [unzip] mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/
+[debug] [2024-03-31T15:28:10.118Z] [unzip] Entry: client/assets/provider-icons/auth_service_oidc.svg (compressed_size=414 bytes, uncompressed_size=858 bytes)
+[debug] [2024-03-31T15:28:10.118Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_oidc.svg
+[debug] [2024-03-31T15:28:10.118Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.119Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_oidc.svg
+[debug] [2024-03-31T15:28:10.119Z] [unzip] Entry: client/assets/provider-icons/auth_service_yahoo.svg (compressed_size=577 bytes, uncompressed_size=1182 bytes)
+[debug] [2024-03-31T15:28:10.120Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_yahoo.svg
+[debug] [2024-03-31T15:28:10.120Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.120Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_yahoo.svg
+[debug] [2024-03-31T15:28:10.120Z] [unzip] Entry: client/assets/provider-icons/auth_service_phone.svg (compressed_size=261 bytes, uncompressed_size=414 bytes)
+[debug] [2024-03-31T15:28:10.120Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_phone.svg
+[debug] [2024-03-31T15:28:10.120Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.121Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_phone.svg
+[debug] [2024-03-31T15:28:10.121Z] [unzip] Entry: client/assets/provider-icons/auth_service_saml.svg (compressed_size=575 bytes, uncompressed_size=1226 bytes)
+[debug] [2024-03-31T15:28:10.121Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_saml.svg
+[debug] [2024-03-31T15:28:10.122Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.122Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_saml.svg
+[debug] [2024-03-31T15:28:10.122Z] [unzip] Entry: client/assets/provider-icons/auth_service_mslive.svg (compressed_size=203 bytes, uncompressed_size=378 bytes)
+[debug] [2024-03-31T15:28:10.122Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_mslive.svg
+[debug] [2024-03-31T15:28:10.123Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.123Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_mslive.svg
+[debug] [2024-03-31T15:28:10.123Z] [unzip] Entry: client/assets/provider-icons/auth_service_facebook.svg (compressed_size=289 bytes, uncompressed_size=457 bytes)
+[debug] [2024-03-31T15:28:10.123Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_facebook.svg
+[debug] [2024-03-31T15:28:10.123Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.124Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_facebook.svg
+[debug] [2024-03-31T15:28:10.127Z] [unzip] Entry: client/assets/provider-icons/auth_service_play_games.svg (compressed_size=565 bytes, uncompressed_size=1173 bytes)
+[debug] [2024-03-31T15:28:10.127Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_play_games.svg
+[debug] [2024-03-31T15:28:10.127Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.127Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_play_games.svg
+[debug] [2024-03-31T15:28:10.128Z] [unzip] Entry: client/assets/provider-icons/auth_service_github.svg (compressed_size=466 bytes, uncompressed_size=838 bytes)
+[debug] [2024-03-31T15:28:10.128Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_github.svg
+[debug] [2024-03-31T15:28:10.128Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.128Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_github.svg
+[debug] [2024-03-31T15:28:10.128Z] [unzip] Entry: client/assets/provider-icons/auth_service_apple.svg (compressed_size=230 bytes, uncompressed_size=334 bytes)
+[debug] [2024-03-31T15:28:10.129Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_apple.svg
+[debug] [2024-03-31T15:28:10.129Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.129Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_apple.svg
+[debug] [2024-03-31T15:28:10.129Z] [unzip] Entry: client/assets/provider-icons/auth_service_google.svg (compressed_size=409 bytes, uncompressed_size=720 bytes)
+[debug] [2024-03-31T15:28:10.130Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_google.svg
+[debug] [2024-03-31T15:28:10.130Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.130Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_google.svg
+[debug] [2024-03-31T15:28:10.130Z] [unzip] Entry: client/assets/provider-icons/auth_service_email.svg (compressed_size=228 bytes, uncompressed_size=326 bytes)
+[debug] [2024-03-31T15:28:10.131Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_email.svg
+[debug] [2024-03-31T15:28:10.131Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.131Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_email.svg
+[debug] [2024-03-31T15:28:10.131Z] [unzip] Entry: client/assets/provider-icons/auth_service_twitter.svg (compressed_size=444 bytes, uncompressed_size=751 bytes)
+[debug] [2024-03-31T15:28:10.131Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_twitter.svg
+[debug] [2024-03-31T15:28:10.131Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.131Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_twitter.svg
+[debug] [2024-03-31T15:28:10.132Z] [unzip] Entry: client/assets/provider-icons/auth_service_game_center.svg (compressed_size=991 bytes, uncompressed_size=3921 bytes)
+[debug] [2024-03-31T15:28:10.132Z] [unzip] Processing entry: client/assets/provider-icons/auth_service_game_center.svg
+[debug] [2024-03-31T15:28:10.132Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons
+[debug] [2024-03-31T15:28:10.132Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/provider-icons/auth_service_game_center.svg
+[debug] [2024-03-31T15:28:10.133Z] [unzip] Entry: client/assets/img/ (compressed_size=0 bytes, uncompressed_size=0 bytes)
+[debug] [2024-03-31T15:28:10.133Z] [unzip] Processing entry: client/assets/img/
+[debug] [2024-03-31T15:28:10.133Z] [unzip] mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/img/
+[debug] [2024-03-31T15:28:10.133Z] [unzip] Entry: client/assets/img/database.png (compressed_size=29449 bytes, uncompressed_size=29988 bytes)
+[debug] [2024-03-31T15:28:10.133Z] [unzip] Processing entry: client/assets/img/database.png
+[debug] [2024-03-31T15:28:10.133Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/img
+[debug] [2024-03-31T15:28:10.133Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/img/database.png
+[debug] [2024-03-31T15:28:10.134Z] [unzip] Entry: client/assets/index-Cj5I7867.css (compressed_size=35786 bytes, uncompressed_size=297937 bytes)
+[debug] [2024-03-31T15:28:10.134Z] [unzip] Processing entry: client/assets/index-Cj5I7867.css
+[debug] [2024-03-31T15:28:10.134Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets
+[debug] [2024-03-31T15:28:10.134Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/index-Cj5I7867.css
+[debug] [2024-03-31T15:28:10.135Z] [unzip] Entry: client/assets/index-Z4-ilXvq.js (compressed_size=563876 bytes, uncompressed_size=2021818 bytes)
+[debug] [2024-03-31T15:28:10.135Z] [unzip] Processing entry: client/assets/index-Z4-ilXvq.js
+[debug] [2024-03-31T15:28:10.135Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets
+[debug] [2024-03-31T15:28:10.135Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/assets/index-Z4-ilXvq.js
+[debug] [2024-03-31T15:28:10.143Z] [unzip] Entry: client/safari-pinned-tab.svg (compressed_size=838 bytes, uncompressed_size=1504 bytes)
+[debug] [2024-03-31T15:28:10.143Z] [unzip] Processing entry: client/safari-pinned-tab.svg
+[debug] [2024-03-31T15:28:10.143Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.143Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/safari-pinned-tab.svg
+[debug] [2024-03-31T15:28:10.144Z] [unzip] Entry: client/mstile-150x150.png (compressed_size=5406 bytes, uncompressed_size=5723 bytes)
+[debug] [2024-03-31T15:28:10.144Z] [unzip] Processing entry: client/mstile-150x150.png
+[debug] [2024-03-31T15:28:10.144Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.144Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/mstile-150x150.png
+[debug] [2024-03-31T15:28:10.144Z] [unzip] Entry: client/browserconfig.xml (compressed_size=491 bytes, uncompressed_size=822 bytes)
+[debug] [2024-03-31T15:28:10.144Z] [unzip] Processing entry: client/browserconfig.xml
+[debug] [2024-03-31T15:28:10.144Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.144Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/browserconfig.xml
+[debug] [2024-03-31T15:28:10.145Z] [unzip] Entry: client/robots.txt (compressed_size=26 bytes, uncompressed_size=26 bytes)
+[debug] [2024-03-31T15:28:10.145Z] [unzip] Processing entry: client/robots.txt
+[debug] [2024-03-31T15:28:10.145Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.145Z] [unzip] Writing file: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/robots.txt
+[debug] [2024-03-31T15:28:10.145Z] [unzip] Entry: client/index.html (compressed_size=1365 bytes, uncompressed_size=3071 bytes)
+[debug] [2024-03-31T15:28:10.145Z] [unzip] Processing entry: client/index.html
+[debug] [2024-03-31T15:28:10.146Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.146Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/index.html
+[debug] [2024-03-31T15:28:10.146Z] [unzip] Entry: client/favicon-16x16.png (compressed_size=757 bytes, uncompressed_size=777 bytes)
+[debug] [2024-03-31T15:28:10.146Z] [unzip] Processing entry: client/favicon-16x16.png
+[debug] [2024-03-31T15:28:10.146Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.146Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/favicon-16x16.png
+[debug] [2024-03-31T15:28:10.147Z] [unzip] Entry: client/manifest.json (compressed_size=246 bytes, uncompressed_size=551 bytes)
+[debug] [2024-03-31T15:28:10.147Z] [unzip] Processing entry: client/manifest.json
+[debug] [2024-03-31T15:28:10.147Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.147Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/manifest.json
+[debug] [2024-03-31T15:28:10.147Z] [unzip] Entry: client/favicon-32x32.png (compressed_size=1175 bytes, uncompressed_size=1175 bytes)
+[debug] [2024-03-31T15:28:10.147Z] [unzip] Processing entry: client/favicon-32x32.png
+[debug] [2024-03-31T15:28:10.147Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.148Z] [unzip] Writing file: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/favicon-32x32.png
+[debug] [2024-03-31T15:28:10.148Z] [unzip] Entry: client/android-chrome-192x192.png (compressed_size=7602 bytes, uncompressed_size=7834 bytes)
+[debug] [2024-03-31T15:28:10.148Z] [unzip] Processing entry: client/android-chrome-192x192.png
+[debug] [2024-03-31T15:28:10.148Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client
+[debug] [2024-03-31T15:28:10.148Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/client/android-chrome-192x192.png
+[debug] [2024-03-31T15:28:10.148Z] [unzip] Entry: server/ (compressed_size=0 bytes, uncompressed_size=0 bytes)
+[debug] [2024-03-31T15:28:10.148Z] [unzip] Processing entry: server/
+[debug] [2024-03-31T15:28:10.148Z] [unzip] mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/
+[debug] [2024-03-31T15:28:10.148Z] [unzip] Entry: server/server.mjs (compressed_size=311497 bytes, uncompressed_size=1147307 bytes)
+[debug] [2024-03-31T15:28:10.148Z] [unzip] Processing entry: server/server.mjs
+[debug] [2024-03-31T15:28:10.149Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server
+[debug] [2024-03-31T15:28:10.149Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/server.mjs
+[debug] [2024-03-31T15:28:10.152Z] [unzip] Entry: server/assets/ (compressed_size=0 bytes, uncompressed_size=0 bytes)
+[debug] [2024-03-31T15:28:10.152Z] [unzip] Processing entry: server/assets/
+[debug] [2024-03-31T15:28:10.152Z] [unzip] mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/assets/
+[debug] [2024-03-31T15:28:10.152Z] [unzip] Entry: server/assets/multipart-parser-n20ATYm_.mjs.map (compressed_size=4790 bytes, uncompressed_size=17920 bytes)
+[debug] [2024-03-31T15:28:10.152Z] [unzip] Processing entry: server/assets/multipart-parser-n20ATYm_.mjs.map
+[debug] [2024-03-31T15:28:10.152Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/assets
+[debug] [2024-03-31T15:28:10.152Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/assets/multipart-parser-n20ATYm_.mjs.map
+[debug] [2024-03-31T15:28:10.153Z] [unzip] Entry: server/assets/multipart-parser-n20ATYm_.mjs (compressed_size=2625 bytes, uncompressed_size=10428 bytes)
+[debug] [2024-03-31T15:28:10.153Z] [unzip] Processing entry: server/assets/multipart-parser-n20ATYm_.mjs
+[debug] [2024-03-31T15:28:10.153Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/assets
+[debug] [2024-03-31T15:28:10.153Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/assets/multipart-parser-n20ATYm_.mjs
+[debug] [2024-03-31T15:28:10.153Z] [unzip] Entry: server/server.mjs.map (compressed_size=286219 bytes, uncompressed_size=1310517 bytes)
+[debug] [2024-03-31T15:28:10.153Z] [unzip] Processing entry: server/server.mjs.map
+[debug] [2024-03-31T15:28:10.153Z] [unzip] else mkdir: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server
+[debug] [2024-03-31T15:28:10.153Z] [unzip] deflating: /home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/server.mjs.map
+[debug] [2024-03-31T15:28:10.157Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2024-03-31T15:28:10.157Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2024-03-31T15:28:10.157Z] Starting Emulator UI with command {"binary":"node","args":["/home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/server.mjs"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/home/vitor/.cache/firebase/emulators/ui-v1.11.8/server/server.mjs\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2024-03-31T15:28:10.246Z] Web / API server started at 127.0.0.1:8082
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:8082\n"}}
+[debug] [2024-03-31T15:28:10.247Z] Web / API server started at ::1:8082
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:8082\n"}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:8082/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Firestore │ 127.0.0.1:8081 │ http://127.0.0.1:8082/firestore │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500, 9150
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2024-03-31T15:32:20.730Z] Mar 31, 2024 5:32:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:32:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected HTTP/2 connection.\n"}}
+[debug] [2024-03-31T15:32:26.852Z] Mar 31, 2024 5:32:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:32:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected HTTP/2 connection.\n"}}
+[debug] [2024-03-31T15:38:09.787Z] Mar 31, 2024 5:38:09 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:09 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected HTTP/2 connection.\n"}}
+[debug] [2024-03-31T15:38:10.323Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:10.358Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+WARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-continuous-deploy-with-dockerfile-and-github-in-gcp) not found.
+com.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-continuous-deploy-with-dockerfile-and-github-in-gcp) not found.
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError\nWARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-continuous-deploy-with-dockerfile-and-github-in-gcp) not found.\ncom.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-continuous-deploy-with-dockerfile-and-github-in-gcp) not found.\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)\n\tat io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)\n\tat io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)\n\tat io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)\n\tat io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1570)\n\n"}}
+[debug] [2024-03-31T15:38:10.385Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:10.445Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:10.446Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+WARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/why_js_devs_are_migrating_from_js_to_rust) not found.
+com.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/why_js_devs_are_migrating_from_js_to_rust) not found.
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError\nWARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/why_js_devs_are_migrating_from_js_to_rust) not found.\ncom.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/why_js_devs_are_migrating_from_js_to_rust) not found.\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)\n\tat io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)\n\tat io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)\n\tat io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)\n\tat io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1570)\n\n"}}
+[debug] [2024-03-31T15:38:10.449Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:10.455Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:10.456Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+WARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-connect-rust-to-firestore-database) not found.
+com.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-connect-rust-to-firestore-database) not found.
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError\nWARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-connect-rust-to-firestore-database) not found.\ncom.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-connect-rust-to-firestore-database) not found.\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)\n\tat io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)\n\tat io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)\n\tat io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)\n\tat io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1570)\n\n"}}
+[debug] [2024-03-31T15:38:10.460Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:10.465Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:10.466Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+WARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-host-a-rust-server-in-gcp) not found.
+com.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-host-a-rust-server-in-gcp) not found.
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)
+	at com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError\nWARNING: Operation failed: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-host-a-rust-server-in-gcp) not found.\ncom.google.cloud.datastore.core.exception.DatastoreException: Document (projects/blogpage-416810/databases/(default)/documents/posts/how-host-a-rust-server-in-gcp) not found.\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1.getDocument(CloudFirestoreV1.java:323)\n\tat com.google.cloud.datastore.emulator.impl.firestore.CloudFirestoreV1Router.getDocument(CloudFirestoreV1Router.java:125)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$getDocument$1(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:70)\n\tat com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.getDocument(FirestoreV1GrpcAdapter.java:112)\n\tat com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1155)\n\tat io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)\n\tat io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)\n\tat io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)\n\tat io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)\n\tat io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:351)\n\tat io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:861)\n\tat io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)\n\tat io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1570)\n\n"}}
+[debug] [2024-03-31T15:38:10.469Z] Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:10 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:14.266Z] Mar 31, 2024 5:38:14 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:14 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:14.270Z] Mar 31, 2024 5:38:14 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:14 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:16.770Z] Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:16.774Z] Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:16.779Z] Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
+[debug] [2024-03-31T15:38:16.784Z] Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader
+WARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 31, 2024 5:38:16 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization fromHeader\nWARNING: Received service account token ya29.a0Ad52N3_rXzxVfRIZ_hMdLa7PkvJe8BZHOWG3mK1cVzco1mcfINg0k3roUt0FOaKsHHvseoVDQn0FiUomOGkjRw4_4Ab2UPW6p-0gYLWuzh2Gbf0L84FVvpoy9X2jfgIiittdFqVnpsWNWlcCcO3d7wYFk8HqEvnEkQ6haCgYKARESARESFQHGX2Mim7WJi7NMej2ZFXIczU7CGA0171, assuming ownership.\n"}}
