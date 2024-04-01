@@ -114,6 +114,17 @@ impl Markdown {
 
         Ok(markdown_info)
     }
+
+    pub async fn list_markdown_info_of_post(
+        filepath: String,
+    ) -> Result<(MarkdownMetadata, PostInfo)> {
+        let markdown_file = fs::read_to_string(format!("./blogpost/{}", &filepath))
+            .map_err(|_| Error::PageNotFound(filepath.to_string()))?;
+        let metadata = MarkdownMetadata::new(&markdown_file)?;
+        let post: PostInfo = Self::get_views_or_create(&metadata.filename).await?;
+
+        Ok((metadata, post))
+    }
 }
 
 #[derive(Debug, Deserialize)]
