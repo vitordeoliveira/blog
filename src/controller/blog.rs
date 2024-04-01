@@ -1,9 +1,8 @@
 use axum::{extract::Path, response::IntoResponse, routing::get, Router};
-use futures::StreamExt;
 use tracing::{info, warn};
 
 use crate::{
-    error::{Error, Result},
+    error::Result,
     model::{Markdown, MarkdownMetadata, PostInfo},
     view,
 };
