@@ -1,0 +1,26 @@
+  <a href="/blog/{{metadata.filename}}">
+    <div
+      class="relative flex flex-col cursor-pointer justify-evenly bg-white dark:bg-orange-100 p-8 drop-shadow rounded-lg"
+    >
+      <div class="md:relative">
+        <p class="dark:bg-orange-100 text-lg font-bold">{{metadata.title}}</p>
+        <span
+          class="absolute md:right-0 right-5 text-sm md:font-bold md:top-0 bottom-3"
+          >views: {{postinfo.views}}</span
+        >
+        <p class="dark:bg-orange-100 text-sm mb-2 text-slate-700">
+          {{metadata.subtitle}}
+        </p>
+        <div>
+          {% for tag in metadata.tags %}
+          <span
+            class="text-white text-xs lowercase px-1 py-0.5 rounded-full bg-orange-800 dark:text-white border border-orange-800"
+            >{{tag}}</span
+          >
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="mt-6">{{ metadata.description }}</div>
+    </div>
+  </a>

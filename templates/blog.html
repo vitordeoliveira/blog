@@ -11,5 +11,12 @@
 {% endblock %}
 
 {% block main %}
-<div class="markdown" hx-post="/api/v1/blog/{{metadata.filename}}" hx-trigger="load" hx-swap="none">{{content|safe }}</div>
+<div class="markdown">{{content|safe }}</div>
+<div>
+
+  {% for similar_posts in metadata.similar_posts %}
+  {{ similar_posts }}
+  {% endfor %}
+
+</div>
 {% endblock %}
