@@ -10,7 +10,7 @@
   }
 
   a {
-    @apply text-orange-500
+    @apply text-orange-800 dark:text-orange-400 font-bold
   }
 
   h1 {
@@ -35,6 +35,10 @@
 
   blockquote {
     @apply bg-white dark:text-sky-950 dark:bg-orange-100 pl-8 py-3 drop-shadow rounded-lg my-3;
+  }
+
+  blockquote a {
+    @apply text-orange-800
   }
 
   img {
