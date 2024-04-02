@@ -6,7 +6,7 @@ description: "Increasingly, we've seen many Rust developers joining the communit
 coming from languages like JS, here we will try to explain why, using my own
 experience of why I switched to rust"
 tags: ["js", "rust", "opinion"]
-similar_posts: []
+similar_posts: ["what_are_axum_askama_htmx_and_why_use_it"]
 date: "2024-03-16t12:58:00"
 finished: true
 ---
