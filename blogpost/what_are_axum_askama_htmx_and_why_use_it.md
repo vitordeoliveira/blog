@@ -5,9 +5,9 @@ subtitle: "A quick explanation about Axum, Askama and HTMX"
 description: "I am a fan of some tools and technologies, I think all my blog posts make this clear to everyone.
 Today, I will show to you guys what and why to use those tecnologies on Rust.
 "
-tags: ["rust", "axum", "htmx", "askama"]
+tags: ["rust", "axum", "htmx", "askama", "opinion"]
 similar_posts: ["why_js_devs_are_migrating_from_js_to_rust"]
-date: "2024-03-31t17:52:00"
+date: "2024-04-01t17:52:00"
 finished: true
 ---
 
@@ -15,11 +15,13 @@ finished: true
 
 I am a fan of some tools and technologies, I think all my blog posts make this clear to everyone.
 
-Today, I will show to you guys [what](#what-is-htmx) and [why](#why-use-these-tools) to use those tecnologies on Rust.
+Today, I will show to you guys [what](#what-is-htmx) and [why](#why-use-these-tools) to use **AXUM + HTMX + Askama** tecnologies on Rust.
 
-> if you already know what axum, askama and htmx is and why you should use them, just [click here](), and we jump to HOW blog post.
+> if you already know what axum, askama and htmx is and why you should use them, just [click here](/blog/how_use_axum_askama_htmx), and we jump to HOW blog post.
 
-OK, now lets go to **What** is the tools, they say "start with the why", but I dont saw the reason to explain the why, if you not even know what the tools are haha
+OK, now lets go to **What** is these tools :D 
+
+> they say "start with the why", but I dont saw the reason to explain the why, if you not even know what the tools are haha
 
 So lets go to the definitions:
 - [What is HTMX?](#what-is-htmx)
@@ -43,12 +45,25 @@ that also allow the backend devs to use the language of choice in the frontend, 
 
 ## <a name="what-is-askama"></a> What is Askama
 Askama is simple the rust crate that we will use to make Rust read and manipulate HTML.
+
+You might think "I can do that myself, I dont need a tool just to deliver html to client".
+
+Yes, and that is how your website receive a Cross-site scripting (XSS) attack...
+
+I have in my mind that at least 95% of the worlds problems happens because of over confidence.
+
+Admit ignorance is good, because this way we can learn and improve.
+
+Some really good devs (probably better than you) already deal with the security stuff, does not re-invent the wheel.
+
 ## <a name="what-is-axum"></a> What is Axum?
 Axum is a Rust crate that allow us to serve a web application framework.
 
 So in a nutshell he is the one we use to create the server, routes and etc...
 
 ## <a name="why-use-these-tools"></a> Why use these tools?
+
+### HTMX is the star of the show
 
 HTMX to simplify the frontend...
 
@@ -60,11 +75,11 @@ What I mean with that? With SPAs the frontend is a JS bundle that is downloaded 
 
 Here is a very simplified draw of this explanation: 
 
-![[Bildschirmfoto vom 2024-03-31 14-43-08.png]]
+![spa exemple](/assets/spa_draw_exemple.png)
 
 And here is a very simplified draw of what we want to achieve with HTMX
 
-![[Bildschirmfoto vom 2024-03-31 16-42-22.png]]
+![htmx exemple](/assets/htmx_exemple.png)
 
 As you can see on this second draw we just have ONE state of the application, this way the view/Frontend don't need to store information, the client shouldn't know anything about the logic of the application.
 
@@ -74,7 +89,7 @@ Ok, but that is exacly how it was in past, so we are just backing to old days ri
 
 Kinda... the difference here is that with HTMX you dont need to render the entire page, the backend will just send a HTML fragment, and the HTMX in the client side will take care of where this new HTML should be placed... This changes some stuff, like in the past when we navigate to another page we have a "blink" of a half of a second because the entire page is been updated, with HTMX we dont have this, because we are just swaping or appending divs in the HTML of the client side.
 
-If you want to understand better, how HTMX works, I recommend to watch and read those links:
+If you want to understand better, how HTMX works, I strongly recommend to watch and read those links:
 
 Official page:
 
@@ -87,9 +102,17 @@ The PrimeGOage video on Frontend Masters
 Youtube PrimeGOage Frontend Masters
 </a>
 
-## How implement then in RUST?
+### Askama
+Because is really easy to make shit, and they already apply all the security stuff the templating needs.
 
-The real and fun part is a different blog post, just [click here]() to go there :D
+and also because it makes life very easy on html manipulation.
+
+### Axum
+Because is easy to use and very extendable... In a nutshell is that.
+
+## How implement them in RUST?
+
+The real and fun part is a different blog post, just [click here](/blog/how_use_axum_askama_htmx) to go there :D
 
 
 
