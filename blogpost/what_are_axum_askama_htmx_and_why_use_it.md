@@ -1,9 +1,9 @@
 ---
 filename: "what_are_axum_askama_htmx_and_why_use_it"
 title: "What are Axum + Askama + HTMX and Why use it?"
-subtitle: "A quick explanation about Axum, Askama and HTMX"
+subtitle: "A quick explanation about Axum, Askama, and HTMX"
 description: "I am a fan of some tools and technologies, I think all my blog posts make this clear to everyone.
-Today, I will show to you guys what and why to use those tecnologies on Rust.
+Today, I will show you guys what and why to use those technologies on Rust.
 "
 tags: ["rust", "axum", "htmx", "askama", "opinion"]
 similar_posts: ["why_js_devs_are_migrating_from_js_to_rust"]
@@ -15,15 +15,15 @@ finished: true
 
 I am a fan of some tools and technologies, I think all my blog posts make this clear to everyone.
 
-Today, I will show to you guys [what](#what-is-htmx) and [why](#why-use-these-tools) to use **AXUM + HTMX + Askama** tecnologies on Rust.
+Today, I will show you guys [what](#what-is-htmx) and [why](#why-use-these-tools) to use **AXUM + HTMX + Askama** technologies on Rust.
 
-> if you already know what axum, askama and htmx is and why you should use them, just [click here](/blog/how_use_axum_askama_htmx), and we jump to HOW blog post.
+> If you already know what Axum, Askama, and HTMX are and why you should use them, just [click here](/blog/how_use_axum_askama_htmx), and we jump to the HOW blog post.
 
 OK, now lets go to **What** is these tools :D 
 
-> they say "start with the why", but I dont saw the reason to explain the why, if you not even know what the tools are haha
+> They say "Start with the why", but I don't see the reason to explain the why, if you do not even know what the tools are haha
 
-So lets go to the definitions:
+So let's go to the definitions:
 - [What is HTMX?](#what-is-htmx)
 - [What is Askama?](#what-is-askama)
 - [What is Axum?](#what-is-axum)
@@ -31,35 +31,35 @@ So lets go to the definitions:
 ## <a name="what-is-htmx"></a> What is HTMX?
 HTMX is a nutshell HTML as language :D
 
-It is a JS script that gives super powers to html, different from React and others that is a JS script that generates html.
+It is a JS script that gives super powers to HTML, different from React and others which is a Javascript that generates HTML.
 
-The idea is that HTML can from EVERY tag dispatch an event to the backend, and deal with the response (that should also be html).
+The idea is that HTML can from EVERY tag dispatch an event to the backend, and deal with the response (that should also be HTML).
 
-In raw html only few tags can dispatch an event to backend, the \<a\> tag and the form with submit.
+In raw HTML, only a few tags can dispatch an event to the backend, the \<a\> tag, and the form with submit.
 
-HTMX allow every element to do that...
+HTMX allows every element to do that...
 
-This is very simple, elegant and powerful, because this way you just use javascript where is needed and not in everything how is done in the modern frameworks.
+This is very simple, elegant, and powerful because this way you just use JavaScript where is needed and not in everything how is done in the modern frameworks.
 
-that also allow the backend devs to use the language of choice in the frontend, making you run away from JS or TS.
+that also allows the backend devs to use the language of choice in the frontend, making you run away from JS or TS.
 
 ## <a name="what-is-askama"></a> What is Askama
-Askama is simple the rust crate that we will use to make Rust read and manipulate HTML.
+Askama is simply the rust crate that we will use to make Rust read and manipulate HTML.
 
-You might think "I can do that myself, I dont need a tool just to deliver html to client".
+You might think "I can do that myself, I don't need a tool just to deliver HTML to the client".
 
-Yes, and that is how your website receive a Cross-site scripting (XSS) attack...
+Yes, and that is how your website receives a Cross-site scripting (XSS) attack...
 
-I have in my mind that at least 95% of the worlds problems happens because of over confidence.
+I have in my mind that at least 95% of the world's problems happen because of overconfidence.
 
-Admit ignorance is good, because this way we can learn and improve.
+Admitting ignorance is good because this way we can learn and improve.
 
-Some really good devs (probably better than you) already deal with the security stuff, does not re-invent the wheel.
+Some good devs (probably better than you) already deal with the security stuff, do not re-invent the wheel.
 
 ## <a name="what-is-axum"></a> What is Axum?
-Axum is a Rust crate that allow us to serve a web application framework.
+Axum is a Rust crate that allows us to serve a web application framework.
 
-So in a nutshell he is the one we use to create the server, routes and etc...
+So in a nutshell he is the one we use to create the server, routes, etc...
 
 ## <a name="why-use-these-tools"></a> Why use these tools?
 
