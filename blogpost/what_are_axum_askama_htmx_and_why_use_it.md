@@ -21,7 +21,7 @@ Today, I will show you guys [what](#what-is-htmx) and [why](#why-use-these-tools
 
 OK, now lets go to **What** is these tools :D 
 
-> They say "Start with the why", but I don't see the reason to explain the why, if you do not even know what the tools are haha
+> They say "Start with the why", but I don't see the reason to explain the why if you do not even know what the tools are haha
 
 So let's go to the definitions:
 - [What is HTMX?](#what-is-htmx)
@@ -54,7 +54,7 @@ I have in my mind that at least 95% of the world's problems happen because of ov
 
 Admitting ignorance is good because this way we can learn and improve.
 
-Some good devs (probably better than you) already deal with the security stuff, do not re-invent the wheel.
+Some good devs (probably better than you) already deal with the security stuff, do not reinvent the wheel.
 
 ## <a name="what-is-axum"></a> What is Axum?
 Axum is a Rust crate that allows us to serve a web application framework.
@@ -67,11 +67,11 @@ So in a nutshell he is the one we use to create the server, routes, etc...
 
 HTMX to simplify the frontend...
 
-We DONT NEED a heavy and very confusing SPA to write a simple blog... to be honest more I code on those tools more I think we not even need SPAs for nothing...
+We DONT NEED a heavy and very confusing SPA to write a simple blog... to be honest more I code on those tools more I think we do not even need SPAs for nothing...
 
-Ok, lets put this in different words, the SPAs was created to have more dynamic pages, and bring a better user experience, they have their value. But in a word with blazzing fast internet, and a awesome infrastrucure tools, MAYBE and just maybe, we should have the backend deal with the state of the application, and rely in the Frontend to be just a view, and not a copy of the state of the backend.
+Ok, lets put this in different words, the SPAs was created to have more dynamic pages and bring a better user experience, they have their value. But in a world with blazing-fast internet, and awesome infrastructure tools, MAYBE, and just maybe, we should have the backend deal with the state of the application, and rely on the Frontend to be just a view and not a copy of the state of the backend.
 
-What I mean with that? With SPAs the frontend is a JS bundle that is downloaded in the user browser, and generate the html in the client-side, after this the client makes a request to backend requesting the data to be loaded, so the backend sent to client a JSON, who is on this point in time a copy of the state of backend, then the client takes this JSON and react (Now you understand why the ReactJs has this name :D ) to it, updating the client on runtime. 
+What do I mean by that? With SPAs the frontend is a JS bundle that is downloaded in the user browser, and generates the HTML in the client side, after this the client requests the backend data to be loaded, so the backend sends to the client a JSON, which is on this point in time a copy of the state of the backend, then the client takes this JSON and react (Now you understand why the ReactJs has this name :D ) to it, updating the client on runtime. 
 
 Here is a very simplified draw of this explanation: 
 
@@ -81,15 +81,15 @@ And here is a very simplified draw of what we want to achieve with HTMX
 
 ![htmx exemple](/assets/htmx_exemple.png)
 
-As you can see on this second draw we just have ONE state of the application, this way the view/Frontend don't need to store information, the client shouldn't know anything about the logic of the application.
+As you can see on this second draw we just have ONE state of the application, this way the view/frontend doesn't need to store information, and the client shouldn't know anything about the logic of the application.
 
-Another advantage of HTMX is the fact, that now you can create the entire application using whatever language you like, here we are using Rust, but you can do with, GO, Java, Rails and even NodeJS... as the frontend is not forced to be only JS anymore, you can use the backend of your preference.
+Another advantage of HTMX is the fact, that now you can create the entire application using whatever language you like, here we are using Rust, but you can do with, GO, Java, Rails, and even NodeJS... as the frontend is not forced to be only JS anymore, you can use the backend of your preference.
 
-Ok, but that is exacly how it was in past, so we are just backing to old days right?
+Ok, but that is exactly how it was in the past, so we are just backing to the old days right?
 
-Kinda... the difference here is that with HTMX you dont need to render the entire page, the backend will just send a HTML fragment, and the HTMX in the client side will take care of where this new HTML should be placed... This changes some stuff, like in the past when we navigate to another page we have a "blink" of a half of a second because the entire page is been updated, with HTMX we dont have this, because we are just swaping or appending divs in the HTML of the client side.
+Kinda... the difference here is that with HTMX you don't need to render the entire page, the backend will just send an HTML fragment, and the HTMX on the client side will take care of where this new HTML should be placed... This changes some stuff, in the past when we navigated to another page we had a "blink" of half of a second because the entire page had been updated, with HTMX we don't have this because we are just swapping or appending divs in the HTML of the client side.
 
-If you want to understand better, how HTMX works, I strongly recommend to watch and read those links:
+If you want to understand better, how HTMX works, I strongly recommend watching and reading those links:
 
 Official page:
 
@@ -103,14 +103,14 @@ Youtube PrimeGOage Frontend Masters
 </a>
 
 ### Askama
-Because is really easy to make shit, and they already apply all the security stuff the templating needs.
+Because is easy to make shit, and they already apply all the security stuff the templating needs.
 
-and also because it makes life very easy on html manipulation.
+and also because it makes life very easy with HTML manipulation.
 
 ### Axum
 Because is easy to use and very extendable... In a nutshell is that.
 
-## How implement them in RUST?
+## How to implement them in RUST?
 
 The real and fun part is a different blog post, just [click here](/blog/how_use_axum_askama_htmx) to go there :D
 
