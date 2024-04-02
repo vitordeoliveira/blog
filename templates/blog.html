@@ -11,5 +11,15 @@
 {% endblock %}
 
 {% block main %}
-<div class="markdown" hx-post="/api/v1/blog/{{metadata.filename}}" hx-trigger="load" hx-swap="none">{{content|safe }}</div>
+<div class="markdown">{{content|safe }}</div>
+
+  {% if similar_posts_metadata.len() > 0 %}
+  <hr class="my-14 border-sky-900 dark:border-white">
+  <div>
+    <h2 class="dark:text-white text-4xl text-center font-semibold" >Similar posts</h2>
+    {% for (metadata, postinfo) in similar_posts_metadata %}
+    {% include "blogcard.html" %}
+    {% endfor %}
+  </div>
+  {% endif %}
 {% endblock %}

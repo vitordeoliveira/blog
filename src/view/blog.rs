@@ -6,7 +6,7 @@ use axum::{
 
 use crate::{
     error::{Error, Result},
-    model::{Markdown, MarkdownMetadata},
+    model::{Markdown, MarkdownMetadata, PostInfo},
 };
 
 #[derive(Template)]
@@ -14,10 +14,18 @@ use crate::{
 struct BlogTemplate {
     metadata: MarkdownMetadata,
     content: String,
+    similar_posts_metadata: Vec<(MarkdownMetadata, PostInfo)>,
 }
 
-pub fn show(Markdown { metadata, content }: Markdown) -> Result<impl IntoResponse> {
-    let root = BlogTemplate { metadata, content };
+pub fn show(
+    Markdown { metadata, content }: Markdown,
+    similar_posts_metadata: Vec<(MarkdownMetadata, PostInfo)>,
+) -> Result<impl IntoResponse> {
+    let root = BlogTemplate {
+        metadata,
+        content,
+        similar_posts_metadata,
+    };
 
     let html = match root.render() {
         Ok(html) => html,

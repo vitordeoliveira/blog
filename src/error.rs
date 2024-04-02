@@ -67,9 +67,9 @@ where
 }
 
 impl Debug for Error {
-    fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        error!("{self}");
-        // writeln!(f, "{}", self)?;
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // error!("{self}");
+        writeln!(f, "{}", self)?;
         Ok(())
     }
 }

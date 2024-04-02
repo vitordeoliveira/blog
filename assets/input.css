@@ -9,12 +9,20 @@
     @apply my-6;
   }
 
+  a {
+    @apply text-orange-500
+  }
+
   h1 {
     @apply text-center text-5xl my-12 font-semibold;
   }
 
   h2 {
     @apply text-3xl my-10 font-bold;
+  }
+  
+  h3 {
+    @apply text-2xl my-10 font-bold;
   }
 
   ol {
