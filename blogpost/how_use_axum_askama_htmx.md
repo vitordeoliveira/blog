@@ -10,13 +10,13 @@ finished: false
 ---
 
 # How use axum + askama + htmx? 
-Ok, I already have a post explaning [What is and Why use these tools]().
+Ok, I already have a post explaining [What is and Why to use these tools]().
 
-Now here is the place where the children cry and the mom don't see (brazilian expression)
+Now here is the place where the children cry and the mom doesn't see (Brazilian expression)
 
 [Github final code](https://github.com/vitordeoliveira/blog_how_use_axum_askama_htmx/tree/main)
 
-lets start from beggining
+let's start from the beginning
 
 Init the new project
 ```bash
@@ -37,9 +37,9 @@ cargo add tracing
 cargo add tracing-subscriber
 ```
 
-> I will in another post explain [how properly setup a project]() here I will just show the basic of these three tools.
+> I will in another post explain [how to properly set up a project]() here I will just show the basics of these three tools.
 
-Lets start running the server, go to /axum_htmx_askama/src/main.rs and add the following code:
+Let's start running the server, go to /axum_htmx_askama/src/main.rs and add the following code:
 
 ```rust
 
@@ -69,11 +69,11 @@ Lets start running the server, go to /axum_htmx_askama/src/main.rs and add the f
 
 ```
 
-now if you run cargo run and go to localhost:8080 you should receive a message from axum.
+now if you run cargo run and go to localhost:8080 you should receive a message from Axum.
 
-Ok, pretty cool... but now lets add Askama also in the game
+Ok, pretty cool... but now let's add Askama also in the game
 
-For doing that, we need first to create a template folder in the root (NOT IN THE SRC/) 
+To do that, we need first to create a template folder in the root (NOT IN THE SRC/) 
 
 > /axum_htmx_askama/templates/
 
@@ -83,7 +83,7 @@ now create a file called root.html in the templates
 
 in root.html we will create the base template of our frontend.
 
-> you can think like root.html from React
+> You can think like root.html from React
 
 ```html
 	<!doctype html>
@@ -102,9 +102,9 @@ in root.html we will create the base template of our frontend.
 	</html>
 ```
 
-You can see a block called content inside body, this block is how Askama will know which part of the html he should change when we use this base in other pages.
+You can see a block called content inside the body, this block is how Askama will know which part of the HTML he should change when we use this base on other pages.
 
-> As we are here, lets also add tailwind as CDN (not recomended on production [see tailwind docs](https://tailwindcss.com/docs/installation))
+> As we are here, let also add tailwind as CDN (not recommended on production [see tailwind docs](https://tailwindcss.com/docs/installation))
 
 > [How properly add tailwind CSS to a rust production code]()
 
@@ -126,7 +126,7 @@ You can see a block called content inside body, this block is how Askama will kn
 	</html>
 ```
 
-lets also add a title block, then every page that use this base should pass a tittle (good for SEO)
+let's also add a title block, then every page that uses this base should pass a title (good for SEO)
 ```html
 	<!doctype html>
 	<html lang="en">
@@ -145,7 +145,7 @@ lets also add a title block, then every page that use this base should pass a ti
 	  </body>
 	</html>
 ```
-Now last but not least lets add HTMX to the base
+Now last but not least let's add HTMX to the base
 ```html
 	<!doctype html>
 	<html lang="en">
@@ -169,17 +169,17 @@ Now last but not least lets add HTMX to the base
 ```
 ### Wait.... is HTMX ONLY that?? A script tag that loads a JS??
 
-Quick answer... YES. Simple, elegant and powerful.
+Quick answer... YES. Simple, elegant, and powerful.
 
-> The HTMX has a size of approximately 10 kb, just as comparison, React it's 316kb for base React + 4.5mb for React DOM + ALL the other libraries.
+> The HTMX has a size of approximately 10 kb, just as a comparison, React it's 316kb for base React + 4.5mb for React DOM + ALL the other libraries.
 
-> HTMX is at least 481.6x smaller than React, and yes that makes difference for the client.
+> HTMX is at least 481.6x smaller than React, and yes that makes a difference for the client.
 
 Again if you want to understand why is so powerful, see the blog post of [what and why use HTMX, Askama, and Axum]().
 
-### Ok, now we have the base html setup with tailwind and HTMX, what is next?
+### OK, now we have the base HTML setup with tailwind and HTMX, what is next?
 
-Now we "import" this html to inside Rust with Askama.
+Now we "import" this HTML to inside Rust with Askama.
 
 Go back to main.rs
 
@@ -204,25 +204,25 @@ look how simple it is
 	    (StatusCode::OK, Html(root.render().unwrap()))
 	}
 ```
-And as rust makes the checks at compile time if you remove the 
+And as Rust makes the checks at compile time if you remove the 
 ```html
     <title>{% block title %}{{ title }}{% endblock %}</title>
 ```
 from the root.html
 
-Rust will give you a hint that title was never used :D (oh man, I love rust)
+Rust will give you a hint that the title was never used :D (oh man, I love Rust)
 
 ![[Screenshot from 2024-04-03 14-00-14.png]]
 
 You can make this check in your environment.
 
-That is SOOOOO good, because a lot of times Rust will gives you a compile time error **IF YOUR HTML IS WRONG**. Isn't that the most beautiful thing??
+That is SOOOOO good because a lot of times Rust will give you a compile-time error **IF YOUR HTML IS WRONG**. Isn't that the most beautiful thing??
 
-Ok, add the block title again (if you had remove) and lets continue.
+Ok, add the block title again (if you had removed it), and let's continue.
 
 if you re-run your server you will see the "placeholder content".
 
-lets pass now string from rust to html (like we did with tittle)
+let's pass now string from Rust to HTML (like we did with the title)
 
 Replace the
 ```html
@@ -238,11 +238,11 @@ If you go back to main.rs you will see this
 
 ![[Screenshot from 2024-04-03 14-10-01.png]]
 
-Again, this is for me (and a lot of devs) a moment developer orgasmic moment, and one of the reasons why Rust is so beloved by so many people. 
+Again, this is for me (and a lot of devs) a moment developer orgasmic moment and one of the reasons why Rust is so beloved by so many people. 
 
-The compiler is saying to you "hey man, you have done shit, I will not allow you ask for a variable that is not passed in your HTML".
+The compiler is saying to you "Hey man, you have done shit, I will not allow you to ask for a variable that is not passed in your HTML".
 
-Continue... lets add this new field in our struct
+Continue... let's add this new field in our struct
 ```rust
 	#[derive(Template)]
 	#[template(path = "root.html")]
@@ -262,9 +262,9 @@ Continue... lets add this new field in our struct
 Re-run your server and see the result :D
 
 ![[Screenshot from 2024-04-03 14-19-21.png]]
-Lets create another file that inherit this base to be your home page
+Let's create another file that inherits this base to be your home page
 
-So create a file called home.html inside templates
+So create a file called home.html inside the templates
 
 > /axum_htmx_askama/templates/home.html
 
@@ -288,15 +288,15 @@ on the file paste the following code
 	{% endblock %}
 ```
 
-we will pass to home a stringvalue and a vector/list of values.
+we will pass to home a string value and a vector/list of values.
 
-This exemple is useful to show a little bit of the power of Askama
+This example is useful to show a little bit of the power of Askama
 
-> The goal of this post is not teach the technologies, just teach HOW setup then in Rust, but is nice to give a little glance. I will make more in depth posts about then individually.
+> The goal of this post is not to teach the technologies, just to teach HOW setup then in Rust, but is nice to give a little glance. I will make more in-depth posts about them individually.
 
 > [What Askama can do?]()
 
-Now in the main.rs we need to create a new struct HomeTemplate
+Now in the main.rs, we need to create a new struct HomeTemplate
 ```rust
 	#[derive(Template)]
 	#[template(path = "home.html")]
@@ -315,9 +315,9 @@ Now in the main.rs we need to create a new struct HomeTemplate
 	    (StatusCode::OK, Html(home.render().unwrap()))
 	}
 ```
-Now lets add a new route to axum, to do this you just need to append a new route in your Router. Axum works in a layer structure.
+Now let's add a new route to Axum, to do this you just need to append a new route in your Router. Axum works in a layer structure.
 
-> The goal of this post is not teach the technologies, just teach HOW setup then in Rust, but is nice to give a little glance. I will make more in depth posts about then individually.
+> The goal of this post is not to teach the technologies, just to teach HOW setup then in Rust, but is nice to give a little glance. I will make more in-depth posts about them individually.
 
 > [How Axum works, and what it can do?]()
 ```rust
@@ -328,7 +328,7 @@ Now lets add a new route to axum, to do this you just need to append a new route
 If you access ***localhost:8080/home*** you will see this page
 
 ![[Screenshot from 2024-04-03 17-13-55.png]]
-Lets add some styling on this page with tailwind:
+Let's add some styling on this page with tailwind:
 ```html
 	{% extends "root.html" %}
 	
@@ -347,10 +347,10 @@ Lets add some styling on this page with tailwind:
 	
 	{% endblock %}
 ```
-> Dont be strict to tailwind here, definetly the goal is not teaching him.
-   If you want more information about [tailwind see their oficial docs](https://tailwindcss.com/docs/installation) or [How properly add tailwind CSS to a rust production code]().
+> Don't be strict to tailwind here, definitely, the goal is not teaching him.
+   If you want more information about [tailwind see their official docs](https://tailwindcss.com/docs/installation) or [How properly add tailwind CSS to a rust production code]().
 
-lets also add a little style to body, so go to root.html and add 
+let's also add a little style to the body, so go to root.html and add 
 ```html
 	<body class="bg-gray-300">
 	 ... rest
@@ -359,21 +359,21 @@ good your page should look like this
 
 ![[Screenshot from 2024-04-03 14-51-14.png]]
 
-Beautiful isn't?? I was a professional designer for 10 years (contains irony)
+Beautiful isn't it?? I was a professional designer for 10 years (contains irony)
 
 Now the last thing we will do is add a little bit of HTMX to you guys understand the idea.
 
-> The goal of this post is not teach the technologies, just teach HOW setup then in Rust, but is nice to give a little glance. I will make more in depth posts about then individually.
+> The goal of this post is not to teach the technologies, just to teach HOW setup then in Rust, but is nice to give a little glance. I will make more in-depth posts about them individually.
 
 > [What HTMX can do?]()
 
-In the root page, lets add a button that will request to append this home div to the root page.
+In the root page, let's add a button that will request to append this home div to the root page.
 
-Lets create a button, that will trigger on click, make a request to /home, take the response and target in the element that have id=content, and afterend append the response.
+Let's create a button, that will trigger on click, make a request to /home, take the response and target in the element that have id=content, and afterend append the response.
 ```html
 	<button hx-get="/home" hx-trigger="click" hx-target="#content" hx-swap="afterend">Append home after end of the element with id = content</button>
 ```
-I will add some styling with tailwind, to looks a little better.
+I will add some styling with the tailwind, to looks a little better.
 
 the body should look like this
 
@@ -410,11 +410,11 @@ If you press the button, you should append the response of /home, then will look
 
 ***PERFECT!!!!***
 
-Now you guys already know, how use AXUM + HTMX + Askama
+Now you guys already know, how to use AXUM + HTMX + Askama
 
-From this post you guys should be able to setup your projects to these technologies.
+From this post, you guys should be able to set up your projects with these technologies.
 
-So all final code should be looking like this
+So all final code should look like this
 
 **axum_htmx_askama/src/main.rs**
 
