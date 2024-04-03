@@ -69,6 +69,11 @@ HTMX to simplify the frontend...
 
 We DONT NEED a heavy and very confusing SPA to write a simple blog... to be honest more I code on those tools more I think we do not even need SPAs for nothing...
 
+> The HTMX has a size of approximately 10 kb, just as comparison, React it's 316kb for base React + 4.5mb for React DOM + ALL the other libraries.
+
+> HTMX is at least 481.6x smaller than React, and yes that makes difference for the client.
+
+
 Ok, lets put this in different words, the SPAs was created to have more dynamic pages and bring a better user experience, they have their value. But in a world with blazing-fast internet, and awesome infrastructure tools, MAYBE, and just maybe, we should have the backend deal with the state of the application, and rely on the Frontend to be just a view and not a copy of the state of the backend.
 
 What do I mean by that? With SPAs the frontend is a JS bundle that is downloaded in the user browser, and generates the HTML in the client side, after this the client requests the backend data to be loaded, so the backend sends to the client a JSON, which is on this point in time a copy of the state of the backend, then the client takes this JSON and react (Now you understand why the ReactJs has this name :D ) to it, updating the client on runtime. 
@@ -113,7 +118,3 @@ Because is easy to use and very extendable... In a nutshell is that.
 ## How to implement them in RUST?
 
 The real and fun part is a different blog post, just [click here](/blog/how_use_axum_askama_htmx) to go there :D
-
-
-
-
