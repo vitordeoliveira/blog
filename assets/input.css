@@ -10,7 +10,7 @@
   }
 
   a {
-    @apply text-orange-500 underline
+    @apply text-orange-800 dark:text-orange-400 font-bold underline
   }
 
   h1 {
@@ -39,6 +39,10 @@
     a {
       @apply dark:text-orange-900
     }
+  }
+
+  blockquote a {
+    @apply text-orange-800
   }
 
   img {

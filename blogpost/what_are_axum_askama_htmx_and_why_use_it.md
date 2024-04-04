@@ -15,9 +15,9 @@ finished: true
 
 I am a fan of some tools and technologies, I think all my blog posts make this clear to everyone.
 
-Today, I will show you guys [what](#what-is-htmx) and [why](#why-use-these-tools) to use **AXUM + HTMX + Askama** technologies on Rust.
+Today, I will show you guys [what is HTMX](#what-is-htmx) and [why use these tools](#why-use-these-tools) to use **AXUM + HTMX + Askama** technologies on Rust.
 
-> If you already know what Axum, Askama, and HTMX are and why you should use them, just [click here](/blog/how_use_axum_askama_htmx), and we jump to the HOW blog post.
+> If you already know what Axum, Askama, and HTMX are and why you should use them, just [click here how use axum + askama + htmx](/blog/how_use_axum_askama_htmx), and we jump to the HOW blog post.
 
 OK, now lets go to **What** is these tools :D 
 
@@ -117,4 +117,8 @@ Because is easy to use and very extendable... In a nutshell is that.
 
 ## How to implement them in RUST?
 
-The real and fun part is a different blog post, just [click here](/blog/how_use_axum_askama_htmx) to go there :D
+The real and fun part is a different blog post, just [click here how use axum + askama + htmx](/blog/how_use_axum_askama_htmx) to go there :D
+
+
+
+
