@@ -2,15 +2,15 @@
 filename: "how_use_axum_askama_htmx"
 title: "How use axum + askama + htmx?"
 subtitle: "A quick explanation about how implement, Askama and HTMX"
-description: "In a post before I explain why and what is "
-tags: ["rust", "axum", "htmx", "askama", "opinion"]
-similar_posts: ["why_js_devs_are_migrating_from_js_to_rust", "what_are_axum_askama_htmx_and_why_use_it"]
-date: "2024-04-01t17:52:00"
-finished: false
+description: "In a post before I explain why and what is Askama, Axum and HTMX, now we will implement then."
+tags: ["rust", "axum", "htmx", "askama"]
+similar_posts: ["why_js_devs_are_migrating_from_js_to_rust", "what_are_axum_askama_htmx_and_why_use_it", "how-host-a-rust-server-in-gcp"]
+date: "2024-04-03t17:52:00"
+finished: true
 ---
 
 # How use axum + askama + htmx? 
-Ok, I already have a post explaining [What is and Why to use these tools]().
+Ok, I already have a post explaining [What is and Why to use these tools](/blog/what_are_axum_askama_htmx_and_why_use_it).
 
 Now here is the place where the children cry and the mom doesn't see (Brazilian expression)
 
@@ -37,7 +37,7 @@ cargo add tracing
 cargo add tracing-subscriber
 ```
 
-> I will in another post explain [how to properly set up a project]() here I will just show the basics of these three tools.
+> I will in another post explain [how to properly set up a project](/blog/how_to_properly_setup_a_rust_project) here I will just show the basics of these three tools.
 
 Let's start running the server, go to /axum_htmx_askama/src/main.rs and add the following code:
 
@@ -106,7 +106,7 @@ You can see a block called content inside the body, this block is how Askama wil
 
 > As we are here, let also add tailwind as CDN (not recommended on production [see tailwind docs](https://tailwindcss.com/docs/installation))
 
-> [How properly add tailwind CSS to a rust production code]()
+> [How properly add tailwind CSS to a rust production code](/blog/how_properly_add_tailwind_css_to_a_rust_production_code)
 
 ```html
 	<!doctype html>
@@ -175,7 +175,7 @@ Quick answer... YES. Simple, elegant, and powerful.
 
 > HTMX is at least 481.6x smaller than React, and yes that makes a difference for the client.
 
-Again if you want to understand why is so powerful, see the blog post of [what and why use HTMX, Askama, and Axum]().
+Again if you want to understand why is so powerful, see the blog post of [what and why use HTMX, Askama, and Axum](/blog/what_are_axum_askama_htmx_and_why_use_it).
 
 ### OK, now we have the base HTML setup with tailwind and HTMX, what is next?
 
@@ -212,7 +212,7 @@ from the root.html
 
 Rust will give you a hint that the title was never used :D (oh man, I love Rust)
 
-![[Screenshot from 2024-04-03 14-00-14.png]]
+![warn message title](/assets/warn_message_title_exemple.png)
 
 You can make this check in your environment.
 
@@ -236,7 +236,7 @@ If you re-run your server you will receive a BEAUTIFUL compile error, because yo
 
 If you go back to main.rs you will see this
 
-![[Screenshot from 2024-04-03 14-10-01.png]]
+![myownvalue error message exemple](/assets/myownvalue_error_message_exemple.png)
 
 Again, this is for me (and a lot of devs) a moment developer orgasmic moment and one of the reasons why Rust is so beloved by so many people. 
 
@@ -261,7 +261,7 @@ Continue... let's add this new field in our struct
 ```
 Re-run your server and see the result :D
 
-![[Screenshot from 2024-04-03 14-19-21.png]]
+![hello from myownvalue](/assets/hello_from_myownvalue.png)
 Let's create another file that inherits this base to be your home page
 
 So create a file called home.html inside the templates
@@ -294,7 +294,7 @@ This example is useful to show a little bit of the power of Askama
 
 > The goal of this post is not to teach the technologies, just to teach HOW setup then in Rust, but is nice to give a little glance. I will make more in-depth posts about them individually.
 
-> [What Askama can do?]()
+> [What Askama can do?](/blog/what_askama_can_do)
 
 Now in the main.rs, we need to create a new struct HomeTemplate
 ```rust
@@ -319,7 +319,7 @@ Now let's add a new route to Axum, to do this you just need to append a new rout
 
 > The goal of this post is not to teach the technologies, just to teach HOW setup then in Rust, but is nice to give a little glance. I will make more in-depth posts about them individually.
 
-> [How Axum works, and what it can do?]()
+> [How Axum works, and what it can do?](/blog/how_axum_works_and_what_it_can_do)
 ```rust
 	let app = Router::new()
         .route("/", get(root))
@@ -327,7 +327,7 @@ Now let's add a new route to Axum, to do this you just need to append a new rout
 ```
 If you access ***localhost:8080/home*** you will see this page
 
-![[Screenshot from 2024-04-03 17-13-55.png]]
+![hello from home](/assets/hello_from_home.png)
 Let's add some styling on this page with tailwind:
 ```html
 	{% extends "root.html" %}
@@ -348,7 +348,7 @@ Let's add some styling on this page with tailwind:
 	{% endblock %}
 ```
 > Don't be strict to tailwind here, definitely, the goal is not teaching him.
-   If you want more information about [tailwind see their official docs](https://tailwindcss.com/docs/installation) or [How properly add tailwind CSS to a rust production code]().
+   If you want more information about [tailwind see their official docs](https://tailwindcss.com/docs/installation) or [How properly add tailwind CSS to a rust production code](/blog/how_properly_add_tailwind_css_to_a_rust_production_code).
 
 let's also add a little style to the body, so go to root.html and add 
 ```html
@@ -357,7 +357,7 @@ let's also add a little style to the body, so go to root.html and add
 ```
 good your page should look like this
 
-![[Screenshot from 2024-04-03 14-51-14.png]]
+![hello from home styled](/assets/hello_from_home_styled.png)
 
 Beautiful isn't it?? I was a professional designer for 10 years (contains irony)
 
@@ -365,7 +365,7 @@ Now the last thing we will do is add a little bit of HTMX to you guys understand
 
 > The goal of this post is not to teach the technologies, just to teach HOW setup then in Rust, but is nice to give a little glance. I will make more in-depth posts about them individually.
 
-> [What HTMX can do?]()
+> [What HTMX can do?](/blog/what_htmx_can_do)
 
 In the root page, let's add a button that will request to append this home div to the root page.
 
@@ -402,11 +402,11 @@ async fn root() -> impl IntoResponse {
 
 The page should look like this
 
-![[Screenshot from 2024-04-03 17-33-38.png]]
+![hello from root styled](/assets/hello_from_root_styled.png)
 
 If you press the button, you should append the response of /home, then will look like this
 
-![[Screenshot from 2024-04-03 17-34-49.png]]
+![hello from root styled htmx hello_from_root_styled_htmx_event](/assets/hello_from_root_styled_htmx_event.png)
 
 ***PERFECT!!!!***
 
