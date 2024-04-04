@@ -137,6 +137,7 @@ pub struct MarkdownMetadata {
     pub similar_posts: Vec<String>,
     pub date: String,
     pub finished: bool,
+    pub image_preview: Option<String>,
 }
 
 impl MarkdownMetadata {
