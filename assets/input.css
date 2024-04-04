@@ -10,7 +10,7 @@
   }
 
   a {
-    @apply text-orange-500
+    @apply text-orange-500 underline
   }
 
   h1 {
@@ -35,6 +35,10 @@
 
   blockquote {
     @apply bg-white dark:text-sky-950 dark:bg-orange-100 pl-8 py-3 drop-shadow rounded-lg my-3;
+
+    a {
+      @apply dark:text-orange-900
+    }
   }
 
   img {
