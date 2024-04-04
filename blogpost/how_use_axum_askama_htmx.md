@@ -6,10 +6,11 @@ description: "In a post before I explain why and what is Askama, Axum and HTMX, 
 tags: ["rust", "axum", "htmx", "askama"]
 similar_posts: ["why_js_devs_are_migrating_from_js_to_rust", "what_are_axum_askama_htmx_and_why_use_it", "how-host-a-rust-server-in-gcp"]
 date: "2024-04-03t20:35:00"
+image_preview: "/assets/hello_from_root_styled_htmx_event.png"
 finished: true
 ---
 
-# How use axum + askama + htmx? 
+# How use Axum + Askama + HTMX? 
 Ok, I already have a post explaining [What is and Why to use Askama, HTMX, and Axum](/blog/what_are_axum_askama_htmx_and_why_use_it).
 
 Now here is the place where the children cry and the mom doesn't see (Brazilian expression)

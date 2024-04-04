@@ -6,7 +6,7 @@ description: "I am a fan of some tools and technologies, I think all my blog pos
 Today, I will show you guys what and why to use those technologies on Rust.
 "
 tags: ["rust", "axum", "htmx", "askama", "opinion"]
-similar_posts: ["why_js_devs_are_migrating_from_js_to_rust"]
+similar_posts: ["why_js_devs_are_migrating_from_js_to_rust","how_use_axum_askama_htmx"]
 date: "2024-04-01t17:52:00"
 finished: true
 ---

@@ -8,6 +8,13 @@
 <meta property="title" content="{{metadata.title}}" />
 <meta property="description" content="{{metadata.description}}" />
 <meta name="keywords" content="{{metadata.tags.join(",")}}">
+
+{% match metadata.image_preview %}
+  {% when Some with (val) %}
+  <meta property="og:image" content="{{ val }}">
+  {% when None %}
+{% endmatch %}
+
 {% endblock %}
 
 {% block main %}
