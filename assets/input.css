@@ -10,7 +10,7 @@
   }
 
   a {
-    @apply text-orange-800 dark:text-orange-400 font-bold
+    @apply text-orange-800 dark:text-orange-400 font-bold underline
   }
 
   h1 {

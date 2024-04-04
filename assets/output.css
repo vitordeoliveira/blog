@@ -927,6 +927,9 @@ video {
     --tw-text-opacity: 1;
     color: rgb(154 52 18 / var(--tw-text-opacity));
   }
+  a {
+    text-decoration-line: underline;
+  }
   a:where(.dark, .dark *) {
     --tw-text-opacity: 1;
     color: rgb(251 146 60 / var(--tw-text-opacity));
@@ -1029,6 +1032,12 @@ video {
   blockquote:where(.dark, .dark *) {
     --tw-text-opacity: 1;
     color: rgb(8 47 73 / var(--tw-text-opacity));
+  }
+  blockquote {
+    a:where(.dark, .dark *) {
+      --tw-text-opacity: 1;
+      color: rgb(124 45 18 / var(--tw-text-opacity));
+    }
   }
   blockquote a {
     --tw-text-opacity: 1;
