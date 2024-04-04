@@ -20,4 +20,9 @@
       <lastmod>2024-04-02</lastmod>
       <changefreq>yearly</changefreq>
    </url>
+   <url>
+      <loc>https://vitor.ws/blog/how_use_axum_askama_htmx</loc>
+      <lastmod>2024-04-02</lastmod>
+      <changefreq>yearly</changefreq>
+   </url>
 </urlset>
