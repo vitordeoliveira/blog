@@ -11,7 +11,7 @@
 
 {% match metadata.image_preview %}
   {% when Some with (val) %}
-  <meta property="og:image" content="{{ val }}">
+  <meta property="og:image:secure_url" content="{{ val }}">
   {% when None %}
 {% endmatch %}
 
