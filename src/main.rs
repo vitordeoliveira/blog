@@ -1,11 +1,29 @@
-use blog::{config::Config, error::Result};
+use anyhow::{Context, Result};
+use blog::{app, config::Config};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let config = Config::new()?;
-    let (listener, router) = config.setup().await?;
+    let host = env!("SERVER_HOST");
+    let port = env!("SERVER_PORT");
+    let rust_log = env!("RUST_LOG");
+    let db_connection = env!("SQLITE_DB_URL");
+    let assets_path = env!("CARGO_MANIFEST_DIR");
 
-    // Run Server
-    axum::serve(listener, router).await.unwrap();
+    Config::logging(rust_log).await;
+
+    let listener = tokio::net::TcpListener::bind(format!("{host}:{port}"))
+        .await
+        .context("Failed to start tokio listener")
+        .unwrap();
+
+    let app = app::new_app(db_connection, assets_path).await?;
+
+    tracing::info!("router initialized, now listening on port {}", port);
+
+    axum::serve(listener, app)
+        .await
+        .context("failed to serve server")
+        .unwrap();
+
     Ok(())
 }
