@@ -6,7 +6,7 @@ async fn main() -> Result<()> {
     let host = env!("SERVER_HOST");
     let port = env!("SERVER_PORT");
     let rust_log = env!("RUST_LOG");
-    let db_connection = env!("SQLITE_DB_URL");
+    let sqlite_db = env!("SQLITE_DB");
     let assets_path = env!("CARGO_MANIFEST_DIR");
 
     Config::logging(rust_log).await;
@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
         .context("Failed to start tokio listener")
         .unwrap();
 
-    let app = app::new_app(db_connection, assets_path).await?;
+    let app = app::new_app(sqlite_db, assets_path).await?;
 
     tracing::info!("router initialized, now listening on port {}", port);
 

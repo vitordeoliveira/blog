@@ -7,8 +7,8 @@ use crate::{
     AppState,
 };
 
-pub async fn new_app(_db_connection: &str, assets_path: &str) -> Result<axum::Router> {
-    let app_state = AppState::new("blog.sqlite")?;
+pub async fn new_app(sqlite_db: &str, assets_path: &str) -> Result<axum::Router> {
+    let app_state = AppState::new(sqlite_db)?;
 
     let blog_routes = Router::new().route("/:id", get(show));
 
