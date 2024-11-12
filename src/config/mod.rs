@@ -1,5 +1,3 @@
-mod environment;
-
 pub struct Config {}
 
 impl Config {
