@@ -1,4 +1,3 @@
-pub mod database;
 mod environment;
 
 pub struct Config {}
