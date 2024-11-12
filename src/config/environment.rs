@@ -1,8 +1,9 @@
 use std::{env, sync::OnceLock};
 
+use anyhow::Result;
 use dotenv::dotenv;
 
-use crate::error::{Error, Result};
+use crate::error::ServerError;
 
 pub struct Environment {
     pub rust_log: String,
@@ -32,6 +33,7 @@ pub fn environment() -> &'static Environment {
     })
 }
 
-fn get_env(name: &'static str) -> Result<String> {
-    env::var(name).map_err(|_| Error::InternalServer(format!("Env: {name} not found").to_string()))
+fn get_env(name: &'static str) -> Result<String, ServerError> {
+    env::var(name)
+        .map_err(|_| ServerError::InternalServer(format!("Env: {name} not found").to_string()))
 }

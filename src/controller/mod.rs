@@ -1,14 +1,15 @@
+use anyhow::Result;
 use axum::response::IntoResponse;
 
 pub mod blog;
 
 use crate::{
-    error::Result,
+    error::ServerError,
     model::{Markdown, MarkdownMetadata, PostInfo},
     view::homepage,
 };
 
-pub async fn home() -> Result<impl IntoResponse> {
+pub async fn home() -> Result<impl IntoResponse, ServerError> {
     let markdownlist: Vec<(MarkdownMetadata, PostInfo)> = Markdown::list_markdown_info()
         .await?
         .into_iter()

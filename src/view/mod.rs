@@ -1,3 +1,4 @@
+use anyhow::Result;
 use askama::Template;
 use axum::{
     http::StatusCode,
@@ -5,7 +6,7 @@ use axum::{
 };
 
 use crate::{
-    error::{self, Result},
+    error::{self, ServerError},
     model::{MarkdownMetadata, PostInfo},
 };
 
@@ -19,7 +20,9 @@ struct RootTemplate {
     posts: Vec<(MarkdownMetadata, PostInfo)>,
 }
 
-pub fn homepage(posts: Vec<(MarkdownMetadata, PostInfo)>) -> Result<impl IntoResponse> {
+pub fn homepage(
+    posts: Vec<(MarkdownMetadata, PostInfo)>,
+) -> Result<impl IntoResponse, ServerError> {
     let root = RootTemplate {
         title: "vitor.ws".to_string(),
         posts,
@@ -27,7 +30,7 @@ pub fn homepage(posts: Vec<(MarkdownMetadata, PostInfo)>) -> Result<impl IntoRes
 
     let html = match root.render() {
         Ok(html) => html,
-        Err(err) => return Err(error::Error::InternalServer(err.to_string())),
+        Err(err) => return Err(error::ServerError::InternalServer(err.to_string())),
     };
 
     Ok((StatusCode::OK, Html(html)))

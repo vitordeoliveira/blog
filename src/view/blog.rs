@@ -1,3 +1,4 @@
+use anyhow::Result;
 use askama::Template;
 use axum::{
     http::StatusCode,
@@ -5,7 +6,7 @@ use axum::{
 };
 
 use crate::{
-    error::{Error, Result},
+    error::ServerError,
     model::{Markdown, MarkdownMetadata, PostInfo},
 };
 
@@ -20,7 +21,7 @@ struct BlogTemplate {
 pub fn show(
     Markdown { metadata, content }: Markdown,
     similar_posts_metadata: Vec<(MarkdownMetadata, PostInfo)>,
-) -> Result<impl IntoResponse> {
+) -> Result<impl IntoResponse, ServerError> {
     let root = BlogTemplate {
         metadata,
         content,
@@ -29,7 +30,7 @@ pub fn show(
 
     let html = match root.render() {
         Ok(html) => html,
-        Err(_) => return Err(Error::InternalServer("Error on render".to_string())),
+        Err(_) => return Err(ServerError::InternalServer("Error on render".to_string())),
     };
 
     Ok((StatusCode::OK, Html(html)))

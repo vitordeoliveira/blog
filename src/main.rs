@@ -1,8 +1,8 @@
 use anyhow::{Context, Result};
-use blog::{app, config::Config};
+use blog::{app, config::Config, error::ServerError};
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), ServerError> {
     let host = env!("SERVER_HOST");
     let port = env!("SERVER_PORT");
     let rust_log = env!("RUST_LOG");

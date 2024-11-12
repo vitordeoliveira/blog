@@ -1,5 +1,6 @@
 use std::{fmt::Debug, io};
 
+use anyhow::Result;
 use async_trait::async_trait;
 use axum::{
     extract::FromRequestParts,
@@ -9,10 +10,9 @@ use axum::{
 use serde::de::DeserializeOwned;
 use thiserror::Error;
 use tracing::error;
-pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Error)]
-pub enum Error {
+pub enum ServerError {
     #[error("Internal Server Error {0}")]
     InternalServer(String),
 
@@ -24,16 +24,24 @@ pub enum Error {
 
     #[error("data store disconnected : {0}")]
     Disconnect(#[from] io::Error),
+
+    #[error(transparent)]
+    Undefined(#[from] anyhow::Error),
+
+    #[error(transparent)]
+    DBError(#[from] rusqlite::Error),
 }
 
-impl IntoResponse for Error {
+impl IntoResponse for ServerError {
     fn into_response(self) -> axum::response::Response {
         error!("{self}");
         let response = match self {
-            Error::InternalServer(_) => "INTERNAL_SERVER_ERROR".to_string(),
-            Error::PageNotFound(_) => "Page not found".to_string(),
-            Error::Disconnect(_) => "INTERNAL_SERVER_ERROR".to_string(),
-            Error::PageUnavailable(_) => "Page unavailable in the moment".to_string(),
+            ServerError::InternalServer(_) => "INTERNAL_SERVER_ERROR".to_string(),
+            ServerError::PageNotFound(_) => "Page not found".to_string(),
+            ServerError::Disconnect(_) => "INTERNAL_SERVER_ERROR".to_string(),
+            ServerError::PageUnavailable(_) => "Page unavailable in the moment".to_string(),
+            ServerError::Undefined(_error) => "Undefined error".to_string(),
+            ServerError::DBError(_error) => "Undefined error".to_string(),
         };
 
         (StatusCode::INTERNAL_SERVER_ERROR, Html(response)).into_response()
@@ -55,17 +63,17 @@ where
     T: Send + Sync + Debug + DeserializeOwned,
     S: Send + Sync,
 {
-    type Rejection = Error;
+    type Rejection = ServerError;
 
-    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self> {
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, ServerError> {
         match axum::extract::Path::<T>::from_request_parts(parts, state).await {
             Ok(value) => Ok(Self(value.0)),
-            Err(_) => Err(Error::PageNotFound("page not found".to_string())),
+            Err(_) => Err(ServerError::PageNotFound("page not found".to_string())),
         }
     }
 }
 
-impl Debug for Error {
+impl Debug for ServerError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         // error!("{self}");
         writeln!(f, "{}", self)?;

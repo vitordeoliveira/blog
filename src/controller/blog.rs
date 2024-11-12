@@ -1,13 +1,14 @@
+use anyhow::Result;
 use axum::{extract::Path, response::IntoResponse};
 use tracing::{info, warn};
 
 use crate::{
-    error::Result,
+    error::ServerError,
     model::{Markdown, MarkdownMetadata, PostInfo},
     view,
 };
 
-pub async fn show(Path(postname): Path<String>) -> Result<impl IntoResponse> {
+pub async fn show(Path(postname): Path<String>) -> Result<impl IntoResponse, ServerError> {
     info!("show");
     Markdown::add_views_to_markdown(&postname).await?;
     let markdown = Markdown::new(postname)?;
