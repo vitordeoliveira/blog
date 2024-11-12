@@ -12,11 +12,15 @@ pub struct AppState {
 
 impl AppState {
     pub fn new(sqlite_path: &str) -> Result<Self> {
-        let mut sqlite_conn = Connection::open(sqlite_path).context("sqlite connection error")?;
+        let sqlite_conn = Arc::new(Mutex::new(
+            Connection::open(sqlite_path).context("sqlite connection error")?,
+        ));
 
-        migrations::runner().run(&mut sqlite_conn).unwrap();
-
-        let sqlite_conn = Arc::new(Mutex::new(sqlite_conn));
+        if let Ok(mut conn) = sqlite_conn.lock() {
+            migrations::runner()
+                .run(&mut *conn)
+                .context("migration error")?;
+        }
 
         Ok(Self { sqlite_conn })
     }
