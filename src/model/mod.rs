@@ -19,14 +19,6 @@ pub struct PostInfo {
     pub views: u16,
 }
 
-#[derive(Debug)]
-struct Post {
-    // TODO: maybe remove this id field, for now is really necessary
-    id: u16,
-    title: String,
-    views: u16,
-}
-
 trait SqliteOperations {
     fn find_or_create_post(sqlite_conn: &Connection, title: &str) -> Result<PostInfo, ServerError>;
     fn increment_views(sqlite_conn: &Connection, title: &str) -> Result<(), ServerError>;
@@ -34,35 +26,32 @@ trait SqliteOperations {
 
 impl SqliteOperations for Markdown {
     fn find_or_create_post(sqlite_conn: &Connection, title: &str) -> Result<PostInfo, ServerError> {
-        let mut stmt =
-            sqlite_conn.prepare_cached("SELECT id, title, views FROM posts WHERE title = ?1")?;
+        let mut stmt = sqlite_conn.prepare_cached("SELECT id, views FROM posts WHERE id = ?1")?;
 
         let post = stmt.query_row([title], |row| {
-            Ok(Post {
+            Ok(PostInfo {
                 id: row.get(0)?,
-                title: row.get(1)?,
-                views: row.get(2)?,
+                views: row.get(1)?,
             })
         });
 
         Ok(match post {
             Ok(post) => PostInfo {
-                id: post.title,
+                id: post.id,
                 views: post.views,
             },
             Err(rusqlite::Error::QueryReturnedNoRows) => {
-                sqlite_conn.execute("INSERT INTO posts (title) values (?1)", params![title])?;
+                sqlite_conn.execute("INSERT INTO posts (id) values (?1)", params![title])?;
 
                 let post = stmt.query_row([title], |row| {
-                    Ok(Post {
+                    Ok(PostInfo {
                         id: row.get(0)?,
-                        title: row.get(1)?,
-                        views: row.get(2)?,
+                        views: row.get(1)?,
                     })
                 })?;
 
                 PostInfo {
-                    id: post.title,
+                    id: post.id,
                     views: post.views,
                 }
             }
@@ -72,7 +61,7 @@ impl SqliteOperations for Markdown {
 
     fn increment_views(sqlite_conn: &Connection, title: &str) -> Result<(), ServerError> {
         sqlite_conn.execute(
-            "UPDATE posts SET views = views + 1 WHERE title = ?1",
+            "UPDATE posts SET views = views + 1 WHERE id = ?1",
             params![title],
         )?;
 
@@ -102,12 +91,16 @@ impl Markdown {
         Ok(Self { metadata, content })
     }
 
-    pub async fn add_views_to_markdown(title: &str) -> Result<(), ServerError> {
-        let sqlite_conn = Connection::open("./data/blog.sqlite")?;
+    pub async fn add_views_to_markdown(
+        sqlite_conn: Connection,
+        title: &str,
+    ) -> Result<(), ServerError> {
         Self::increment_views(&sqlite_conn, title)
     }
 
-    pub async fn list_markdown_info() -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
+    pub async fn list_markdown_info(
+        sqlite_conn: Connection,
+    ) -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
         let paths = fs::read_dir("./blogpost").unwrap();
 
         let mut markdown_info: Vec<(MarkdownMetadata, PostInfo)> = Vec::new();
@@ -117,9 +110,7 @@ impl Markdown {
             let markdown_file = fs::read_to_string(&filepath)
                 .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
             let metadata = MarkdownMetadata::new(&markdown_file)?;
-            // let post: PostInfo = Self::get_views_or_create(&metadata.filename).await?;
 
-            let sqlite_conn = Connection::open("./data/blog.sqlite")?;
             let post: PostInfo = Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
 
             markdown_info.push((metadata, post));
@@ -129,13 +120,12 @@ impl Markdown {
     }
 
     pub async fn list_markdown_info_of_post(
+        sqlite_conn: Connection,
         filepath: String,
     ) -> Result<(MarkdownMetadata, PostInfo)> {
         let markdown_file = fs::read_to_string(format!("./blogpost/{}", &filepath))
             .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
         let metadata = MarkdownMetadata::new(&markdown_file)?;
-        // TODO: ok, I am creating connections all the time, use the app state insead
-        let sqlite_conn = Connection::open("./data/blog.sqlite")?;
         let post: PostInfo = Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
         Ok((metadata, post))
     }

@@ -1,22 +1,37 @@
 use anyhow::Result;
-use axum::{extract::Path, response::IntoResponse};
+use axum::{
+    extract::{Path, State},
+    response::IntoResponse,
+};
+use rusqlite::Connection;
 use tracing::{info, warn};
 
 use crate::{
     error::ServerError,
     model::{Markdown, MarkdownMetadata, PostInfo},
-    view,
+    view, AppState,
 };
 
-pub async fn show(Path(postname): Path<String>) -> Result<impl IntoResponse, ServerError> {
+pub async fn show(
+    State(state): State<AppState>,
+    Path(postname): Path<String>,
+) -> Result<impl IntoResponse, ServerError> {
     info!("show");
-    Markdown::add_views_to_markdown(&postname).await?;
+
+    let connection: Connection = state.get_connection()?;
+    Markdown::add_views_to_markdown(connection, &postname).await?;
+
     let markdown = Markdown::new(postname)?;
 
-    let similar_posts_metadata = markdown.metadata.similar_posts.iter().map(|i| async move {
-        Markdown::list_markdown_info_of_post(format!("{}.md", i))
-            .await
-            .map_err(|e| warn!("{e}"))
+    let similar_posts_metadata = markdown.metadata.similar_posts.iter().map(|i| {
+        let connection: Connection = state.get_connection().unwrap();
+        async move {
+            {
+                Markdown::list_markdown_info_of_post(connection, format!("{}.md", i))
+                    .await
+                    .map_err(|e| warn!("{e}"))
+            }
+        }
     });
 
     let similar_posts_metadata: Vec<(MarkdownMetadata, PostInfo)> =
