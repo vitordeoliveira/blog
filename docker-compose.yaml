@@ -5,5 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - SQLITE_DB=./blog.sqlite
     ports:
       - "8080:8080"
+    # volumes:
+    #   - ./blog.sqlite:/blog/data/blog.sqlite
