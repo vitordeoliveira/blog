@@ -4,6 +4,7 @@ use anyhow::Result;
 use pulldown_cmark::Options;
 use rusqlite::{params, Connection};
 use serde::{Deserialize, Serialize};
+use tracing::instrument;
 use yaml_front_matter::YamlFrontMatter;
 
 use crate::error::ServerError;
@@ -25,6 +26,7 @@ trait SqliteOperations {
 }
 
 impl SqliteOperations for Markdown {
+    #[instrument]
     fn find_or_create_post(sqlite_conn: &Connection, title: &str) -> Result<PostInfo, ServerError> {
         let mut stmt = sqlite_conn.prepare_cached("SELECT id, views FROM posts WHERE id = ?1")?;
 
@@ -59,6 +61,7 @@ impl SqliteOperations for Markdown {
         })
     }
 
+    #[instrument]
     fn increment_views(sqlite_conn: &Connection, title: &str) -> Result<(), ServerError> {
         sqlite_conn.execute(
             "UPDATE posts SET views = views + 1 WHERE id = ?1",
@@ -70,6 +73,7 @@ impl SqliteOperations for Markdown {
 }
 
 impl Markdown {
+    #[instrument]
     pub fn new(postname: String) -> Result<Self> {
         let file = format!("./blogpost/{}.md", &postname);
         let markdown_file =
@@ -91,6 +95,7 @@ impl Markdown {
         Ok(Self { metadata, content })
     }
 
+    #[instrument]
     pub async fn add_views_to_markdown(
         sqlite_conn: Connection,
         title: &str,
@@ -98,6 +103,7 @@ impl Markdown {
         Self::increment_views(&sqlite_conn, title)
     }
 
+    #[instrument]
     pub async fn list_markdown_info(
         sqlite_conn: Connection,
     ) -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
@@ -119,6 +125,7 @@ impl Markdown {
         Ok(markdown_info)
     }
 
+    #[instrument]
     pub async fn list_markdown_info_of_post(
         sqlite_conn: Connection,
         filepath: String,
@@ -145,6 +152,7 @@ pub struct MarkdownMetadata {
 }
 
 impl MarkdownMetadata {
+    #[instrument]
     fn new(input: &str) -> Result<Self> {
         let result = YamlFrontMatter::parse::<MarkdownMetadata>(input)
             .map_err(|_| ServerError::InternalServer("Error on YamlFrontMatter".to_string()))?;
@@ -152,6 +160,7 @@ impl MarkdownMetadata {
         Ok(result.metadata)
     }
 
+    #[instrument]
     fn extract(string_output: &str) -> Result<String> {
         let regex = regex::Regex::new(r"---((.|\n)*?)---")
             .map_err(|err| ServerError::InternalServer(err.to_string()))?;

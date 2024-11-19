@@ -4,7 +4,7 @@ use axum::{
     response::IntoResponse,
 };
 use rusqlite::Connection;
-use tracing::{info, warn};
+use tracing::{info, instrument, warn};
 
 use crate::{
     error::ServerError,
@@ -12,12 +12,11 @@ use crate::{
     view, AppState,
 };
 
+#[instrument]
 pub async fn show(
     State(state): State<AppState>,
     Path(postname): Path<String>,
 ) -> Result<impl IntoResponse, ServerError> {
-    info!("show");
-
     let connection: Connection = state.get_connection()?;
     Markdown::add_views_to_markdown(connection, &postname).await?;
 
