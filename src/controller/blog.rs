@@ -4,7 +4,7 @@ use axum::{
     response::IntoResponse,
 };
 use rusqlite::Connection;
-use tracing::{info, instrument, warn};
+use tracing::{instrument, warn};
 
 use crate::{
     error::ServerError,
