@@ -8,8 +8,6 @@ edition = "2021"
 [dependencies]
 askama = "0.12.1"
 tokio = { version = "1.36.0", features = ["full"] }
-tracing = "0.1.40"
-tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 axum = { version = "0.7.4", features = ["form", "macros"] }
 thiserror = "1.0.57"
 tower-http = { version = "0.5.2", features = ["fs"] }
@@ -23,3 +21,12 @@ anyhow = "1.0.93"
 # sqlx = { version = "0.8.2", features = ["sqlite", "runtime-tokio-rustls"] }
 rusqlite = { version = "0.31.0", features = ["bundled"] }
 refinery = { version = "0.8.14", features = ["rusqlite"] }
+strum = { version = "0.26.3", features = ["derive"] }
+
+opentelemetry = "0.24.0"
+opentelemetry-otlp = { version = "0.17.0", features = ["tonic"] }
+opentelemetry_sdk = { version = "0.24.1", features = ["rt-tokio"] }
+tracing = "0.1.40"
+tracing-opentelemetry = { version = "0.25.0", features = ["metrics"] }
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+opentelemetry-semantic-conventions = "0.16.0"
