@@ -6,10 +6,11 @@ refinery::embed_migrations!("migrations");
 #[derive(Clone, Debug)]
 pub struct AppState {
     pub sqlite_path: String,
+    pub rust_env: String,
 }
 
 impl AppState {
-    pub fn new(sqlite_path: &str) -> Result<Self> {
+    pub fn new(sqlite_path: &str, rust_env: &str) -> Result<Self> {
         let mut sqlite_conn = Connection::open(sqlite_path)
             .map_err(|e| anyhow::anyhow!("sqlite connection error: {}", e))?;
 
@@ -19,6 +20,7 @@ impl AppState {
 
         Ok(Self {
             sqlite_path: sqlite_path.to_string(),
+            rust_env: rust_env.to_string(),
         })
     }
 
