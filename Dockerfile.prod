@@ -1,0 +1,72 @@
+
+FROM node:21.7.1 AS tailwind_build
+ARG WORKDIR=/app
+WORKDIR ${WORKDIR}
+COPY ./templates/ ./templates/
+COPY ./tailwind.config.js .
+COPY ./assets/input.css .
+RUN npm install -D tailwindcss@3.4.15 && npx tailwindcss -i input.css -o output.css --minify
+
+FROM rust:1.77.1 AS rust_build
+
+ARG SERVER_HOST=0.0.0.0
+ARG SERVER_PORT=8080
+ARG WORKDIR=/app
+ARG BUILD_FOLDER=./build
+ARG RUST_ENV=development
+ARG TRACER_URL=http://jaeger:4317
+ARG RUST_LOG=debug
+ARG SQLITE_DB_PATH=${WORKDIR}/data/blog.sqlite
+
+ENV SERVER_HOST=${SERVER_HOST}
+ENV SERVER_PORT=${SERVER_PORT}
+ENV RUST_ENV=${RUST_ENV}
+ENV TRACER_URL=${TRACER_URL}
+ENV SQLITE_DB_PATH=${SQLITE_DB_PATH}
+
+RUN apt-get update && apt-get install -y musl-tools --no-install-recommends
+WORKDIR ${WORKDIR}
+
+COPY ./Cargo.lock ./Cargo.lock
+COPY ./Cargo.toml ./Cargo.toml
+COPY ./src ./src
+COPY ./templates/ ./templates/
+COPY ./migrations/ ./migrations/
+COPY ./blogpost/ ./blogpost/
+COPY ./assets/ ./assets/
+RUN rm ./assets/input.css
+COPY --from=tailwind_build ${WORKDIR}/output.css ./assets/output.css
+COPY ./sitemap.xml ./sitemap.xml
+
+RUN rustup target add x86_64-unknown-linux-musl \
+  && cargo build --release --target=x86_64-unknown-linux-musl \
+  && mkdir -p ${BUILD_FOLDER} \
+  && cp -rf ./target/x86_64-unknown-linux-musl/release/* ${BUILD_FOLDER}/
+
+RUN  cp -rf templates/ ${BUILD_FOLDER} \
+  && cp -rf blogpost/ ${BUILD_FOLDER} \
+  && cp -rf assets/ ${BUILD_FOLDER} \
+  && cp -rf sitemap.xml ${BUILD_FOLDER}
+
+# CMD ["tail", "-f", "/dev/null"]
+# CMD ["cargo", "run"]
+
+## our final base
+FROM scratch
+ARG WORKDIR=/app
+ARG SERVER_PORT=8080
+ARG BUILD_FOLDER=./build
+ARG RUST_ENV=development
+ARG TRACER_URL=http://jaeger:4317
+ARG SQLITE_DB_PATH=${WORKDIR}/blog.sqlite
+
+ENV RUST_ENV=${RUST_ENV}
+ENV TRACER_URL=${TRACER_URL}
+ENV SQLITE_DB_PATH=${SQLITE_DB_PATH}
+
+WORKDIR ${WORKDIR}
+EXPOSE ${SERVER_PORT}
+COPY --from=rust_build ${WORKDIR}/build .
+
+# IN scratch DYNAMIC WILL NOT WORK
+CMD ["./blog"]

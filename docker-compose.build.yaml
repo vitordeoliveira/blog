@@ -1,0 +1,15 @@
+services:
+  blogpage:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        - RUST_ENV=production
+        - TRACER_URL=http://jaeger:4317
+    ports:
+      - "8081:8080"
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
