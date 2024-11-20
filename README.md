@@ -10,4 +10,5 @@ use a volume if necessary
 
 for publish
 
-docker tag /image tag/ /account_tag/:/version/
+docker build -t /image tag/ /account_tag/:/version/ PATH_DOCKERFILE
+docker push /account_tag/:/version/
