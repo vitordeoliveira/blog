@@ -1,7 +1,8 @@
+mod mock;
 use anyhow::{Context, Result};
 use rusqlite::Connection;
-
 refinery::embed_migrations!("migrations");
+pub use mock::*;
 
 #[derive(Clone, Debug)]
 pub struct AppState {
