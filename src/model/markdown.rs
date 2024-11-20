@@ -3,7 +3,7 @@ use std::fs;
 use anyhow::Result;
 use pulldown_cmark::Options;
 use rusqlite::{params, Connection};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use tracing::instrument;
 use yaml_front_matter::YamlFrontMatter;
 
@@ -129,7 +129,7 @@ impl SqliteOperations for Markdown {
     }
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
 pub struct MarkdownMetadata {
     pub filename: String,
     pub title: String,
@@ -137,7 +137,7 @@ pub struct MarkdownMetadata {
     pub description: String,
     pub tags: Vec<String>,
     pub similar_posts: Vec<String>,
-    pub _date: String,
+    pub date: String,
     pub finished: bool,
     pub image_preview: Option<String>,
 }
@@ -146,8 +146,7 @@ impl MarkdownMetadata {
     #[instrument]
     fn new(input: &str) -> Result<Self> {
         let result = YamlFrontMatter::parse::<MarkdownMetadata>(input)
-            .map_err(|_| ServerError::InternalServer("Error on YamlFrontMatter".to_string()))?;
-
+            .map_err(|e| ServerError::InternalServer(format!("Error on YamlFrontMatter: {e}")))?;
         Ok(result.metadata)
     }
 
