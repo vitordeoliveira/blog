@@ -13,9 +13,11 @@ async fn main() -> Result<(), ServerError> {
     let host = env!("SERVER_HOST");
     let port = env!("SERVER_PORT");
     let rust_log = env!("RUST_LOG");
-    let sqlite_db = env!("SQLITE_DB");
     let assets_path = env!("CARGO_MANIFEST_DIR");
 
+    let sqlite_db_path = env::var("SQLITE_DB_PATH")
+        .context("SQLITE_DB must be defined")
+        .unwrap();
     let rust_env = env::var("RUST_ENV")
         .context("RUST_ENV must be defined")
         .unwrap();
@@ -30,7 +32,7 @@ async fn main() -> Result<(), ServerError> {
         .context("Failed to start tokio listener")
         .unwrap();
 
-    let app_state: AppState = AppState::new(sqlite_db, &rust_env)?;
+    let app_state: AppState = AppState::new(&sqlite_db_path, &rust_env)?;
     let app = app::new_app(app_state, assets_path).await?;
 
     tracing::info!("router initialized, now listening on port {}", port);
