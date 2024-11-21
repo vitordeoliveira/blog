@@ -1,8 +1,7 @@
 use anyhow::Result;
 use axum::{
-    body::Body,
     extract::{Path, State},
-    http::{header, Request, Response},
+    http::{header, Response},
     response::IntoResponse,
     Extension, Json,
 };
@@ -40,7 +39,6 @@ pub async fn markdown_list_api(
         Markdown::list_private_markdown_info(sqlite_conn, user.id)
             .await?
             .into_iter()
-            .filter(|i| i.0.finished)
             .collect();
 
     Ok(Json(markdownlist))
