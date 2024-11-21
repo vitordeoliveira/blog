@@ -19,6 +19,7 @@ pub struct Markdown {
 
 impl Markdown {
     #[instrument]
+    // TODO: TEST
     pub fn new(postname: String) -> Result<Self> {
         let file = format!("./blogpost/{}.md", &postname);
         let markdown_file =
@@ -41,6 +42,7 @@ impl Markdown {
     }
 
     #[instrument]
+    // TODO: TEST
     pub async fn add_views_to_markdown(
         sqlite_conn: Connection,
         title: &str,
@@ -49,6 +51,7 @@ impl Markdown {
     }
 
     #[instrument]
+    // TODO: TEST
     pub async fn list_private_markdown_info(
         sqlite_conn: Connection,
         user_id: Uuid,
@@ -62,8 +65,6 @@ impl Markdown {
             let markdown_file = fs::read_to_string(&filepath)
                 .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
             let metadata = MarkdownMetadata::new(&markdown_file)?;
-
-            println!("{:?} - {:?} - {:?}", filepath, metadata.owner, user_id);
             if let Some(owner) = metadata.owner {
                 if user_id == owner {
                     let post: PostInfo =
@@ -77,6 +78,7 @@ impl Markdown {
     }
 
     #[instrument]
+    // TODO: TEST
     pub async fn list_markdown_info(
         sqlite_conn: Connection,
     ) -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
@@ -103,6 +105,7 @@ impl Markdown {
     }
 
     #[instrument]
+    // TODO: TEST
     pub async fn list_markdown_info_of_post(
         sqlite_conn: Connection,
         filepath: String,
@@ -133,6 +136,7 @@ pub struct MarkdownMetadata {
 
 impl MarkdownMetadata {
     #[instrument]
+    // TODO: TEST
     fn new(input: &str) -> Result<Self> {
         let result = YamlFrontMatter::parse::<MarkdownMetadata>(input)
             .map_err(|e| ServerError::InternalServer(format!("Error on YamlFrontMatter: {e}")))?;
@@ -140,6 +144,7 @@ impl MarkdownMetadata {
     }
 
     #[instrument]
+    // TODO: TEST
     fn extract(string_output: &str) -> Result<String> {
         let regex = regex::Regex::new(r"---((.|\n)*?)---")
             .map_err(|err| ServerError::InternalServer(err.to_string()))?;

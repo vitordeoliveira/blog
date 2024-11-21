@@ -7,8 +7,6 @@ use serde::{Deserialize, Serialize};
 use tracing::instrument;
 use uuid::Uuid;
 
-use super::MarkdownMetadata;
-
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct PostInfo {
     pub id: String,
@@ -23,6 +21,7 @@ pub struct User {
 
 pub trait SqliteOperations {
     #[instrument]
+    // TODO: TEST
     fn find_or_create_post(sqlite_conn: &Connection, title: &str) -> Result<PostInfo, ServerError> {
         let mut stmt = sqlite_conn.prepare_cached("SELECT id, views FROM posts WHERE id = ?1")?;
 
@@ -58,6 +57,7 @@ pub trait SqliteOperations {
     }
 
     #[instrument]
+    // TODO: TEST
     fn increment_views(sqlite_conn: &Connection, title: &str) -> Result<(), ServerError> {
         sqlite_conn.execute(
             "UPDATE posts SET views = views + 1 WHERE id = ?1",
@@ -67,11 +67,8 @@ pub trait SqliteOperations {
         Ok(())
     }
 
-    fn get_user_blog_posts_info() -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
-        todo!()
-    }
-
     #[instrument]
+    // TODO: TEST
     fn get_user_from_api_key(
         sqlite_conn: &Connection,
         api_key: &Uuid,
