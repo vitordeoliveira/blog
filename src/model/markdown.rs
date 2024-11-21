@@ -140,6 +140,7 @@ pub struct MarkdownMetadata {
     pub date: String,
     pub finished: bool,
     pub image_preview: Option<String>,
+    pub owner: Option<String>,
 }
 
 impl MarkdownMetadata {

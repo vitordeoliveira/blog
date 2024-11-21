@@ -29,6 +29,9 @@ pub enum ServerError {
     Undefined(#[from] anyhow::Error),
 
     #[error(transparent)]
+    UuidError(#[from] uuid::Error),
+
+    #[error(transparent)]
     DBError(#[from] rusqlite::Error),
 }
 
@@ -42,6 +45,7 @@ impl IntoResponse for ServerError {
             ServerError::PageUnavailable(_) => "Page unavailable in the moment".to_string(),
             ServerError::Undefined(_error) => "Undefined error".to_string(),
             ServerError::DBError(_error) => "Undefined error".to_string(),
+            ServerError::UuidError(_error) => "Undefined error".to_string(),
         };
 
         (StatusCode::INTERNAL_SERVER_ERROR, Html(response)).into_response()
