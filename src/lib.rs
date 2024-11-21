@@ -8,5 +8,6 @@ pub mod state;
 mod model;
 mod view;
 
-pub use model::{Markdown, MarkdownMetadata, PostInfo, SqliteOperations, User};
+pub(crate) use model::SqliteOperations;
+pub use model::{Markdown, MarkdownMetadata, PostInfo};
 pub use state::*;
