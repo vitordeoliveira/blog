@@ -1,29 +1,29 @@
-use std::{fmt::Debug, io};
+use std::fmt::Debug;
 
 use anyhow::Result;
 use async_trait::async_trait;
 use axum::{
     extract::FromRequestParts,
     http::{request::Parts, StatusCode},
-    response::{Html, IntoResponse},
+    response::IntoResponse,
 };
 use serde::de::DeserializeOwned;
 use thiserror::Error;
-use tracing::error;
+use tracing::{error, instrument};
 
 #[derive(Error)]
 pub enum ServerError {
     #[error("Internal Server Error {0}")]
     InternalServer(String),
 
+    #[error("Unauthorized")]
+    Unauthorized,
+
     #[error("Page {0} not found")]
     PageNotFound(String),
 
     #[error("Page {0} has some error")]
     PageUnavailable(String),
-
-    #[error("data store disconnected : {0}")]
-    Disconnect(#[from] io::Error),
 
     #[error(transparent)]
     Undefined(#[from] anyhow::Error),
@@ -36,26 +36,22 @@ pub enum ServerError {
 }
 
 impl IntoResponse for ServerError {
+    #[instrument]
     fn into_response(self) -> axum::response::Response {
         error!("{self}");
-        let response = match self {
-            ServerError::InternalServer(_) => "INTERNAL_SERVER_ERROR".to_string(),
-            ServerError::PageNotFound(_) => "Page not found".to_string(),
-            ServerError::Disconnect(_) => "INTERNAL_SERVER_ERROR".to_string(),
-            ServerError::PageUnavailable(_) => "Page unavailable in the moment".to_string(),
-            ServerError::Undefined(_error) => "Undefined error".to_string(),
-            ServerError::DBError(_error) => "Undefined error".to_string(),
-            ServerError::UuidError(_error) => "Undefined error".to_string(),
-        };
-
-        (StatusCode::INTERNAL_SERVER_ERROR, Html(response)).into_response()
-
-        // Create a placeholder Axum response
-        // StatusCode::INTERNAL_SERVER_ERROR.into_response()
-
-        // (StatusCode::INTERNAL_SERVER_ERROR, "UNHANDLED_CLIENT_ERROR").into_response()
-        // Insert the Error into the response.
-        // response.extensions_mut().insert(self);
+        match self {
+            ServerError::InternalServer(_) => {
+                (StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
+            }
+            ServerError::PageNotFound(_) => (StatusCode::NOT_FOUND, "Page not found"),
+            ServerError::PageUnavailable(_) => (
+                StatusCode::SERVICE_UNAVAILABLE,
+                "Page unavailable in the moment",
+            ),
+            ServerError::Unauthorized => (StatusCode::UNAUTHORIZED, "Unauthorized"),
+            _ => (StatusCode::BAD_REQUEST, "Undefined error"),
+        }
+        .into_response()
     }
 }
 
