@@ -2,9 +2,10 @@ use std::fs;
 
 use anyhow::Result;
 use pulldown_cmark::Options;
-use rusqlite::{params, Connection};
+use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 use tracing::instrument;
+use uuid::Uuid;
 use yaml_front_matter::YamlFrontMatter;
 
 use crate::error::ServerError;
@@ -48,6 +49,34 @@ impl Markdown {
     }
 
     #[instrument]
+    pub async fn list_private_markdown_info(
+        sqlite_conn: Connection,
+        user_id: Uuid,
+    ) -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
+        let paths = fs::read_dir("./blogpost").unwrap();
+
+        let mut markdown_info: Vec<(MarkdownMetadata, PostInfo)> = Vec::new();
+
+        for path in paths {
+            let filepath = path.unwrap().path().display().to_string();
+            let markdown_file = fs::read_to_string(&filepath)
+                .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
+            let metadata = MarkdownMetadata::new(&markdown_file)?;
+
+            println!("{:?} - {:?} - {:?}", filepath, metadata.owner, user_id);
+            if let Some(owner) = metadata.owner {
+                if user_id == owner {
+                    let post: PostInfo =
+                        Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
+                    markdown_info.push((metadata, post));
+                }
+            }
+        }
+
+        Ok(markdown_info)
+    }
+
+    #[instrument]
     pub async fn list_markdown_info(
         sqlite_conn: Connection,
     ) -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
@@ -60,6 +89,10 @@ impl Markdown {
             let markdown_file = fs::read_to_string(&filepath)
                 .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
             let metadata = MarkdownMetadata::new(&markdown_file)?;
+
+            if metadata.owner.is_some() {
+                continue;
+            }
 
             let post: PostInfo = Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
 
@@ -82,52 +115,7 @@ impl Markdown {
     }
 }
 
-impl SqliteOperations for Markdown {
-    #[instrument]
-    fn find_or_create_post(sqlite_conn: &Connection, title: &str) -> Result<PostInfo, ServerError> {
-        let mut stmt = sqlite_conn.prepare_cached("SELECT id, views FROM posts WHERE id = ?1")?;
-
-        let post = stmt.query_row([title], |row| {
-            Ok(PostInfo {
-                id: row.get(0)?,
-                views: row.get(1)?,
-            })
-        });
-
-        Ok(match post {
-            Ok(post) => PostInfo {
-                id: post.id,
-                views: post.views,
-            },
-            Err(rusqlite::Error::QueryReturnedNoRows) => {
-                sqlite_conn.execute("INSERT INTO posts (id) values (?1)", params![title])?;
-
-                let post = stmt.query_row([title], |row| {
-                    Ok(PostInfo {
-                        id: row.get(0)?,
-                        views: row.get(1)?,
-                    })
-                })?;
-
-                PostInfo {
-                    id: post.id,
-                    views: post.views,
-                }
-            }
-            Err(e) => return Err(ServerError::DBError(e)),
-        })
-    }
-
-    #[instrument]
-    fn increment_views(sqlite_conn: &Connection, title: &str) -> Result<(), ServerError> {
-        sqlite_conn.execute(
-            "UPDATE posts SET views = views + 1 WHERE id = ?1",
-            params![title],
-        )?;
-
-        Ok(())
-    }
-}
+impl SqliteOperations for Markdown {}
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 pub struct MarkdownMetadata {
@@ -140,7 +128,7 @@ pub struct MarkdownMetadata {
     pub date: String,
     pub finished: bool,
     pub image_preview: Option<String>,
-    pub owner: Option<String>,
+    pub owner: Option<Uuid>,
 }
 
 impl MarkdownMetadata {
