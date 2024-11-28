@@ -50,26 +50,47 @@ impl Markdown {
         Self::increment_views(&sqlite_conn, title)
     }
 
-    #[instrument]
     // TODO: TEST
+    #[instrument(parent = None, skip(sqlite_conn))]
     pub async fn list_private_markdown_info(
         sqlite_conn: Connection,
         user_id: Uuid,
-    ) -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
+    ) -> Result<Vec<Option<(MarkdownMetadata, PostInfo)>>> {
         let paths = fs::read_dir("./blogpost").unwrap();
 
-        let mut markdown_info: Vec<(MarkdownMetadata, PostInfo)> = Vec::new();
+        let mut markdown_info: Vec<Option<(MarkdownMetadata, PostInfo)>> = Vec::new();
 
         for path in paths {
+            info!(
+                "Starting reading markdown: {}",
+                path.as_ref()
+                    .unwrap()
+                    .file_name()
+                    .clone()
+                    .into_string()
+                    .unwrap()
+            );
+
             let filepath = path.unwrap().path().display().to_string();
             let markdown_file = fs::read_to_string(&filepath)
                 .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
-            let metadata = MarkdownMetadata::new(&markdown_file)?;
-            if let Some(owner) = metadata.owner {
-                if user_id == owner {
-                    let post: PostInfo =
-                        Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
-                    markdown_info.push((metadata, post));
+            let metadata_option = MarkdownMetadata::new(&markdown_file)
+                .map_err(|e| tracing::warn!("{}", e.to_string()))
+                .ok();
+
+            match metadata_option {
+                Some(metadata) => {
+                    if let Some(owner) = metadata.owner {
+                        if user_id == owner {
+                            let post: PostInfo =
+                                Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
+                            markdown_info.push(Some((metadata, post)));
+                        }
+                    }
+                }
+                None => {
+                    markdown_info.push(None);
+                    continue;
                 }
             }
         }
