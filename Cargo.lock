@@ -258,6 +258,7 @@ dependencies = [
  "strum",
  "thiserror",
  "tokio",
+ "toml",
  "tower-http",
  "tracing",
  "tracing-opentelemetry",

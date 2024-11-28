@@ -15,9 +15,14 @@ async fn main() -> Result<(), ServerError> {
     let rust_env = env::var("RUST_ENV")
         .context("RUST_ENV must be defined")
         .unwrap();
+
     let tracer_url = env::var("TRACER_URL")
         .context(" TRACER_URL must be defined")
         .unwrap();
+
+    let blog_config_path = env::var("BLOG_CONFIG_PATH")
+        .context("BLOG_CONFIG_PATH must be defined")
+        .unwrap_or("./blog.config.toml".to_string());
 
     config::tracing::Tracing::setup(&tracer_url, rust_log)?;
 
