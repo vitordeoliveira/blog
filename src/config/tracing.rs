@@ -59,9 +59,12 @@ impl Tracing {
         let tracer = init_tracer_provider(tracer_url)?;
         let env_filter = format!("{rust_log},h2=off,tower::buffer::worker=off");
 
+        let console_layer = tracing_subscriber::fmt::layer()
+            .pretty()
+            .with_filter(EnvFilter::builder().parse(env_filter).unwrap());
+
         tracing_subscriber::registry()
-            .with(tracing_subscriber::fmt::layer())
-            .with(EnvFilter::builder().parse(env_filter).unwrap())
+            .with(console_layer)
             .with(OpenTelemetryLayer::new(tracer).with_filter(LevelFilter::INFO))
             .init();
 
