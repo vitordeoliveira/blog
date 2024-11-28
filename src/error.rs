@@ -13,16 +13,19 @@ use tracing::{error, instrument};
 
 #[derive(Error)]
 pub enum ServerError {
-    #[error("Internal Server Error {0}")]
+    #[error("Internal Server Error: {0}")]
     InternalServer(String),
+
+    #[error("Error occur on metadata extraction of {0}")]
+    YamlConvertionError(String),
 
     #[error("Unauthorized")]
     Unauthorized,
 
-    #[error("Page {0} not found")]
+    #[error("PageNotFound: {0} not found")]
     PageNotFound(String),
 
-    #[error("Page {0} has some error")]
+    #[error("PageUnavailable: {0} has some error")]
     PageUnavailable(String),
 
     #[error(transparent)]

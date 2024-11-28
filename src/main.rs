@@ -1,12 +1,6 @@
-use std::env;
-
 use anyhow::{Context, Result};
-use blog::{
-    app,
-    config::{self},
-    error::ServerError,
-    AppState,
-};
+use blog::{app, config, error::ServerError, AppState};
+use std::env;
 
 #[tokio::main]
 async fn main() -> Result<(), ServerError> {
@@ -33,6 +27,7 @@ async fn main() -> Result<(), ServerError> {
         .unwrap();
 
     let app_state: AppState = AppState::new(&sqlite_db_path, &rust_env)?;
+
     let app = app::new_app(app_state, assets_path).await?;
 
     tracing::info!("router initialized, now listening on port {}", port);

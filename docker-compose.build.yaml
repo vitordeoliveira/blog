@@ -7,9 +7,15 @@ services:
         - RUST_ENV=production
         - TRACER_URL=http://jaeger:4317
     ports:
-      - "8081:8080"
+      - "8082:8080"
+    networks:
+      - shared-network
 
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - "16686:16686"
+  # jaeger:
+  #   image: jaegertracing/all-in-one:latest
+  #   ports:
+  #     - "16686:16686"
+
+networks:
+  shared-network:
+    external: true

@@ -12,3 +12,7 @@ for publish
 
 docker build -t /image tag/ /account_tag/:/version/ PATH_DOCKERFILE
 docker push /account_tag/:/version/
+
+## cargo utils
+
+cargo login --registry invisible-matrix

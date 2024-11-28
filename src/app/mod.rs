@@ -21,12 +21,12 @@ use crate::{
         home,
     },
     error::ServerError,
-    model::Markdown,
-    AppState, SqliteOperations,
+    AppState, Markdown, SqliteOperations,
 };
 
 #[instrument]
-async fn api_key_auth(
+// TODO: TEST
+async fn api_key_auth_middleware(
     state: State<AppState>,
     mut request: Request,
     next: Next,
@@ -57,7 +57,7 @@ pub async fn new_app(app_state: AppState, assets_path: &str) -> Result<axum::Rou
         )
         .layer(middleware::from_fn_with_state(
             app_state.clone(),
-            api_key_auth,
+            api_key_auth_middleware,
         ));
 
     let api = Router::new().nest("/api", blog_api);
@@ -71,4 +71,12 @@ pub async fn new_app(app_state: AppState, assets_path: &str) -> Result<axum::Rou
         .nest_service("/assets", ServeDir::new(format!("{}/assets", assets_path)));
 
     Ok(router)
+}
+
+#[cfg(test)]
+mod tests {
+    // #[tokio::test]
+    // async fn api_key_auth_middleware_should_receive_every_string() {
+    //     // api_key_auth_middleware(state, request, next)
+    // }
 }

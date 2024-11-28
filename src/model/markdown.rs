@@ -4,7 +4,7 @@ use anyhow::Result;
 use pulldown_cmark::Options;
 use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
-use tracing::instrument;
+use tracing::{info, instrument};
 use uuid::Uuid;
 use yaml_front_matter::YamlFrontMatter;
 
@@ -139,7 +139,7 @@ impl MarkdownMetadata {
     // TODO: TEST
     fn new(input: &str) -> Result<Self> {
         let result = YamlFrontMatter::parse::<MarkdownMetadata>(input)
-            .map_err(|e| ServerError::InternalServer(format!("Error on YamlFrontMatter: {e}")))?;
+            .map_err(|e| ServerError::YamlConvertionError(e.to_string()))?;
         Ok(result.metadata)
     }
 
@@ -152,3 +152,6 @@ impl MarkdownMetadata {
         Ok(regex.replace(string_output, "").to_string())
     }
 }
+
+#[cfg(test)]
+mod tests {}

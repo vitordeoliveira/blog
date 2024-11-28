@@ -3,9 +3,8 @@ pub mod config;
 pub mod controller;
 pub mod error;
 pub mod i18n;
-pub mod state;
-
 mod model;
+pub mod state;
 mod view;
 
 pub(crate) use model::SqliteOperations;
