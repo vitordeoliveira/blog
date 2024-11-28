@@ -24,7 +24,7 @@ use crate::{
     AppState, Markdown, SqliteOperations,
 };
 
-#[instrument]
+#[instrument(skip_all, fields(self.uri = %request.uri(), self.headers = ?request.headers()))]
 // TODO: TEST
 async fn api_key_auth_middleware(
     state: State<AppState>,

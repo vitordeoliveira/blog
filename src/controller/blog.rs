@@ -6,7 +6,7 @@ use axum::{
     Extension, Json,
 };
 use rusqlite::Connection;
-use tracing::{instrument, warn};
+use tracing::{info, instrument, warn};
 
 use crate::{
     error::ServerError,
@@ -33,12 +33,13 @@ pub async fn markdown_list_api(
     State(state): State<AppState>,
     Extension(user): Extension<User>,
 ) -> Result<impl IntoResponse, ServerError> {
+    info!("Listing markdown list of user: {}", user.id);
     let sqlite_conn = state.get_connection()?;
-
     let markdownlist: Vec<(MarkdownMetadata, PostInfo)> =
         Markdown::list_private_markdown_info(sqlite_conn, user.id)
             .await?
             .into_iter()
+            .flatten()
             .collect();
 
     Ok(Json(markdownlist))
@@ -108,9 +109,29 @@ pub async fn show(
 mod tests {
     use axum::body::to_bytes;
 
-    use crate::MockAppState;
+    use crate::{mock::MockAppState, model::mock::MockUser};
 
     use super::*;
+
+    #[tokio::test]
+    async fn it_should_return_empty_when_invalid_metadata() {
+        let mock_app_state = AppState::new_mock("./data/blog.test.sqlite").unwrap();
+        let state = State(mock_app_state);
+        let user = User::new_mock().unwrap();
+        let extension = Extension(user);
+
+        let content = markdown_list_api(state, extension)
+            .await
+            .unwrap()
+            .into_response()
+            .into_body();
+
+        let body_bytes = to_bytes(content, usize::MAX).await.unwrap();
+        let content: Vec<(MarkdownMetadata, PostInfo)> =
+            serde_json::from_slice(&body_bytes).unwrap();
+
+        assert_eq!(content, [])
+    }
 
     #[tokio::test]
     async fn it_should_return_plain_text_markdown() {
