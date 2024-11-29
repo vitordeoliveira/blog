@@ -4,11 +4,11 @@ use anyhow::Result;
 use pulldown_cmark::Options;
 use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
-use tracing::{info, instrument};
+use tracing::{info, instrument, warn};
 use uuid::Uuid;
 use yaml_front_matter::YamlFrontMatter;
 
-use crate::error::ServerError;
+use crate::{config::blog::Blog, error::ServerError};
 
 use super::sqlite::{PostInfo, SqliteOperations};
 
@@ -20,10 +20,10 @@ pub struct Markdown {
 impl Markdown {
     #[instrument]
     // TODO: TEST
-    pub fn new(postname: String) -> Result<Self> {
-        let file = format!("./blogpost/{}.md", &postname);
+    pub fn new(post_path: String) -> Result<Self, ServerError> {
+        let file = post_path.to_string();
         let markdown_file =
-            fs::read_to_string(file).map_err(|_| ServerError::PageNotFound(postname.clone()))?;
+            fs::read_to_string(file).map_err(|_| ServerError::PageNotFound(post_path.clone()))?;
         let metadata = MarkdownMetadata::new(&markdown_file)?;
         let content_raw = MarkdownMetadata::extract(&markdown_file)?;
         let mut content = String::new();
@@ -54,9 +54,14 @@ impl Markdown {
     #[instrument(parent = None, skip(sqlite_conn))]
     pub async fn list_private_markdown_info(
         sqlite_conn: Connection,
-        user_id: Uuid,
-    ) -> Result<Vec<Option<(MarkdownMetadata, PostInfo)>>> {
-        let paths = fs::read_dir("./blogpost").unwrap();
+        blog_config: Blog,
+    ) -> Result<Vec<(MarkdownMetadata, PostInfo)>, ServerError> {
+        info!("Starting reading path: {}", blog_config.path.clone());
+        let paths = fs::read_dir(blog_config.path)
+            .map_err(|e| {
+                tracing::error!("folder of user: {} not found, error: {e}", blog_config.user)
+            })
+            .unwrap();
 
         let mut markdown_info: Vec<Option<(MarkdownMetadata, PostInfo)>> = Vec::new();
 
@@ -80,13 +85,9 @@ impl Markdown {
 
             match metadata_option {
                 Some(metadata) => {
-                    if let Some(owner) = metadata.owner {
-                        if user_id == owner {
-                            let post: PostInfo =
-                                Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
-                            markdown_info.push(Some((metadata, post)));
-                        }
-                    }
+                    let post: PostInfo =
+                        Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
+                    markdown_info.push(Some((metadata, post)));
                 }
                 None => {
                     markdown_info.push(None);
@@ -95,39 +96,49 @@ impl Markdown {
             }
         }
 
-        Ok(markdown_info)
+        Ok(markdown_info.into_iter().flatten().collect())
     }
 
     #[instrument]
     // TODO: TEST
     pub async fn list_markdown_info(
         sqlite_conn: Connection,
-    ) -> Result<Vec<(MarkdownMetadata, PostInfo)>> {
+    ) -> Result<Vec<(MarkdownMetadata, PostInfo)>, ServerError> {
         let paths = fs::read_dir("./blogpost").unwrap();
 
-        let mut markdown_info: Vec<(MarkdownMetadata, PostInfo)> = Vec::new();
+        let mut markdown_info: Vec<Option<(MarkdownMetadata, PostInfo)>> = Vec::new();
 
         for path in paths {
             let filepath = path.unwrap().path().display().to_string();
             let markdown_file = fs::read_to_string(&filepath)
                 .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
-            let metadata = MarkdownMetadata::new(&markdown_file)?;
+            let metadata_option = MarkdownMetadata::new(&markdown_file)
+                .map_err(|e| tracing::warn!("{}", e.to_string()))
+                .ok();
 
-            if metadata.owner.is_some() {
-                continue;
+            match metadata_option {
+                Some(metadata) => {
+                    if metadata.owner.is_some() {
+                        continue;
+                    }
+                    let post: PostInfo =
+                        Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
+                    markdown_info.push(Some((metadata, post)));
+                }
+
+                None => {
+                    markdown_info.push(None);
+                    continue;
+                }
             }
-
-            let post: PostInfo = Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
-
-            markdown_info.push((metadata, post));
         }
 
-        Ok(markdown_info)
+        Ok(markdown_info.into_iter().flatten().collect())
     }
 
     #[instrument]
     // TODO: TEST
-    pub async fn list_markdown_info_of_post(
+    pub async fn list_markdown_info_of_a_post(
         sqlite_conn: Connection,
         filepath: String,
     ) -> Result<(MarkdownMetadata, PostInfo)> {
@@ -148,7 +159,7 @@ pub struct MarkdownMetadata {
     pub subtitle: String,
     pub description: String,
     pub tags: Vec<String>,
-    pub similar_posts: Vec<String>,
+    pub similar_posts: Option<Vec<String>>,
     pub date: String,
     pub finished: bool,
     pub image_preview: Option<String>,
@@ -158,7 +169,7 @@ pub struct MarkdownMetadata {
 impl MarkdownMetadata {
     #[instrument]
     // TODO: TEST
-    fn new(input: &str) -> Result<Self> {
+    fn new(input: &str) -> Result<Self, ServerError> {
         let result = YamlFrontMatter::parse::<MarkdownMetadata>(input)
             .map_err(|e| ServerError::YamlConvertionError(e.to_string()))?;
         Ok(result.metadata)
@@ -166,7 +177,7 @@ impl MarkdownMetadata {
 
     #[instrument]
     // TODO: TEST
-    fn extract(string_output: &str) -> Result<String> {
+    fn extract(string_output: &str) -> Result<String, ServerError> {
         let regex = regex::Regex::new(r"---((.|\n)*?)---")
             .map_err(|err| ServerError::InternalServer(err.to_string()))?;
 
