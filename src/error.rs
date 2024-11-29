@@ -1,4 +1,4 @@
-use std::fmt::Debug;
+use std::{fmt::Debug, io};
 
 use anyhow::Result;
 use async_trait::async_trait;
@@ -31,6 +31,8 @@ pub enum ServerError {
     #[error("PageUnavailable: {0} has some error")]
     ConfigurationError(String),
 
+    #[error("IOError: {0}")]
+    IOError(#[from] io::Error),
     // #[error(transparent)]
     // Undefined(#[from] anyhow::Error),
     #[error(transparent)]
