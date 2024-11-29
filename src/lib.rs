@@ -9,7 +9,7 @@ mod view;
 
 pub(crate) use model::SqliteOperations;
 pub use model::{Markdown, MarkdownMetadata, PostInfo};
-pub use state::AppState;
+pub use state::{AppState, ConfigState, EnvState};
 
 #[cfg(test)]
 use state::mock;
