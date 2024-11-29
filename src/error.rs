@@ -9,7 +9,7 @@ use axum::{
 };
 use serde::de::DeserializeOwned;
 use thiserror::Error;
-use tracing::{error, instrument};
+use tracing::error;
 
 #[derive(Error)]
 pub enum ServerError {
@@ -28,20 +28,21 @@ pub enum ServerError {
     #[error("PageUnavailable: {0} has some error")]
     PageUnavailable(String),
 
-    #[error(transparent)]
-    Undefined(#[from] anyhow::Error),
+    #[error("PageUnavailable: {0} has some error")]
+    ConfigurationError(String),
 
+    // #[error(transparent)]
+    // Undefined(#[from] anyhow::Error),
     #[error(transparent)]
     UuidError(#[from] uuid::Error),
 
-    #[error(transparent)]
+    #[error("sqlite error: {0}")]
     DBError(#[from] rusqlite::Error),
 }
 
 impl IntoResponse for ServerError {
-    #[instrument]
     fn into_response(self) -> axum::response::Response {
-        error!("{self}");
+        error!("Error {:?}", self);
         match self {
             ServerError::InternalServer(_) => {
                 (StatusCode::INTERNAL_SERVER_ERROR, "internal server error")
