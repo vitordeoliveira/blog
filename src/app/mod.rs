@@ -82,6 +82,10 @@ pub async fn new_app(state: AppState) -> Result<axum::Router, ServerError> {
         )
         .layer(middleware::from_fn_with_state(
             state.clone(),
+            mw_extract_blog_from_config_state,
+        ))
+        .layer(middleware::from_fn_with_state(
+            state.clone(),
             mw_extract_user_from_key,
         ));
 
