@@ -14,6 +14,7 @@ use tracing::instrument;
 use uuid::Uuid;
 
 use crate::{
+    config::blog::Blog,
     controller::{
         blog::{
             load_markdown_content_api, load_markdown_similar_posts_api, markdown_list_api, show,
@@ -21,13 +22,37 @@ use crate::{
         home,
     },
     error::ServerError,
-    AppState, Markdown, SqliteOperations,
+    model::User,
+    state::{AppState, ConfigState},
+    EnvState, Markdown, SqliteOperations,
 };
 
-#[instrument(skip_all, fields(self.uri = %request.uri(), self.headers = ?request.headers()))]
 // TODO: TEST
-async fn api_key_auth_middleware(
-    state: State<AppState>,
+#[instrument(skip_all, fields(self.uri = %request.uri(), host = ?request.headers().get("host")))]
+async fn mw_extract_blog_from_config_state(
+    state: State<ConfigState>,
+    mut request: Request,
+    next: Next,
+) -> Result<Response, ServerError> {
+    let user = request.extensions().get::<User>().unwrap().id.to_string();
+
+    let blog_config: Blog = state
+        .blog_config
+        .blog
+        .clone()
+        .into_iter()
+        .find(|blog| blog.user.clone() == user.clone())
+        .unwrap();
+
+    request.extensions_mut().insert(blog_config);
+
+    Ok(next.run(request).await)
+}
+
+// TODO: TEST
+#[instrument(skip_all, fields(self.uri = %request.uri(), host = ?request.headers().get("host")))]
+async fn mw_extract_user_from_key(
+    state: State<EnvState>,
     mut request: Request,
     next: Next,
 ) -> Result<Response, ServerError> {
@@ -45,7 +70,7 @@ async fn api_key_auth_middleware(
     }
 }
 
-pub async fn new_app(app_state: AppState, assets_path: &str) -> Result<axum::Router> {
+pub async fn new_app(state: AppState) -> Result<axum::Router, ServerError> {
     let blog_view = Router::new().route("/:id", get(show));
 
     let blog_api = Router::new()
@@ -56,8 +81,8 @@ pub async fn new_app(app_state: AppState, assets_path: &str) -> Result<axum::Rou
             get(load_markdown_similar_posts_api),
         )
         .layer(middleware::from_fn_with_state(
-            app_state.clone(),
-            api_key_auth_middleware,
+            state.clone(),
+            mw_extract_user_from_key,
         ));
 
     let api = Router::new().nest("/api", blog_api);
@@ -66,9 +91,12 @@ pub async fn new_app(app_state: AppState, assets_path: &str) -> Result<axum::Rou
         .route("/", get(home))
         .nest("/blog", blog_view)
         .merge(api)
-        .with_state(app_state)
+        .with_state(state.clone())
         .route_service("/sitemap.xml", ServeFile::new("sitemap.xml"))
-        .nest_service("/assets", ServeDir::new(format!("{}/assets", assets_path)));
+        .nest_service(
+            "/assets",
+            ServeDir::new(format!("{}/assets", state.config_state.clone().assets_path)),
+        );
 
     Ok(router)
 }

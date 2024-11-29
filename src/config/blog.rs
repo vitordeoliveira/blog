@@ -1,21 +1,26 @@
 use std::fs;
 
+use anyhow::Context;
 use serde::Deserialize;
 
-#[derive(Deserialize, PartialEq, Debug)]
-pub struct Config {
-    blog: Vec<Blog>,
+#[derive(Deserialize, PartialEq, Debug, Clone)]
+pub struct BlogConfig {
+    pub blog: Vec<Blog>,
 }
 
-#[derive(Deserialize, PartialEq, Debug)]
+#[derive(Deserialize, PartialEq, Debug, Clone)]
 pub struct Blog {
-    paths: Vec<String>,
-    key: Option<String>,
+    pub path: String,
+    pub user: String,
 }
 
-impl Config {
+impl BlogConfig {
     pub fn from_file(blog_config_path: &str) -> Self {
-        let content = fs::read_to_string(blog_config_path).unwrap();
+        let content = fs::read_to_string(blog_config_path)
+            .context(format!(
+                "Blog config file in -> {blog_config_path} not found"
+            ))
+            .unwrap();
         toml::from_str(&content).unwrap()
     }
 }
@@ -28,7 +33,7 @@ mod tests {
         path::{Path, PathBuf},
     };
 
-    use super::{Blog, Config};
+    use super::{Blog, BlogConfig};
 
     pub struct TempTomlFile {
         path: PathBuf,
@@ -62,12 +67,12 @@ mod tests {
     fn test_with_temp_toml_file() {
         let toml_content = r#"
             [[blog]]
-            paths = ["fake/path/1"]
-            key = "00000000-fake-key1-0000-000000000000"
+            path = "fake/path/1"
+            user = "00000000-fake-key1-0000-000000000000"
 
             [[blog]]
-            paths = ["fake/path/2"]
-            key = "00000000-fake-key2-0000-000000000000"
+            path = "fake/path/2"
+            user = "00000000-fake-key2-0000-000000000000"
         "#;
 
         let temp_file = TempTomlFile::new(toml_content);
@@ -80,29 +85,29 @@ mod tests {
     fn should_convert_toml_to_struct() {
         let toml_content = r#"
             [[blog]]
-            paths = ["fake/path/1"]
-            key = "00000000-fake-key1-0000-000000000000"
+            path = "fake/path/1"
+            user = "00000000-fake-key1-0000-000000000000"
 
             [[blog]]
-            paths = ["fake/path/2"]
-            key = "00000000-fake-key2-0000-000000000000"
+            path = "fake/path/2"
+            user = "00000000-fake-key2-0000-000000000000"
         "#;
 
         let temp_file = TempTomlFile::new(toml_content);
 
-        let blog = Config::from_file(&temp_file.path().display().to_string());
+        let blog = BlogConfig::from_file(&temp_file.path().display().to_string());
 
         assert_eq!(
             blog,
-            Config {
+            BlogConfig {
                 blog: vec![
                     Blog {
-                        paths: vec!["fake/path/1".to_string()],
-                        key: Some("00000000-fake-key1-0000-000000000000".to_string())
+                        path: "fake/path/1".to_string(),
+                        user: "00000000-fake-key1-0000-000000000000".to_string()
                     },
                     Blog {
-                        paths: vec!["fake/path/2".to_string()],
-                        key: Some("00000000-fake-key2-0000-000000000000".to_string())
+                        path: "fake/path/2".to_string(),
+                        user: "00000000-fake-key2-0000-000000000000".to_string()
                     }
                 ]
             }

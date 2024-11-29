@@ -9,19 +9,21 @@ use rusqlite::Connection;
 use tracing::{info, instrument, warn};
 
 use crate::{
+    config::blog::Blog,
     error::ServerError,
     model::{Markdown, MarkdownMetadata, PostInfo, User},
-    view, AppState,
+    view, AppState, EnvState,
 };
 
 #[instrument]
 pub async fn load_markdown_content_api(
-    State(state): State<AppState>,
+    State(state): State<EnvState>,
     Path(postname): Path<String>,
+    Extension(blog_config): Extension<Blog>,
 ) -> Result<impl IntoResponse, ServerError> {
     let connection: Connection = state.get_connection()?;
+    let markdown = Markdown::new(format!("{}/{}.md", blog_config.path, postname.clone()))?;
     Markdown::add_views_to_markdown(connection, &postname).await?;
-    let markdown = Markdown::new(postname)?;
     Ok(Response::builder()
         .header(header::CONTENT_TYPE, "text/plain")
         .body(markdown.content)
@@ -30,33 +32,30 @@ pub async fn load_markdown_content_api(
 
 #[instrument]
 pub async fn markdown_list_api(
-    State(state): State<AppState>,
+    State(state): State<EnvState>,
     Extension(user): Extension<User>,
+    Extension(blogconfig): Extension<Blog>,
 ) -> Result<impl IntoResponse, ServerError> {
     info!("Listing markdown list of user: {}", user.id);
     let sqlite_conn = state.get_connection()?;
     let markdownlist: Vec<(MarkdownMetadata, PostInfo)> =
-        Markdown::list_private_markdown_info(sqlite_conn, user.id)
-            .await?
-            .into_iter()
-            .flatten()
-            .collect();
+        Markdown::list_private_markdown_info(sqlite_conn, blogconfig).await?;
 
     Ok(Json(markdownlist))
 }
 
 #[instrument]
 pub async fn load_markdown_similar_posts_api(
-    State(state): State<AppState>,
+    State(state): State<EnvState>,
     Path(postname): Path<String>,
 ) -> Result<impl IntoResponse, ServerError> {
     let markdown = Markdown::new(postname)?;
 
-    let similar_posts_metadata = markdown.metadata.similar_posts.iter().map(|i| {
+    let similar_posts_metadata = markdown.metadata.similar_posts.iter().flatten().map(|i| {
         let connection: Connection = state.get_connection().unwrap();
         async move {
             {
-                Markdown::list_markdown_info_of_post(connection, format!("{}.md", i))
+                Markdown::list_markdown_info_of_a_post(connection, format!("{}.md", i))
                     .await
                     .map_err(|e| warn!("{e}"))
             }
@@ -78,16 +77,28 @@ pub async fn show(
     State(state): State<AppState>,
     Path(postname): Path<String>,
 ) -> Result<impl IntoResponse, ServerError> {
-    let connection: Connection = state.get_connection()?;
+    let connection: Connection = state.env_state.get_connection()?;
     Markdown::add_views_to_markdown(connection, &postname).await?;
 
-    let markdown = Markdown::new(postname)?;
+    let post_full_name = format!(
+        "{}/{}.md",
+        state
+            .config_state
+            .blog_config
+            .blog
+            .iter()
+            .find(|&e| e.user == state.config_state.app_key)
+            .unwrap()
+            .path,
+        postname
+    );
+    let markdown = Markdown::new(post_full_name)?;
 
-    let similar_posts_metadata = markdown.metadata.similar_posts.iter().map(|i| {
-        let connection: Connection = state.get_connection().unwrap();
+    let similar_posts_metadata = markdown.metadata.similar_posts.iter().flatten().map(|i| {
+        let connection: Connection = state.env_state.get_connection().unwrap();
         async move {
             {
-                Markdown::list_markdown_info_of_post(connection, format!("{}.md", i))
+                Markdown::list_markdown_info_of_a_post(connection, format!("{}.md", i))
                     .await
                     .map_err(|e| warn!("{e}"))
             }
@@ -115,12 +126,19 @@ mod tests {
 
     #[tokio::test]
     async fn it_should_return_empty_when_invalid_metadata() {
-        let mock_app_state = AppState::new_mock("./data/blog.test.sqlite").unwrap();
+        let mock_app_state = EnvState::new_mock("./data/blog.test.sqlite").unwrap();
         let state = State(mock_app_state);
         let user = User::new_mock().unwrap();
         let extension = Extension(user);
 
-        let content = markdown_list_api(state, extension)
+        let blog_config = Blog {
+            path: "mock_path".to_string(),
+            user: "mockuser".to_string(),
+        };
+
+        let extension_blog_config = Extension(blog_config);
+
+        let content = markdown_list_api(state, extension, extension_blog_config)
             .await
             .unwrap()
             .into_response()
@@ -135,11 +153,17 @@ mod tests {
 
     #[tokio::test]
     async fn it_should_return_plain_text_markdown() {
-        let mock_app_state = AppState::new_mock("./data/blog.test.sqlite").unwrap();
+        let mock_app_state = EnvState::new_mock("./data/blog.test.sqlite").unwrap();
         let state = State(mock_app_state);
         let path = Path("test-markdown".to_string());
 
-        let content = load_markdown_content_api(state, path)
+        let blog_config = Blog {
+            path: "mock_path".to_string(),
+            user: "mockuser".to_string(),
+        };
+
+        let extension_blog_config = Extension(blog_config);
+        let content = load_markdown_content_api(state, path, extension_blog_config)
             .await
             .unwrap()
             .into_response()
@@ -161,7 +185,7 @@ mod tests {
 
     #[tokio::test]
     async fn it_should_return_an_array_of_similar_posts() {
-        let mock_app_state = AppState::new_mock("./data/blog.test.sqlite").unwrap();
+        let mock_app_state = EnvState::new_mock("./data/blog.test.sqlite").unwrap();
         let state = State(mock_app_state);
         let path = Path("test-markdown".to_string());
 
@@ -184,7 +208,7 @@ mod tests {
                     subtitle: "test-markdown-subtitle".to_string(),
                     description: "test-markdown-description".to_string(),
                     tags: vec!["rust".to_string(), "test".to_string()],
-                    similar_posts: vec!["test-markdown".to_string()],
+                    similar_posts: Some(vec!["test-markdown".to_string()]),
                     date: "2024-04-03t17:52:00".to_string(),
                     finished: false,
                     image_preview: None,

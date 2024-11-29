@@ -1,4 +1,4 @@
-use anyhow::{Ok, Result};
+use anyhow::Result;
 use opentelemetry::{trace::TracerProvider as _, KeyValue};
 use opentelemetry_otlp::WithExportConfig;
 use opentelemetry_sdk::trace::{RandomIdGenerator, Sampler, Tracer};
@@ -11,6 +11,8 @@ use tracing::level_filters::LevelFilter;
 use tracing_opentelemetry::OpenTelemetryLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use tracing_subscriber::{EnvFilter, Layer};
+
+use crate::error::ServerError;
 
 pub struct Tracing;
 
@@ -55,8 +57,9 @@ fn init_tracer_provider(tracer_url: &str) -> Result<Tracer> {
 // }
 
 impl Tracing {
-    pub fn setup(tracer_url: &str, rust_log: &str) -> Result<()> {
-        let tracer = init_tracer_provider(tracer_url)?;
+    pub fn setup(tracer_url: &str, rust_log: &str) -> Result<(), ServerError> {
+        let tracer = init_tracer_provider(tracer_url)
+            .map_err(|e| ServerError::ConfigurationError(e.to_string()))?;
         let env_filter = format!("{rust_log},h2=off,tower::buffer::worker=off");
 
         let console_layer = tracing_subscriber::fmt::layer()
