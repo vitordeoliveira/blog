@@ -22,3 +22,6 @@ node_modules/
 
 # others
 data/
+blogpost/
+blog.config.toml
+.cargo/config.toml
