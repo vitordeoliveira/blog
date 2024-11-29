@@ -66,15 +66,20 @@ impl Markdown {
         let mut markdown_info: Vec<Option<(MarkdownMetadata, PostInfo)>> = Vec::new();
 
         for path in paths {
-            info!(
-                "Starting reading markdown: {}",
-                path.as_ref()
-                    .unwrap()
-                    .file_name()
-                    .clone()
-                    .into_string()
-                    .unwrap()
-            );
+            let file_name = path
+                .as_ref()
+                .unwrap()
+                .file_name()
+                .clone()
+                .into_string()
+                .unwrap();
+
+            info!("Starting reading markdown: {}", file_name);
+
+            if path.as_ref().unwrap().file_type()?.is_dir() {
+                warn!("{file_name} is a folder");
+                continue;
+            }
 
             let filepath = path.unwrap().path().display().to_string();
             let markdown_file = fs::read_to_string(&filepath)
