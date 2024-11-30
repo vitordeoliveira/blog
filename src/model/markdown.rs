@@ -106,49 +106,12 @@ impl Markdown {
 
     #[instrument]
     // TODO: TEST
-    pub async fn list_markdown_info(
-        sqlite_conn: Connection,
-    ) -> Result<Vec<(MarkdownMetadata, PostInfo)>, ServerError> {
-        let paths = fs::read_dir("./blogpost").unwrap();
-
-        let mut markdown_info: Vec<Option<(MarkdownMetadata, PostInfo)>> = Vec::new();
-
-        for path in paths {
-            let filepath = path.unwrap().path().display().to_string();
-            let markdown_file = fs::read_to_string(&filepath)
-                .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
-            let metadata_option = MarkdownMetadata::new(&markdown_file)
-                .map_err(|e| tracing::warn!("{}", e.to_string()))
-                .ok();
-
-            match metadata_option {
-                Some(metadata) => {
-                    if metadata.owner.is_some() {
-                        continue;
-                    }
-                    let post: PostInfo =
-                        Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
-                    markdown_info.push(Some((metadata, post)));
-                }
-
-                None => {
-                    markdown_info.push(None);
-                    continue;
-                }
-            }
-        }
-
-        Ok(markdown_info.into_iter().flatten().collect())
-    }
-
-    #[instrument]
-    // TODO: TEST
     pub async fn list_markdown_info_of_a_post(
         sqlite_conn: Connection,
-        filepath: String,
+        full_file_path: String,
     ) -> Result<(MarkdownMetadata, PostInfo)> {
-        let markdown_file = fs::read_to_string(format!("./blogpost/{}", &filepath))
-            .map_err(|_| ServerError::PageNotFound(filepath.to_string()))?;
+        let markdown_file = fs::read_to_string(full_file_path.clone())
+            .map_err(|_| ServerError::PageNotFound(full_file_path.to_string()))?;
         let metadata = MarkdownMetadata::new(&markdown_file)?;
         let post: PostInfo = Self::find_or_create_post(&sqlite_conn, &metadata.filename)?;
         Ok((metadata, post))

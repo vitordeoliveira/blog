@@ -8,7 +8,6 @@ async fn main() -> Result<(), ServerError> {
     let port = env!("SERVER_PORT");
     let rust_log = env!("RUST_LOG");
     let assets_path = env!("CARGO_MANIFEST_DIR");
-    let app_key = env!("APP_KEY");
 
     let sqlite_db_path = env::var("SQLITE_DB_PATH")
         .context("SQLITE_DB must be defined")
@@ -21,9 +20,7 @@ async fn main() -> Result<(), ServerError> {
         .context(" TRACER_URL must be defined")
         .unwrap();
 
-    let blog_config_path = env::var("BLOG_CONFIG_PATH")
-        .context("BLOG_CONFIG_PATH must be defined")
-        .unwrap_or("./blog.config.toml".to_string());
+    let blog_config_path = env::var("BLOG_CONFIG_PATH").unwrap_or("./blog.config.toml".to_string());
 
     config::tracing::Tracing::setup(&tracer_url, rust_log)?;
 
@@ -32,7 +29,7 @@ async fn main() -> Result<(), ServerError> {
         .context("Failed to start tokio listener")
         .unwrap();
 
-    let config_state: ConfigState = ConfigState::new(&blog_config_path, assets_path, app_key);
+    let config_state: ConfigState = ConfigState::new(&blog_config_path, assets_path);
     let env_state: EnvState = EnvState::new(&sqlite_db_path, &rust_env)?;
     let state = AppState {
         config_state,

@@ -5,6 +5,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize, PartialEq, Debug, Clone)]
 pub struct BlogConfig {
+    pub application: String,
     pub blog: Vec<Blog>,
 }
 
@@ -66,6 +67,8 @@ mod tests {
     #[test]
     fn test_with_temp_toml_file() {
         let toml_content = r#"
+            application = "fake/path/0"
+
             [[blog]]
             path = "fake/path/1"
             user = "00000000-fake-key1-0000-000000000000"
@@ -84,6 +87,8 @@ mod tests {
     #[test]
     fn should_convert_toml_to_struct() {
         let toml_content = r#"
+            application = "fake/path/0"
+
             [[blog]]
             path = "fake/path/1"
             user = "00000000-fake-key1-0000-000000000000"
@@ -100,6 +105,7 @@ mod tests {
         assert_eq!(
             blog,
             BlogConfig {
+                application: "fake/path/0".to_string(),
                 blog: vec![
                     Blog {
                         path: "fake/path/1".to_string(),

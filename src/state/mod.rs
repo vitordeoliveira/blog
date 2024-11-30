@@ -32,16 +32,14 @@ impl FromRef<AppState> for EnvState {
 #[derive(Clone, Debug)]
 pub struct ConfigState {
     pub blog_config: BlogConfig,
-    pub app_key: String,
     pub assets_path: String,
 }
 
 impl ConfigState {
-    pub fn new(blog_config_path: &str, assets_path: &str, app_key: &str) -> Self {
+    pub fn new(blog_config_path: &str, assets_path: &str) -> Self {
         Self {
             blog_config: config::blog::BlogConfig::from_file(blog_config_path),
             assets_path: assets_path.to_string(),
-            app_key: app_key.to_string(),
         }
     }
 }

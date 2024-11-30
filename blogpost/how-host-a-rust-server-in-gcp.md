@@ -7,7 +7,6 @@ able to create a server, the second thought comes to mind... how do I do it
 available for the internet, how should I configure my server for the internet
 and what is the cheapest way to do it, if possible for free?"
 tags: ["rust", "GCP", "free", "axum"]
-similar_posts: [""]
 date: "2024-03-14t17:52:00"
 finished: true
 ---

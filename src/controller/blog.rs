@@ -34,12 +34,12 @@ pub async fn load_markdown_content_api(
 pub async fn markdown_list_api(
     State(state): State<EnvState>,
     Extension(user): Extension<User>,
-    Extension(blogconfig): Extension<Blog>,
+    Extension(blog_config): Extension<Blog>,
 ) -> Result<impl IntoResponse, ServerError> {
     info!("Listing markdown list of user: {}", user.id);
     let sqlite_conn = state.get_connection()?;
     let markdownlist: Vec<(MarkdownMetadata, PostInfo)> =
-        Markdown::list_private_markdown_info(sqlite_conn, blogconfig).await?;
+        Markdown::list_private_markdown_info(sqlite_conn, blog_config).await?;
 
     Ok(Json(markdownlist))
 }
@@ -48,16 +48,21 @@ pub async fn markdown_list_api(
 pub async fn load_markdown_similar_posts_api(
     State(state): State<EnvState>,
     Path(postname): Path<String>,
+    Extension(blog_config): Extension<Blog>,
 ) -> Result<impl IntoResponse, ServerError> {
     let markdown = Markdown::new(postname)?;
 
     let similar_posts_metadata = markdown.metadata.similar_posts.iter().flatten().map(|i| {
         let connection: Connection = state.get_connection().unwrap();
+        let md_folder_path = blog_config.path.clone();
         async move {
             {
-                Markdown::list_markdown_info_of_a_post(connection, format!("{}.md", i))
-                    .await
-                    .map_err(|e| warn!("{e}"))
+                Markdown::list_markdown_info_of_a_post(
+                    connection,
+                    format!("{}/{}.md", md_folder_path, i),
+                )
+                .await
+                .map_err(|e| warn!("{e}"))
             }
         }
     });
@@ -82,25 +87,21 @@ pub async fn show(
 
     let post_full_name = format!(
         "{}/{}.md",
-        state
-            .config_state
-            .blog_config
-            .blog
-            .iter()
-            .find(|&e| e.user == state.config_state.app_key)
-            .unwrap()
-            .path,
-        postname
+        state.config_state.blog_config.application, postname
     );
     let markdown = Markdown::new(post_full_name)?;
 
     let similar_posts_metadata = markdown.metadata.similar_posts.iter().flatten().map(|i| {
         let connection: Connection = state.env_state.get_connection().unwrap();
+        let md_folder_path = state.config_state.blog_config.application.clone();
         async move {
             {
-                Markdown::list_markdown_info_of_a_post(connection, format!("{}.md", i))
-                    .await
-                    .map_err(|e| warn!("{e}"))
+                Markdown::list_markdown_info_of_a_post(
+                    connection,
+                    format!("{}/{}.md", md_folder_path, i),
+                )
+                .await
+                .map_err(|e| warn!("{e}"))
             }
         }
     });
@@ -189,7 +190,13 @@ mod tests {
         let state = State(mock_app_state);
         let path = Path("test-markdown".to_string());
 
-        let content = load_markdown_similar_posts_api(state, path)
+        let blog_config = Blog {
+            path: "mock_path".to_string(),
+            user: "mockuser".to_string(),
+        };
+
+        let extension_blog_config = Extension(blog_config);
+        let content = load_markdown_similar_posts_api(state, path, extension_blog_config)
             .await
             .unwrap()
             .into_response()

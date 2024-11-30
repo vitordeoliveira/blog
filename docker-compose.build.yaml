@@ -6,8 +6,14 @@ services:
       args:
         - RUST_ENV=production
         - TRACER_URL=http://jaeger:4317
+        - BLOG_CONFIG_PATH=/app/blog.config.toml
     ports:
       - "8082:8080"
+    volumes:
+      - ./blogpost/:/app/blogpost/
+      - ./invisible-matrix/:/app/invisible-matrix/
+      - ./data/blog.sqlite:/app/blog.sqlite
+      - ./blog.config.toml:/app/blog.config.toml
     networks:
       - shared-network
 

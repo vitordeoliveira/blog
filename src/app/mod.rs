@@ -89,11 +89,11 @@ pub async fn new_app(state: AppState) -> Result<axum::Router, ServerError> {
             mw_extract_user_from_key,
         ));
 
+    let application_pages = Router::new().route("/", get(home)).nest("/blog", blog_view);
     let api = Router::new().nest("/api", blog_api);
 
     let router = Router::new() // `GET /` goes to `root`
-        .route("/", get(home))
-        .nest("/blog", blog_view)
+        .merge(application_pages)
         .merge(api)
         .with_state(state.clone())
         .route_service("/sitemap.xml", ServeFile::new("sitemap.xml"))
