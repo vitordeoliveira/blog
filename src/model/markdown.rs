@@ -124,14 +124,15 @@ impl SqliteOperations for Markdown {}
 pub struct MarkdownMetadata {
     pub filename: String,
     pub title: String,
-    pub subtitle: String,
     pub description: String,
-    pub tags: Vec<String>,
-    pub similar_posts: Option<Vec<String>>,
-    pub date: String,
+    pub subtitle: String,
     pub finished: bool,
-    pub image_preview: Option<String>,
+    pub version: Option<u8>,
+    pub tags: Option<Vec<String>>,
+    pub similar_posts: Option<Vec<String>>,
+    pub date: Option<String>,
     pub owner: Option<Uuid>,
+    pub image_preview: Option<String>,
 }
 
 impl MarkdownMetadata {

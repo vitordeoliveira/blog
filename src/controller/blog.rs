@@ -210,13 +210,14 @@ mod tests {
             content,
             [(
                 MarkdownMetadata {
+                    version: None,
                     filename: "test-markdown-2".to_string(),
                     title: "test-markdown-title".to_string(),
                     subtitle: "test-markdown-subtitle".to_string(),
                     description: "test-markdown-description".to_string(),
-                    tags: vec!["rust".to_string(), "test".to_string()],
+                    tags: Some(vec!["rust".to_string(), "test".to_string()]),
                     similar_posts: Some(vec!["test-markdown".to_string()]),
-                    date: "2024-04-03t17:52:00".to_string(),
+                    date: Some("2024-04-03t17:52:00".to_string()),
                     finished: false,
                     image_preview: None,
                     owner: None
