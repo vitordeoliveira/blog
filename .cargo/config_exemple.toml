@@ -5,7 +5,7 @@ SERVER_PORT = "8080"
 SERVER_HOST = "127.0.0.1"
 SQLITE_DB_PATH = "./data/blog.sqlite"
 TRACER_URL = "http://localhost:4317"
-BLOG_CONFIG_PATH = "./blog.config.toml"
+BLOG_CONFIG_PATH = "./blog.config.local.toml"
 APP_KEY = "00000000-0000-0000-0000-000000000000"
 
 [registries]
