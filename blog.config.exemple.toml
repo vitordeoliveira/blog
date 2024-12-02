@@ -1,3 +1,5 @@
+aplication = "blog_posts_path"
+
 [[blog]]
 path = "full_path_of_folder_with_the_markdowns"
 user = "00000000-0000-0000-0000-000000000000"
