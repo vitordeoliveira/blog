@@ -7,7 +7,7 @@
 {% block head %}
 <meta property="title" content="{{metadata.title}}" />
 <meta property="description" content="{{metadata.description}}" />
-<meta name="keywords" content="{{metadata.tags.join(",")}}">
+<meta name="keywords" content="{{metadata.tags.clone().unwrap_or_default().join(",")}}">
 
 {% match metadata.image_preview %}
   {% when Some with (val) %}
