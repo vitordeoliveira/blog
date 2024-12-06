@@ -15,9 +15,8 @@ services:
       - "/data/coolify/applications/kssw8kcwg0sckskk44wwcckw/data/blog.sqlite:/app/blog.sqlite"
       - "/data/coolify/applications/kssw8kcwg0sckskk44wwcckw/blog.config.toml:/app/blog.config.toml"
     networks:
-      shared-network: null
       kssw8kcwg0sckskk44wwcckw: null
-    container_name: blogpage-kssw8kcwg0sckskk44wwcckw-191255024757
+    container_name: blogpage-kssw8kcwg0sckskk44wwcckw-192834551516
     restart: unless-stopped
     labels:
       - coolify.managed=true
@@ -26,12 +25,43 @@ services:
       - coolify.type=application
       - coolify.name=blogpage-kssw8kcwg0sckskk44wwcckw-191255024757
       - coolify.pullRequestId=0
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.375
+      - coolify.applicationId=1
+      - coolify.type=application
+      - coolify.name=blogpage-kssw8kcwg0sckskk44wwcckw-192834551516
+      - coolify.pullRequestId=0
+      - traefik.enable=true
+      - traefik.http.middlewares.gzip.compress=true
+      - "traefik.http.middlewares.http-1-kssw8kcwg0sckskk44wwcckw-blogpage-stripprefix.stripprefix.prefixes= http://localhost:8088"
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.routers.http-0-kssw8kcwg0sckskk44wwcckw-blogpage.entryPoints=http
+      - traefik.http.routers.http-0-kssw8kcwg0sckskk44wwcckw-blogpage.middlewares=gzip
+      - "traefik.http.routers.http-0-kssw8kcwg0sckskk44wwcckw-blogpage.rule=Host(`os888swo40occ4goks0ok00c.77.54.78.50.sslip.io`) && PathPrefix(`/`)"
+      - traefik.http.routers.http-1-kssw8kcwg0sckskk44wwcckw-blogpage.entryPoints=http
+      - "traefik.http.routers.http-1-kssw8kcwg0sckskk44wwcckw-blogpage.middlewares=http-1-kssw8kcwg0sckskk44wwcckw-blogpage-stripprefix,gzip"
+      - "traefik.http.routers.http-1-kssw8kcwg0sckskk44wwcckw-blogpage.rule=Host(``) && PathPrefix(` http://localhost:8088`)"
+      - "caddy_0.encode=zstd gzip"
+      - "caddy_0.handle_path.0_reverse_proxy={{upstreams}}"
+      - "caddy_0.handle_path=/*"
+      - caddy_0.header=-Server
+      - "caddy_0.try_files={path} /index.html /index.php"
+      - "caddy_0=http://os888swo40occ4goks0ok00c.77.54.78.50.sslip.io"
+      - "caddy_1.encode=zstd gzip"
+      - "caddy_1.handle_path.1_reverse_proxy={{upstreams}}"
+      - "caddy_1.handle_path= http://localhost:8088*"
+      - caddy_1.header=-Server
+      - "caddy_1.try_files={path} /index.html /index.php"
+      - "caddy_1=://"
+      - caddy_ingress_network=kssw8kcwg0sckskk44wwcckw
     environment:
       RUST_ENV: production
       TRACER_URL: "http://jaeger:4317"
       BLOG_CONFIG_PATH: /app/blog.config.toml
       COOLIFY_BRANCH: '"main"'
-      COOLIFY_CONTAINER_NAME: '"blogpage-kssw8kcwg0sckskk44wwcckw-191255024757"'
+      COOLIFY_CONTAINER_NAME: '"blogpage-kssw8kcwg0sckskk44wwcckw-192834551516"'
+      COOLIFY_URL: "http://os888swo40occ4goks0ok00c.77.54.78.50.sslip.io, http://localhost:8088"
+      COOLIFY_FQDN: "os888swo40occ4goks0ok00c.77.54.78.50.sslip.io, localhost:8088"
 volumes: {}
 networks:
   shared-network:
