@@ -1,0 +1,43 @@
+services:
+  blogpage:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        - RUST_ENV=production
+        - "TRACER_URL=http://jaeger:4317"
+        - BLOG_CONFIG_PATH=/app/blog.config.toml
+    ports:
+      - "8082:8080"
+    volumes:
+      - "/data/coolify/applications/kssw8kcwg0sckskk44wwcckw/blogpost:/app/blogpost/"
+      - "/data/coolify/applications/kssw8kcwg0sckskk44wwcckw/invisible-matrix:/app/invisible-matrix/"
+      - "/data/coolify/applications/kssw8kcwg0sckskk44wwcckw/data/blog.sqlite:/app/blog.sqlite"
+      - "/data/coolify/applications/kssw8kcwg0sckskk44wwcckw/blog.config.toml:/app/blog.config.toml"
+    networks:
+      shared-network: null
+      kssw8kcwg0sckskk44wwcckw: null
+    container_name: blogpage-kssw8kcwg0sckskk44wwcckw-191255024757
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.375
+      - coolify.applicationId=1
+      - coolify.type=application
+      - coolify.name=blogpage-kssw8kcwg0sckskk44wwcckw-191255024757
+      - coolify.pullRequestId=0
+    environment:
+      RUST_ENV: production
+      TRACER_URL: "http://jaeger:4317"
+      BLOG_CONFIG_PATH: /app/blog.config.toml
+      COOLIFY_BRANCH: '"main"'
+      COOLIFY_CONTAINER_NAME: '"blogpage-kssw8kcwg0sckskk44wwcckw-191255024757"'
+volumes: {}
+networks:
+  shared-network:
+    external: true
+  kssw8kcwg0sckskk44wwcckw:
+    name: kssw8kcwg0sckskk44wwcckw
+    external: true
+configs: {}
+secrets: {}
