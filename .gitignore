@@ -25,3 +25,4 @@ data/
 blogpost/
 blog.config.toml
 .cargo/config.toml
+invisible-matrix/
