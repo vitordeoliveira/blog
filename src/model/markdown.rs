@@ -120,7 +120,7 @@ impl Markdown {
 
 impl SqliteOperations for Markdown {}
 
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
 pub struct MarkdownMetadata {
     pub filename: String,
     pub title: String,
@@ -131,6 +131,7 @@ pub struct MarkdownMetadata {
     pub tags: Option<Vec<String>>,
     pub similar_posts: Option<Vec<String>>,
     pub date: Option<String>,
+    pub author: Option<String>,
     pub owner: Option<Uuid>,
     pub image_preview: Option<String>,
 }
