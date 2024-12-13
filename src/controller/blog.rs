@@ -26,6 +26,20 @@ pub async fn load_markdown_content_api(
     Markdown::add_views_to_markdown(connection, &postname).await?;
     Ok(Response::builder()
         .header(header::CONTENT_TYPE, "text/plain")
+        .header("X-Content-Title", markdown.metadata.title)
+        .header("X-Content-Description", markdown.metadata.description)
+        .header(
+            "X-Content-Author",
+            markdown.metadata.author.unwrap_or_default(),
+        )
+        .header(
+            "X-Content-Image-Preview",
+            markdown.metadata.image_preview.unwrap_or_default(),
+        )
+        .header(
+            "X-Content-Tags",
+            markdown.metadata.tags.unwrap_or_default().join(","),
+        )
         .body(markdown.content)
         .unwrap())
 }
@@ -219,8 +233,7 @@ mod tests {
                     similar_posts: Some(vec!["test-markdown".to_string()]),
                     date: Some("2024-04-03t17:52:00".to_string()),
                     finished: false,
-                    image_preview: None,
-                    owner: None
+                    ..Default::default()
                 },
                 PostInfo {
                     id: "test-markdown-2".to_string(),
