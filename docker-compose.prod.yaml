@@ -1,0 +1,22 @@
+services:
+  blogpage:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        - RUST_ENV=production
+        - TRACER_URL=http://jaeger:4317
+        - BLOG_CONFIG_PATH=/app/blog.config.toml
+    volumes:
+      - /home/blog/data/blog.sqlite:/app/blog.sqlite
+      - /home/blog/blogs/invisible-matrix-blog/:/app/invisible-matrix/
+      - /home/blog/blogs/vitor-ws-blog/:/app/vitor-ws/
+      - /home/blog/blog.config.toml:/app/blog.config.toml
+    environment:
+      - BLOG_CONFIG_PATH=/app/blog.config.toml
+    networks:
+      - global
+
+networks:
+  global:
+    external: true
