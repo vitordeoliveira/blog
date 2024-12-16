@@ -1,0 +1,19 @@
+services:
+  blogpage:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./data/blog.sqlite:/app/blog.sqlite
+      - /home/vitor/Studie/blog_invisible_matrix/:/app/invisible-matrix/
+      - /home/vitor/Studie/blog_vitor_ws/:/app/vitor-ws/
+      - ./blog.config.toml:/app/blog.config.toml
+      - ./assets/:/app/assets/
+    environment:
+      - BLOG_CONFIG_PATH=/app/blog.config.toml
+    networks:
+      - invisible_matrix
+
+networks:
+  invisible_matrix:
+    external: true
